@@ -1,3 +1,4 @@
+from Sabor import Sabor
 from Produto import Produto
 
 class Pizza(Produto):

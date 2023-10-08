@@ -1,3 +1,4 @@
+from Tipo_Bebida import Tipo_Bebida
 from Produto import Produto
 
 
