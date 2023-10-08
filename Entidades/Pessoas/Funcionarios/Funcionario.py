@@ -1,4 +1,4 @@
-from Pessoas.Pessoa import Pessoa
+from Entidades.Pessoas.Pessoa import Pessoa
 from abc import ABC, abstractmethod
 
 

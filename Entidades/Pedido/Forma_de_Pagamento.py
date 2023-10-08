@@ -8,3 +8,7 @@ class Forma_de_Pagamento(Enum):
 
     def __str__(self):
         return self.value
+
+
+
+
