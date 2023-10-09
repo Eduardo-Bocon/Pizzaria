@@ -17,3 +17,12 @@ class Tela_Cliente():
 
     def busca_clientes(self, cpf: str):
         pass
+
+    def cadastrar_cliente():
+        pass
+
+    def deletar_cliente():
+        pass
+    
+    def modificar_cliente():
+        pass

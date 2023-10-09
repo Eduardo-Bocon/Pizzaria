@@ -8,13 +8,13 @@ class Controlador_Pedidos():
         self.__Tela_Pedido = Tela_Pedido()
         self.__Controlador_Pizzaria = Controlador_Pizzaria
 
-    def fazer_pedido():
+    def fazer_pedido(self, pedido: Pedido):
         pass
     
-    def deletar_pedido():
+    def deletar_pedido(self, pedido: Pedido):
         pass
     
-    def modificar_pedido():
+    def modificar_pedido(self, pedido: Pedido):
         pass
 
     def ver_pedido():
