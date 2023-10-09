@@ -15,9 +15,6 @@ class Tela_Cliente():
     def mostra_mensagem(self, mensagem: str):
         pass
 
-    def busca_clientes(self, cpf: str):
-        pass
-
     def cadastrar_cliente():
         pass
 
@@ -25,4 +22,7 @@ class Tela_Cliente():
         pass
     
     def modificar_cliente():
+        pass
+
+    def seleciona_cliente():
         pass

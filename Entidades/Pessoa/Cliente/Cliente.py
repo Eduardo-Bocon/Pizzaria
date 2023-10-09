@@ -10,6 +10,14 @@ class Cliente(Pessoa):
         self.__endereco = Endereco
 
     @property
+    def quantidade_pedidos(self):
+        return self.__quantidade_pedidos
+    
+    @quantidade_pedidos.setter
+    def quantidade_pedidos(self, quantidade_pedidos):
+        self.__quantidade_pedidos = quantidade_pedidos
+
+    @property
     def endereco(self):
         return self.__endereco
 
