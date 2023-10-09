@@ -20,3 +20,9 @@ class Controlador_Funcionario():
 
     def ver_funcionario():
         pass
+
+    def abre_tela():
+        pass
+
+    def retornar():
+        pass

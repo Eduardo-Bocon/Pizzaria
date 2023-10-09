@@ -1,6 +1,7 @@
 from Limites.Tela_Pedido import Tela_Pedido
 from Entidades.Pedido.Pedido import Pedido
 
+
 class Controlador_Pedidos():
 
     def __init__(self, Controlador_Pizzaria):
@@ -18,4 +19,10 @@ class Controlador_Pedidos():
         pass
 
     def ver_pedido():
+        pass
+
+    def abre_tela():
+        pass
+
+    def retornar():
         pass

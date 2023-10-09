@@ -1,11 +1,5 @@
 class Tela_Cliente():
 
-    def abre_tela():
-        pass
-
-    def retornar():
-        pass
-
     def pega_dados_cliente():
         pass
     
@@ -25,4 +19,7 @@ class Tela_Cliente():
         pass
 
     def seleciona_cliente():
+        pass
+
+    def tela_opcoes():
         pass

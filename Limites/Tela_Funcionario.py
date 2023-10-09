@@ -1,10 +1,4 @@
 class Tela_Funcionario():
-    
-    def abre_tela():
-        pass
-
-    def retornar():
-        pass
 
     def cadastrar_funcionario():
         pass
@@ -25,4 +19,7 @@ class Tela_Funcionario():
         pass
 
     def busca_funcionario(self, cpf: str):
+        pass
+
+    def tela_opcoes():
         pass

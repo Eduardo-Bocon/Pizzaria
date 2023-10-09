@@ -6,7 +6,7 @@ import datetime
 
 class Pedido:
     
-    def __init__(self, valor: float, entregue: bool, codigo: int):
+    def __init__(self, cliente: Cliente, atendente: Atendente, valor: float, forma_de_pagamento: Forma_de_Pagamento, data: datetime, entregue: bool, codigo: int):
         self.__cliente = Cliente
         self.__produtos = []
         self.__atendente = Atendente

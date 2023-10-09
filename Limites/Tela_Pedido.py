@@ -1,11 +1,5 @@
 class Tela_Pedido():
 
-    def retornar():
-        pass
-
-    def abre_tela():
-        pass
-
     def fazer_pedido():
         pass
     
@@ -22,4 +16,7 @@ class Tela_Pedido():
         pass
 
     def busca_pedido(self, codigo: int):
+        pass
+
+    def tela_opcoes():
         pass
