@@ -1,3 +1,4 @@
+
 from Entidades.Pessoa.Funcionario.Funcionario import Funcionario
 from Limites.Tela_Funcionario import Tela_Funcionario
 
@@ -26,3 +27,4 @@ class Controlador_Funcionario():
 
     def retornar():
         pass
+
