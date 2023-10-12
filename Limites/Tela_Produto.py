@@ -3,9 +3,6 @@ from excecoes import Entrada_muito_curta, Valor_invalido
 
 class Tela_Produto:
 
-    def __init__(self):
-        pass
-
     def abre_tela(self):
         print("---- Tela Produtos ----")
         print("Opcões:")
@@ -63,23 +60,23 @@ class Tela_Produto:
             try:
                 preco_venda = input("Insira o preço de venda: ")
                 if preco_venda <= 0:
-                    raise Valor_invalido
+                    raise Valor_invalido(" maior que 0")
                 break
             except ValueError:
                 print("Digite um numero.")
-            except Valor_invalido:
-                print("O valor tem que ser maior que 0.")
+            except Valor_invalido as e:
+                print(e)
 
         while True:
             try:
                 quantidade = input("Insira a quantidade em estoque: ")
                 if quantidade <= 0:
-                    raise Valor_invalido
+                    raise Valor_invalido(" maior que 0")
                 break
             except ValueError:
                 print("Digite um numero.")
-            except Valor_invalido:
-                print("O valor tem que ser maior que 0.")
+            except Valor_invalido as e:
+                print(e)
 
         return {"tipo": tipo, "nome": nome, "preco_compra": preco_compra, "preco_venda": preco_venda, "quantidade": quantidade}
 
@@ -91,6 +88,11 @@ class Tela_Produto:
         print("Preco de venda do produto: ", produto["preco_venda"])
         print("Quantidade em estoque: ", produto["quantidade"])
         print("\n")
+
+    def escolher_produto(self) -> str:
+        nome = input("Digite o nome do produto: ")
+        return nome
+
 
 
 

@@ -4,10 +4,9 @@ from Entidades.Pessoa.Cliente.Cliente import Cliente
 
 class Controlador_CLiente():
 
-    def __init__(self, Controlador_Pizzaria):
+    def __init__(self):
         self.__lista_Clientes = []
         self.__tela_Cliente = Tela_Cliente()
-        self.__Controlador_Pizzaria = Controlador_Pizzaria
 
     def cadastrar_cliente(self, cliente: Cliente):
         #verifica repetitacao de clientes por cpf

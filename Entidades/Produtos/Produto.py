@@ -29,9 +29,11 @@ class Produto(ABC):
     def quantidade(self):
         return self.__quantidade
 
-    @quantidade.setter
-    def quantidade(self, novo_quantidade):
-        self.__quantidade = novo_quantidade
+    def aumentar_estoque(self, quantidade: int):
+        self.__quantidade += quantidade
+
+    def diminuir_estoque(self, quantidade: int):
+        self.__quantidade -= quantidade
 
 
 
