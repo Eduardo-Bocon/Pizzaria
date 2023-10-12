@@ -84,6 +84,6 @@ class Pedido:
     def adicionar_produto(self, produtos):
         pass
 
-    def calcula_preco():
+    def calcula_preco(self):
         pass
 

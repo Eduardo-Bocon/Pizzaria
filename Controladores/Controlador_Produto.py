@@ -8,9 +8,8 @@ from excecoes import Produto_ja_cadastrado
 
 class Controlador_Produto():
 
-    def __init__(self, controlador_pizzaria: Controlador_Pizzaria):
+    def __init__(self):
         self.__tela = Tela_Produto()
-        self.__controlador_pizzaria = controlador_pizzaria
         self.__produtos = []
 
     def retornar(self):

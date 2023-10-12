@@ -2,7 +2,7 @@
 from Limites.Tela_Cliente import Tela_Cliente
 from Entidades.Pessoa.Cliente.Cliente import Cliente
 
-class Controlador_CLiente():
+class Controlador_Cliente():
 
     def __init__(self):
         self.__lista_Clientes = []
@@ -56,7 +56,7 @@ class Controlador_CLiente():
         else:
             self.__tela_Cliente.mostra_mensagem("Cliente não cadastrado!")
 
-    def ver_clientes():
+    def ver_clientes(self):
         pass
 
     def busca_clientes(self, cpf: str):
@@ -69,12 +69,12 @@ class Controlador_CLiente():
     def ver_clientes_fieis():
         pass
 
-    def abre_tela():
+    def abre_tela(self):
         lista_opcoes = {1: self.cadastrar_cliente, 2: self.modificar_cliente, 3: self.deletar_cliente, 4: self.ver_clientes, 5: self.ver_clientes_fieis, 0: self.retornar}
 
         while True:
             lista_opcoes[self.__Tela_Cliente.tela_opcoes()]()
             
-    def retornar():
+    def retornar(self):
         self.__Controlador_Pizzaria.tela_geral()
 

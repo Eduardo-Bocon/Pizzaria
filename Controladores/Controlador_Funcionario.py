@@ -18,12 +18,20 @@ class Controlador_Funcionario():
     def modificar_funcionario(self, funcionario: Funcionario):
         pass
 
-    def ver_funcionario():
+    def ver_funcionario(self):
         pass
 
-    def abre_tela():
+    def abre_tela(self):
         pass
 
-    def retornar():
+    def retornar(self):
         pass
+
+    def pegar_salarios(self) -> float:
+        salarios = 0
+        for funcionario in self.__lista_Atendentes:
+            salarios += funcionario.salario
+        for funcionario in self.__lista_Outros_Funcionarios:
+            salarios += funcionario.salario
+        return salarios
 

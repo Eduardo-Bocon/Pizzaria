@@ -17,11 +17,11 @@ class Controlador_Pedido():  # todo
     def modificar_pedido(self, pedido: Pedido):
         pass
 
-    def ver_pedido():
+    def ver_pedido(self):
         pass
 
-    def abre_tela():
+    def abre_tela(self):
         pass
 
-    def retornar():
+    def retornar(self):
         pass
