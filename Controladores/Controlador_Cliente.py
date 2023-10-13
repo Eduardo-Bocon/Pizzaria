@@ -1,27 +1,23 @@
-
 from Limites.Tela_Cliente import Tela_Cliente
 from Entidades.Pessoa.Cliente.Cliente import Cliente
+from Controladores import Controlador_Pizzaria
 
 class Controlador_CLiente():
 
-    def __init__(self, Controlador_Pizzaria):
+    def __init__(self, controlador_pizzaria: Controlador_Pizzaria):
         self.__lista_Clientes = []
         self.__tela_Cliente = Tela_Cliente()
-        self.__Controlador_Pizzaria = Controlador_Pizzaria
+        self.__controlador_pizzaria = controlador_pizzaria
 
     def cadastrar_cliente(self, cliente: Cliente):
-        #verifica repetitacao de clientes por cpf
         for verifica in self.__lista_Clientes:
             if cliente.cpf == verifica.cpf:
                 return
 
-        #recebe os dados do cliente que esta sendo cadastrado
         dados_cliente = self.__tela_Cliente.pega_dados_cliente()
 
-        #instancia novo cliente
         novo_cliente = Cliente(dados_cliente["nome"], dados_cliente["cpf"], dados_cliente["telefone"], dados_cliente["endereco"])
 
-        #adiciona cliente na lista_Clientes
         self.__lista_Clientes.append(novo_cliente)
 
     def deletar_cliente(self, cliente: Cliente):
@@ -57,7 +53,7 @@ class Controlador_CLiente():
         else:
             self.__tela_Cliente.mostra_mensagem("Cliente não cadastrado!")
 
-    def ver_clientes():
+    def ver_clientes(self):
         pass
 
     def busca_clientes(self, cpf: str):
@@ -67,15 +63,14 @@ class Controlador_CLiente():
                 return cliente
         return None
 
-    def ver_clientes_fieis():
+    def ver_clientes_fieis(self):
         pass
 
-    def abre_tela():
+    def abre_tela(self):
         lista_opcoes = {1: self.cadastrar_cliente, 2: self.modificar_cliente, 3: self.deletar_cliente, 4: self.ver_clientes, 5: self.ver_clientes_fieis, 0: self.retornar}
 
         while True:
-            lista_opcoes[self.__Tela_Cliente.tela_opcoes()]()
+            lista_opcoes[self.__tela_Cliente.tela_opcoes()]()
             
-    def retornar():
-        self.__Controlador_Pizzaria.tela_geral()
-
+    def retornar(self):
+        self.__controlador_pizzaria.tela_geral()
