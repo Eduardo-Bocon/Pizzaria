@@ -18,7 +18,7 @@ class Tela_Funcionario():
     def mostra_mensagem(self, mensagem: str):
         pass
 
-    def busca_funcionario(self, cpf: str):
+    def seleciona_funcionario(self):
         pass
 
     def tela_opcoes():

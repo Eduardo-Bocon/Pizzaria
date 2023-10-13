@@ -5,7 +5,7 @@ from Controladores import Controlador_Pizzaria
 from excecoes import Cliente_ja_cadastrado
 
 
-class Controlador_CLiente():
+class Controlador_Cliente():
 
     def __init__(self, controlador_pizzaria: Controlador_Pizzaria):
         self.__lista_Clientes = []
@@ -21,7 +21,7 @@ class Controlador_CLiente():
             if cliente == None:
                 cliente = Cliente(dados_cliente["nome"], dados_cliente["cpf"], dados_cliente["telefone"], dados_cliente["endereco"])
                 self.__lista_Clientes.append(cliente)
-                self.__tela_Cliente.mostra_mensagem("Cadastro realizado!")
+                self.__tela_Cliente.mostra_mensagem("Cadastro de cliente realizado!")
 
             else:
                 raise Cliente_ja_cadastrado(cliente)
@@ -36,7 +36,7 @@ class Controlador_CLiente():
         if cliente is not None:
             self.__lista_Clientes.remove(cliente)
             self.ver_clientes()
-            self.__tela_Cliente.mostra_mensagem("Remoção de cadastro realizado!")
+            self.__tela_Cliente.mostra_mensagem("Remoção de cadastro de cliente realizado!")
 
         else:
             self.__tela_Cliente.mostra_mensagem("Cliente não cadastrado!")
@@ -55,7 +55,7 @@ class Controlador_CLiente():
             cliente.endereco = novos_dados_cliente["endereco"]
 
             self.ver_clientes()
-            self.__tela_Cliente.mostra_mensagem("Modificação de cadastro realizado!")
+            self.__tela_Cliente.mostra_mensagem("Modificação de cadastro de cliente realizado!")
         
         else:
             self.__tela_Cliente.mostra_mensagem("Cliente não cadastrado!")

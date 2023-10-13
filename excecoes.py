@@ -17,3 +17,8 @@ class Cliente_ja_cadastrado(Exception):
     def __init__(self, cliente):
         self.mensagem = "O cliente {} já está cadastrado"
         super().__init__(self.mensagem.format(cliente))
+
+class Funcionario_ja_cadastrado(Exception):
+    def __init__(self, funcionario):
+        self.mensagem = "O funcionario {} já está cadastrado"
+        super().__init__(self.mensagem.format(funcionario))
