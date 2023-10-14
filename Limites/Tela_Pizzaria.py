@@ -1,4 +1,5 @@
-class Tela_Pizzaria:
+class Tela_Pizzaria():
+
     def abre_tela(self):
         print("---- Tela Pizzaria ----")
         print("Opcões:")

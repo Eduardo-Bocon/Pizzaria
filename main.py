@@ -1,9 +1,4 @@
-
-def main():
-   print("A")
-
+from Controladores.Controlador_Pizzaria import Controlador_Pizzaria
 
 if __name__ == '__main__':
-    main()
-
-
+    Controlador_Pizzaria().abre_tela()

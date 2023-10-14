@@ -1,8 +1,9 @@
 
 from Limites.Tela_Cliente import Tela_Cliente
 from Entidades.Pessoa.Cliente.Cliente import Cliente
-from Controladores import Controlador_Pizzaria
+from Controladores.Controlador_Pizzaria import Controlador_Pizzaria
 from excecoes import Cliente_ja_cadastrado
+from Entidades.Pessoa.Cliente.Endereco import Endereco
 
 
 class Controlador_Cliente():
@@ -66,23 +67,45 @@ class Controlador_Cliente():
 
         else:
             for cliente in self.__lista_Clientes:
-                self.__tela_Cliente.mostra_clientes({"nome": cliente.nome, "cpf": cliente.cpf, "telefone": cliente.telefone, "endereco": cliente.endereco})
+                self.__tela_Cliente.mostra_clientes({"nome": cliente.nome, "cpf": cliente.cpf, "telefone": cliente.telefone, "cidade": cliente.endereco.cidade})
 
     def busca_clientes(self, cpf: str):
-        #busca cliente solicitado na lista de clientes
         for cliente in self.__lista_Clientes:
             if cpf == cliente.cpf:
                 return cliente
         return None
+    
+    def pega_endereco(self):
+        dados_endereco = self.__tela_Cliente.pega_endereco
 
+        numero = dados_endereco["numero"]
+        rua = dados_endereco["rua"]
+        cidade = dados_endereco["cidade"]
+        bairro = dados_endereco["bairro"]
+        cep = dados_endereco["cep"]
+
+        endereco = Endereco(numero, rua, cidade, bairro, cep)
+        return endereco
+        
     def ver_clientes_fieis(self):
-        pass
+        if self.__lista_Clientes == None:
+            self.__tela_Cliente.mostra_mensagem("Nenhum cliente cadastrado!")
+
+        else:
+            aux = 0
+            for cliente in self.__lista_Clientes:
+                if cliente.quantidade_pedidos >= 5:
+                    self.__tela_Cliente.mostra_clientes({"nome": cliente.nome, "cpf": cliente.cpf, "telefone": cliente.telefone, "cidade": cliente.endereco.cidade})
+                    aux += 1
+
+            if aux == 0:
+                self.__tela_Cliente.mostra_mensagem("Sem clientes Fiéis!")
 
     def abre_tela(self):
         lista_opcoes = {1: self.cadastrar_cliente, 2: self.modificar_cliente, 3: self.deletar_cliente, 4: self.ver_clientes, 5: self.ver_clientes_fieis, 0: self.retornar}
 
         while True:
-            lista_opcoes[self.__tela_Cliente.tela_opcoes()]()
+            lista_opcoes[self.__tela_Cliente.abre_tela()]()
             
     def retornar(self):
-        self.__controlador_pizzaria.tela_geral()
+        self.__controlador_pizzaria.abre_tela()

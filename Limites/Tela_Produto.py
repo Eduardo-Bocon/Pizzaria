@@ -1,7 +1,7 @@
 from excecoes import Entrada_muito_curta, Valor_invalido
 
 
-class Tela_Produto:
+class Tela_Produto():
 
     def abre_tela(self):
         print("---- Tela Produtos ----")

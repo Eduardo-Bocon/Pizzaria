@@ -1,25 +1,108 @@
+from Controladores.Controlador_Funcionario import Funcionario
+from excecoes import Entrada_muito_curta, Entrada_muito_longa, Valor_acima_de_zero
+
+
 class Tela_Funcionario():
 
-    def cadastrar_funcionario():
-        pass
+    def pega_dados_funcionario(self):
+        print("Insira os dados do funcionário:")
 
-    def deletar_funcionario():
-        pass
+        while True:
+            try:
+                nome = input("Insira o nome do funcionário: ")
+                if len(nome) < 4:
+                    raise Entrada_muito_curta
+                break
+            except ValueError:
+                print("Entrada inválida!")
 
-    def modificar_funcionario():
-        pass
+        while True:
+            try:
+                telefone = input("Insira o telefone do funcionário: ")
 
-    def pega_dados_funcionario():
-        pass
+                if int(telefone) <= 0:
+                    raise Valor_acima_de_zero
+                
+                elif len(telefone) < 6:
+                    raise Entrada_muito_curta
+                
+                elif len(telefone) > 12:
+                    raise Entrada_muito_longa
+                break
+            except ValueError:
+                print("Entrada inválida!")
 
-    def mostra_funcionarios():
-        pass
+        while True:
+            try:
+                cpf = input("Insira o CPF do funcionário: ")
+
+                if int(cpf) <= 0:
+                    raise Valor_acima_de_zero
+                
+                elif len(cpf) < 9:
+                    raise Entrada_muito_curta
+            
+                elif len(cpf) > 11:
+                    raise Entrada_muito_longa
+                break
+            except ValueError:
+                print("Entrada inválida!")
+
+        while True:
+            try:
+                salario = input("Insira o salário do funcionário: ")
+
+                if int(salario) <= 0:
+                    raise Valor_acima_de_zero
+                break
+            except ValueError:
+                print("Entrada inválida!")
+
+        return {"nome": nome, "telefone": telefone, "cpf": cpf, "endereco": endereco}
+
+    def mostra_funcionarios(self, dados_funcionario):
+        print("Nome do funcionário: ", dados_funcionario["nome"])
+        print("CPF do funcionário: ", dados_funcionario["cpf"])
+        print("Telefone do funcionário: ", dados_funcionario["telefone"])
+        print("Salário do funcionário: ", dados_funcionario["salario"])
+        print("\n")
 
     def mostra_mensagem(self, mensagem: str):
-        pass
+        print(mensagem)
 
     def seleciona_funcionario(self):
-        pass
+        while True:
+            try:
+                cpf = input("Insira o CPF do funcionário que deseja selecionar: ")
 
-    def tela_opcoes():
-        pass
+                if int(cpf) <= 0:
+                    raise Valor_acima_de_zero
+                
+                elif len(cpf) < 9:
+                    raise Entrada_muito_curta
+            
+                elif len(cpf) > 11:
+                    raise Entrada_muito_longa
+                break
+            except ValueError:
+                print("Entrada inválida!")
+
+        return cpf
+
+    def abre_tela(self):
+        print("---- Tela Funcionários ----")
+        print("Opcões:")
+        print("1 - Cadastrar Funcionário")
+        print("2 - Modificar Funcionário")
+        print("3 - Deletar Funcionário")
+        print("4 - Ver Clientes")
+        print("0 - Retornar")
+
+        while True:
+            try:
+                opcao = int(input("O que deseja fazer? "))
+                if opcao < 0 or opcao > 4:
+                    raise ValueError
+                return opcao
+            except ValueError:
+                print("Valor inválido, insira um valor entre 0 e 4!")

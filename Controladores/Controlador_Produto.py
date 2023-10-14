@@ -1,7 +1,7 @@
 from Controladores import Controlador_Pizzaria
 from Entidades.Produto.Produto import Produto
-from Entidades.Produtos.Bebida import Bebida
-from Entidades.Produtos.Pizza import Pizza
+from Entidades.Produto.Bebida import Bebida
+from Entidades.Produto.Pizza import Pizza
 from Limites.Tela_Produto import Tela_Produto
 from excecoes import Produto_ja_cadastrado
 
