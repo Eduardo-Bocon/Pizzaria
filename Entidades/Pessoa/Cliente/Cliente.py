@@ -1,4 +1,4 @@
-from Pessoa import Pessoa
+from Entidades.Pessoa.Pessoa import Pessoa
 from Entidades.Pessoa.Cliente.Endereco import Endereco
 
 

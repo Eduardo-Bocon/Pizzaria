@@ -1,9 +1,4 @@
-
-def main():
-   pass
-
+from Controladores.Controlador_Pizzaria import Controlador_Pizzaria
 
 if __name__ == '__main__':
-    main()
-
-
+    Controlador_Pizzaria().inicializa_sistema()

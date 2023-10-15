@@ -1,4 +1,4 @@
-from Funcionario import Funcionario
+from Entidades.Pessoa.Funcionario.Funcionario import Funcionario
 
 
 class Entregador(Funcionario):
