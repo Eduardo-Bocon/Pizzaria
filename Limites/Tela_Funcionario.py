@@ -1,25 +1,25 @@
-class Tela_Funcionario():
+class Tela_Funcionario(): #todo
 
-    def cadastrar_funcionario():
+    def cadastrar_funcionario(self):
         pass
 
-    def deletar_funcionario():
+    def deletar_funcionario(self):
         pass
 
-    def modificar_funcionario():
+    def modificar_funcionario(self):
         pass
 
-    def pega_dados_funcionario():
+    def pega_dados_funcionario(self):
         pass
 
-    def mostra_funcionarios():
+    def mostra_funcionarios(self):
         pass
 
     def mostra_mensagem(self, mensagem: str):
-        pass
+        print(mensagem)
 
     def busca_funcionario(self, cpf: str):
         pass
 
-    def tela_opcoes():
+    def tela_opcoes(self):
         pass
