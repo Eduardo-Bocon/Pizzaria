@@ -8,11 +8,14 @@ from Limites.Tela_Pizzaria import Tela_Pizzaria
 class Controlador_Pizzaria(): #todo
 
     def __init__(self):
-        self.__contr_produto = Controlador_Produto()
-        self.__contr_pedido = Controlador_Pedido()
-        self.__contr_funcionario = Controlador_Funcionario()
-        self.__contr_cliente = Controlador_Cliente()
+        self.__contr_produto = Controlador_Produto(self)
+        self.__contr_pedido = Controlador_Pedido(self)
+        self.__contr_funcionario = Controlador_Funcionario(self)
+        self.__contr_cliente = Controlador_Cliente(self)
         self.__tela_pizzaria = Tela_Pizzaria()
+
+    def inicializa_sistema(self):
+        self.abre_tela_geral()
 
     def calcular_receitas(self):
         pass

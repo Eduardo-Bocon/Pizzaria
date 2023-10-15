@@ -1,4 +1,4 @@
-from Forma_de_Pagamento import Forma_de_Pagamento
+from Entidades.Pedido.Forma_de_Pagamento import Forma_de_Pagamento
 from Entidades.Pessoa.Cliente.Cliente import Cliente
 from Entidades.Pessoa.Funcionario.Atendente import Atendente
 import datetime

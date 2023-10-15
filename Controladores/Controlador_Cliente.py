@@ -1,14 +1,13 @@
 
 from Limites.Tela_Cliente import Tela_Cliente
 from Entidades.Pessoa.Cliente.Cliente import Cliente
-from Controladores.Controlador_Pizzaria import Controlador_Pizzaria
 from excecoes import Cliente_ja_cadastrado
 from Entidades.Pessoa.Cliente.Endereco import Endereco
 
 
 class Controlador_Cliente():
 
-    def __init__(self, controlador_pizzaria: Controlador_Pizzaria):
+    def __init__(self, controlador_pizzaria):
         self.__lista_Clientes = []
         self.__tela_Cliente = Tela_Cliente()
         self.__controlador_pizzaria = controlador_pizzaria

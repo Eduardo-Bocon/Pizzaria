@@ -1,4 +1,3 @@
-from Controladores.Controlador_Pizzaria import Controlador_Pizzaria
 from Entidades.Produto.Produto import Produto
 from Entidades.Produto.Bebida import Bebida
 from Entidades.Produto.Pizza import Pizza
@@ -8,7 +7,7 @@ from excecoes import Produto_ja_cadastrado
 
 class Controlador_Produto():
 
-    def __init__(self, controlador_pizzaria: Controlador_Pizzaria):
+    def __init__(self, controlador_pizzaria):
         self.__tela = Tela_Produto()
         self.__produtos = []
         self.__controlador_pizzaria = controlador_pizzaria

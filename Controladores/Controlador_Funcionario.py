@@ -4,12 +4,11 @@ from Entidades.Pessoa.Funcionario.Gerente import Gerente
 from Entidades.Pessoa.Funcionario.Pizzaiolo import Pizzaiolo
 from Entidades.Pessoa.Funcionario.Entregador import Entregador
 from Limites.Tela_Funcionario import Tela_Funcionario
-from Controladores.Controlador_Pizzaria import Controlador_Pizzaria
 from excecoes import Funcionario_ja_cadastrado
 
 class Controlador_Funcionario():
 
-    def __init__(self, controlador_pizzaria: Controlador_Pizzaria):
+    def __init__(self, controlador_pizzaria):
         self.__lista_Funcionarios = []
         self.__Tela_Funcionario = Tela_Funcionario()
         self.__controlador_pizzaria = controlador_pizzaria
