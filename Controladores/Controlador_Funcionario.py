@@ -122,4 +122,4 @@ class Controlador_Funcionario():
             lista_opcoes[self.__Tela_Funcionario.abre_tela()]()
 
     def retornar(self):
-        self.__controlador_pizzaria.abre_tela()
+        self.__controlador_pizzaria.abre_tela_geral()

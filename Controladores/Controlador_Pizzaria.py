@@ -29,11 +29,20 @@ class Controlador_Pizzaria(): #todo
     def atendente_do_mes(self):
         self.__contr_funcionario.atendente_do_mes()
 
+    def abre_tela_geral(self):
+        lista_opcoes = {1: self.__contr_produto.abre_tela, 2: self.__contr_cliente.abre_tela, 3: self.__contr_funcionario.abre_tela, 4: self.__contr_pedido.abre_tela, 5: self.abre_tela, 0: self.encerra_sistema}
+
+        while True:
+            lista_opcoes[self.__tela_pizzaria.abre_tela_geral()]()
+
     def abre_tela(self):
-        lista_opcoes = {1: self.__contr_produto.abre_tela(), 2: self.__contr_cliente.abre_tela(), 3: self.__contr_funcionario.abre_tela(), 4: self.__contr_pedido.abre_tela(), 5: self.__tela_pizzaria.ver_relatorio(self.calcular_total_salarios(), self.calcular_despesas(), self.calcular_receitas(), self.atendente_do_mes()), 0: self.encerra_sistema}
+        lista_opcoes = {1: self.__tela_pizzaria.atendente_do_mes(self.atendente_do_mes), 2: self.__tela_pizzaria.produto_mais_vendido(self.produto_mais_vendido), 3: self.__tela_pizzaria.salarios(self.calcular_total_salarios), 4: self.__tela_pizzaria.despesas(self.calcular_despesas), 5: self.__tela_pizzaria.receitas(self.calcular_receitas), 6: self.__tela_pizzaria.lucro(self.calcular_despesas(), self.calcular_receitas()), 0: self.retornar}
 
         while True:
             lista_opcoes[self.__tela_pizzaria.abre_tela()]()
+
+    def retornar(self):
+        self.abre_tela_geral()
 
     def encerra_sistema(self):
         exit(0)

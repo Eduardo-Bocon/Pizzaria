@@ -14,7 +14,7 @@ class Controlador_Produto():
         self.__controlador_pizzaria = controlador_pizzaria
 
     def retornar(self):
-        self.__controlador_pizzaria.abre_tela()
+        self.__controlador_pizzaria.abre_tela_geral()
 
     def abre_tela(self):
         lista_opcoes = {1: self.cadastrar_produto, 2: self.modificar_produto, 3: self.deletar_produto, 4: self.ver_produtos,

@@ -108,4 +108,4 @@ class Controlador_Cliente():
             lista_opcoes[self.__tela_Cliente.abre_tela()]()
             
     def retornar(self):
-        self.__controlador_pizzaria.abre_tela()
+        self.__controlador_pizzaria.abre_tela_geral()
