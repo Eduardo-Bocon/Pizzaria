@@ -122,3 +122,10 @@ class Controlador_Funcionario():
 
     def retornar(self):
         self.__controlador_pizzaria.abre_tela_geral()
+
+    def pegar_atendentes(self):
+        atendentes = list()
+        for funcionario in self.__lista_Funcionarios:
+            if isinstance(funcionario, Atendente):
+                atendentes.append(funcionario)
+        return atendentes

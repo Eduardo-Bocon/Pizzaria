@@ -47,7 +47,7 @@ class Tela_Produto:
 
         while True:
             try:
-                preco_compra = input("Insira o preço de compra: ")
+                preco_compra = float(input("Insira o preço de compra: "))
                 if preco_compra <= 0:
                     raise Valor_invalido
                 break
@@ -58,10 +58,13 @@ class Tela_Produto:
 
         while True:
             try:
-                preco_venda = input("Insira o preço de venda: ")
+                preco_venda = float(input("Insira o preço de venda: "))
                 if preco_venda <= 0:
                     raise Valor_invalido(" maior que 0")
+                elif preco_venda <= preco_compra:
+                    raise Valor_invalido(" maior que o valor de compra")
                 break
+
             except ValueError:
                 print("Digite um numero.")
             except Valor_invalido as e:
@@ -69,7 +72,7 @@ class Tela_Produto:
 
         while True:
             try:
-                quantidade = input("Insira a quantidade em estoque: ")
+                quantidade = int(input("Insira a quantidade em estoque: "))
                 if quantidade <= 0:
                     raise Valor_invalido(" maior que 0")
                 break
@@ -80,13 +83,13 @@ class Tela_Produto:
 
         return {"tipo": tipo, "nome": nome, "preco_compra": preco_compra, "preco_venda": preco_venda, "quantidade": quantidade}
 
-    def ver_produto(self, produto):
+    def ver_produto(self, dados_produto):
 
-        print("Nome do produto: ", produto["nome"])
-        print("Tipo do produto: ", produto["tipo"])
-        print("Preco de compra do produto: ", produto["preco_compra"])
-        print("Preco de venda do produto: ", produto["preco_venda"])
-        print("Quantidade em estoque: ", produto["quantidade"])
+        print("Nome do produto: ", dados_produto["nome"])
+        print("Tipo do produto: ", dados_produto["tipo"])
+        print("Preco de compra do produto: ", dados_produto["preco_compra"])
+        print("Preco de venda do produto: ", dados_produto["preco_venda"])
+        print("Quantidade em estoque: ", dados_produto["quantidade"])
         print("\n")
 
     def escolher_produto(self) -> str:

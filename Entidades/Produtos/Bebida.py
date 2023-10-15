@@ -1,6 +1,4 @@
-
-from Produto import Produto
-
+from Entidades.Produtos.Produto import Produto
 
 class Bebida(Produto):
     def __init__(self, preco_venda: float, preco_compra: float, quantidade: int, tipo:str):

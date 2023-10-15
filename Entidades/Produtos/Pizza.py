@@ -1,5 +1,5 @@
+from Entidades.Produtos.Produto import Produto
 
-from Produto import Produto
 
 class Pizza(Produto):
     def __init__(self, preco_venda:float, preco_compra:float, quantidade:int, sabor:str):

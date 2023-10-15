@@ -49,3 +49,15 @@ class Controlador_Pizzaria(): #todo
 
     def encerra_sistema(self):
         exit(0)
+
+    def pegar_atendentes(self):
+        return self.__contr_funcionario.pegar_atendentes()
+
+    def pegar_pizzas(self):
+        return self.__contr_produto.pegar_pizzas()
+
+    def pegar_bebidas(self):
+        return self.__contr_produto.pegar_bebidas()
+
+    def pegar_cliente_por_cpf(self, cpf):
+        self.__contr_cliente.busca_clientes(cpf)

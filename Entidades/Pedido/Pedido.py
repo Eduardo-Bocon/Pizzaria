@@ -3,18 +3,19 @@ from Entidades.Pessoa.Cliente.Cliente import Cliente
 from Entidades.Pessoa.Funcionario.Atendente import Atendente
 import datetime
 
+from Entidades.Produtos.Produto import Produto
+
 
 class Pedido:
     
-    def __init__(self, cliente: Cliente, atendente: Atendente, valor: float, forma_de_pagamento: Forma_de_Pagamento, data: datetime, entregue: bool, codigo: int):
-        self.__cliente = Cliente
-        self.__produtos = []
-        self.__atendente = Atendente
-        self.__valor = valor
-        self.__forma_pagamento = Forma_de_Pagamento
-        self.__data = datetime
-        self.__entregue = entregue
+    def __init__(self, produtos:list(Produto),cliente: Cliente, atendente: Atendente, forma_de_pagamento: Forma_de_Pagamento, data: datetime, codigo: int):
+        self.__cliente = cliente
+        self.__produtos = produtos
+        self.__atendente = atendente
+        self.__forma_pagamento = forma_de_pagamento
+        self.__data = data
         self.__codigo = codigo
+        self.__entregue = False
 
     @property
     def cliente(self):
@@ -41,14 +42,6 @@ class Pedido:
         self.__atendente = atendente
 
     @property
-    def valor(self):
-        return self.__valor
-
-    @valor.setter
-    def valor(self, valor):
-        self.__valor = valor
-
-    @property
     def forma_pagamento(self):
         return self.__forma_pagamento
 
@@ -69,7 +62,7 @@ class Pedido:
         return self.__entregue
 
     @entregue.setter
-    def entregue(self, entregue):
+    def entregue(self, entregue:bool):
         self.__entregue = entregue
 
     @property
@@ -80,9 +73,21 @@ class Pedido:
     def codigo(self, codigo):
         self.__codigo = codigo
 
-    def adicionar_produto(self, produtos):
-        pass
+    def adicionar_produto(self, produto):
+        self.__produtos.append(produto)
 
     def calcula_preco(self):
-        pass
+        preco = 0
+        for produto in self.__produtos:
+            preco += produto.preco_venda
+
+        return preco
+
+    def calcula_lucro(self):
+        lucro = 0
+        for produto in self.__produtos:
+            lucro += produto.preco_venda - produto.preco_compra
+
+        return lucro
+
 

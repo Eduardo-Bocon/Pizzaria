@@ -32,3 +32,13 @@ class Funcionario_ja_cadastrado(Exception):
     def __init__(self, funcionario):
         self.mensagem = "O funcionario {} já está cadastrado"
         super().__init__(self.mensagem.format(funcionario))
+
+class Forma_de_Pagamento_Invalida(Exception):
+    def __init__(self):
+        self.mensagem = "Forma de pagamento invalida."
+        super().__init__(self.mensagem.format())
+
+class Atendente_nao_encontrado(Exception):
+    def __init__(self):
+        self.mensagem = "Atendente não encontrado."
+        super().__init__(self.mensagem.format())

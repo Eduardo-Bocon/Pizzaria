@@ -8,12 +8,13 @@ from excecoes import Produto_ja_cadastrado
 
 class Controlador_Produto():
 
-    def __init__(self):
+    def __init__(self, controlador_pizzaria):
         self.__tela = Tela_Produto()
         self.__produtos = []
+        self.__controlador_pizzaria = controlador_pizzaria
 
     def retornar(self):
-        self.__controlador_pizzaria.abre_tela()
+        self.__controlador_pizzaria.abre_tela_geral()
 
     def abre_tela(self):
         lista_opcoes = {1: self.cadastrar_produto, 2: self.modificar_produto, 3: self.deletar_produto, 4: self.ver_produtos,
@@ -86,3 +87,17 @@ class Controlador_Produto():
             self.ver_produtos()
         else:
             self.__tela.mostra_mensagem("Erro: produto não existente")
+
+    def pegar_pizzas(self):
+        pizzas = list()
+        for produto in self.__produtos:
+            if isinstance(produto, Pizza):
+                pizzas.append(produto)
+        return pizzas
+
+    def pegar_bebidas(self):
+        bebidas = list()
+        for produto in self.__produtos:
+            if isinstance(produto, Bebida):
+                bebidas.append(produto)
+        return bebidas
