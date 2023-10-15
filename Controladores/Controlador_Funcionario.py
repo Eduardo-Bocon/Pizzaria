@@ -1,7 +1,10 @@
 
-from Entidades.Pessoa.Funcionario.Funcionario import Funcionario
+from Entidades.Pessoa.Funcionario.Atendente import Atendente
+from Entidades.Pessoa.Funcionario.Gerente import Gerente
+from Entidades.Pessoa.Funcionario.Pizzaiolo import Pizzaiolo
+from Entidades.Pessoa.Funcionario.Entregador import Entregador
 from Limites.Tela_Funcionario import Tela_Funcionario
-from Controladores import Controlador_Pizzaria
+from Controladores.Controlador_Pizzaria import Controlador_Pizzaria
 from excecoes import Funcionario_ja_cadastrado
 
 class Controlador_Funcionario():
@@ -18,8 +21,16 @@ class Controlador_Funcionario():
 
         try:
             if funcionario == None:
-                ###############################################ERRO
-                funcionario = Funcionario(dados_funcionario["nome"], dados_funcionario["cpf"], dados_funcionario["telefone"], dados_funcionario["salario"])
+
+                if self.__Tela_Funcionario.escolhe_funcao() == 1:
+                    funcionario = Atendente(dados_funcionario["nome"], dados_funcionario["cpf"], dados_funcionario["telefone"], dados_funcionario["salario"])
+                elif self.__Tela_Funcionario.escolhe_funcao() == 2:
+                    funcionario = Gerente(dados_funcionario["nome"], dados_funcionario["cpf"], dados_funcionario["telefone"], dados_funcionario["salario"])
+                elif self.__Tela_Funcionario.escolhe_funcao() == 3:
+                    funcionario = Pizzaiolo(dados_funcionario["nome"], dados_funcionario["cpf"], dados_funcionario["telefone"], dados_funcionario["salario"])
+                elif self.__Tela_Funcionario.escolhe_funcao() == 4:
+                    funcionario = Entregador(dados_funcionario["nome"], dados_funcionario["cpf"], dados_funcionario["telefone"], dados_funcionario["salario"])
+
                 self.__lista_Funcionarios.append(funcionario)
                 self.__Tela_Funcionario.mostra_mensagem("Cadastro de funcionário realizado!")
 
@@ -69,22 +80,46 @@ class Controlador_Funcionario():
                 self.__Tela_Funcionario.mostra_funcionarios({"nome": funcionario.nome, "cpf": funcionario.cpf, "telefone": funcionario.telefone, "salario": funcionario.salario})
 
     def busca_funcionario(self, cpf: str):
-        for funcionario in self.__lista_Funcionarios:
-            if cpf == funcionario.cpf:
-                return funcionario
-        return None
+        if self.__lista_Funcionarios is None:
+            self.__Tela_Funcionario.mostra_mensagem("Nenhum funcionário cadastrado!")
+        
+        else:
+            for funcionario in self.__lista_Funcionarios:
+                if cpf == funcionario.cpf:
+                    return funcionario
+            self.__Tela_Funcionario.mostra_mensagem("CPF de funcionário não cadastrado!")
     
     def pegar_salarios(self):
         salario = 0
         for funcionario in self.__lista_Funcionarios:
             salario += funcionario.salario
         return salario
+    
+    def atendente_do_mes(self):
+        flag = False
+        for funcionario in self.__lista_Funcionarios:
+            if isinstance(funcionario, Atendente):
+                flag = True
+
+        if flag == False:
+            self.__Tela_Funcionario.mostra_mensagem("Nenhum funcionário atendente cadastrado!")
+
+        else:
+            vendas_atendente_do_mes = 0
+
+            for funcionario in self.__lista_Funcionarios:
+                if isinstance(funcionario, Atendente):
+                    if funcionario.vendas_mes > vendas_atendente_do_mes:
+                        vendas_atendente_do_mes = funcionario.vendas_mes
+                        atendente_do_mes = funcionario
+
+            return atendente_do_mes
 
     def abre_tela(self):
         lista_opcoes = {1: self.cadastrar_funcionario, 2: self.modificar_funcionario, 3: self.deletar_funcionario, 4: self.ver_funcionarios, 0: self.retornar}
 
         while True:
-            lista_opcoes[self.__Tela_Funcionario.tela_opcoes()]()
+            lista_opcoes[self.__Tela_Funcionario.abre_tela()]()
 
     def retornar(self):
-        self.__controlador_pizzaria.tela_geral()
+        self.__controlador_pizzaria.abre_tela()

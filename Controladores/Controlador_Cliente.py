@@ -92,13 +92,13 @@ class Controlador_Cliente():
             self.__tela_Cliente.mostra_mensagem("Nenhum cliente cadastrado!")
 
         else:
-            aux = 0
+            flag = False
             for cliente in self.__lista_Clientes:
                 if cliente.quantidade_pedidos >= 5:
                     self.__tela_Cliente.mostra_clientes({"nome": cliente.nome, "cpf": cliente.cpf, "telefone": cliente.telefone, "cidade": cliente.endereco.cidade})
-                    aux += 1
+                    flag = True
 
-            if aux == 0:
+            if flag == False:
                 self.__tela_Cliente.mostra_mensagem("Sem clientes Fiéis!")
 
     def abre_tela(self):

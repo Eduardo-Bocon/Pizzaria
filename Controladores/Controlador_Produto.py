@@ -1,4 +1,4 @@
-from Controladores import Controlador_Pizzaria
+from Controladores.Controlador_Pizzaria import Controlador_Pizzaria
 from Entidades.Produto.Produto import Produto
 from Entidades.Produto.Bebida import Bebida
 from Entidades.Produto.Pizza import Pizza

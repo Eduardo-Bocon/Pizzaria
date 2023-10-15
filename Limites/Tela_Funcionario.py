@@ -58,7 +58,7 @@ class Tela_Funcionario():
             except ValueError:
                 print("Entrada inválida!")
 
-        return {"nome": nome, "telefone": telefone, "cpf": cpf, "endereco": endereco}
+        return {"nome": nome, "telefone": telefone, "cpf": cpf, "salario": salario}
 
     def mostra_funcionarios(self, dados_funcionario):
         print("Nome do funcionário: ", dados_funcionario["nome"])
@@ -88,6 +88,18 @@ class Tela_Funcionario():
                 print("Entrada inválida!")
 
         return cpf
+    
+    def escolhe_funcao(self):
+        print("1 - Atendente; 2 - Gerente; 3 - Pizzaiolo, 4 - Entregador")
+
+        while True:
+            try:
+                funcao = int(input("Insira o número da função do funcionário:"))
+                if funcao < 1 or funcao > 4:
+                    raise ValueError
+                return funcao
+            except ValueError:
+                print("Valor inválido, insira um valor entre 1 e 4!")
 
     def abre_tela(self):
         print("---- Tela Funcionários ----")

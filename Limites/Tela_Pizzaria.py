@@ -5,10 +5,10 @@ class Tela_Pizzaria():
         print("Opcões:")
         print("1 - Ir para tela dos produtos")
         print("2 - Ir para tela dos clientes")
-        print("3 - Ir para tela dos funcionarios")
+        print("3 - Ir para tela dos funcionários")
         print("4 - Ir para tela de pedidos")
-        print("5 - Ver relatorio financeiro")
-        print("0 - Finalizar")
+        print("5 - Ver relatório da pizzaria")
+        print("0 - Encerrar programa")
 
         while True:
             try:
@@ -22,7 +22,9 @@ class Tela_Pizzaria():
     def mostra_mensagem(self, mensagem):
         print(mensagem)
 
-    def ver_financeiro(self, despesas, receitas):
+    def ver_relatorio(self, salarios, despesas, receitas, atendente_do_mes):
+        print("Atendente do mês: {}".format(atendente_do_mes))
+        print("Total de salários: {}".format(salarios))
         print("Total de despesas: {}".format(despesas))
         print("Total de receitas: {}".format(receitas))
         print("Lucro total: {}".format(receitas - despesas))

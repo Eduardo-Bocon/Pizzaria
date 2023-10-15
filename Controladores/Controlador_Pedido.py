@@ -1,6 +1,6 @@
 from Limites.Tela_Pedido import Tela_Pedido
 from Entidades.Pedido.Pedido import Pedido
-from Controladores import Controlador_Pizzaria
+from Controladores.Controlador_Pizzaria import Controlador_Pizzaria
 
 
 class Controlador_Pedido():

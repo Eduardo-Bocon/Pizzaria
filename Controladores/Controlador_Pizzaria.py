@@ -14,20 +14,23 @@ class Controlador_Pizzaria(): #todo
         self.__contr_cliente = Controlador_Cliente()
         self.__tela_pizzaria = Tela_Pizzaria()
 
-    def pegar_lucro(self):
-        pass
-
     def calcular_receitas(self):
         pass
 
     def calcular_despesas(self):
-        despesa_salario = self.__contr_funcionario.pegar_salarios()
+        pass
 
     def calcular_total_salarios(self):
         self.__contr_funcionario.pegar_salarios()
 
+    def produto_mais_vendido(self):
+        pass
+
+    def atendente_do_mes(self):
+        self.__contr_funcionario.atendente_do_mes()
+
     def abre_tela(self):
-        lista_opcoes = {1: self.pegar_lucro, 2: self.calcular_receitas, 3: self.calcular_despesas, 4: self.calcular_total_salarios, 0: self.encerra_sistema}
+        lista_opcoes = {1: self.__contr_produto.abre_tela(), 2: self.__contr_cliente.abre_tela(), 3: self.__contr_funcionario.abre_tela(), 4: self.__contr_pedido.abre_tela(), 5: self.__tela_pizzaria.ver_relatorio(self.calcular_total_salarios(), self.calcular_despesas(), self.calcular_receitas(), self.atendente_do_mes()), 0: self.encerra_sistema}
 
         while True:
             lista_opcoes[self.__tela_pizzaria.abre_tela()]()
