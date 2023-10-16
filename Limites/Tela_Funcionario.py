@@ -1,10 +1,10 @@
-from excecoes import Entrada_muito_curta, Entrada_muito_longa, Valor_acima_de_zero
+from excecoes import Entrada_muito_curta, Entrada_muito_longa, Valor_abaixo_de_zero
 
 
 class Tela_Funcionario():
 
     def pega_dados_funcionario(self):
-        print("Insira os dados do funcionário:")
+        print("Insira os dados do funcionário.")
 
         while True:
             try:
@@ -14,29 +14,38 @@ class Tela_Funcionario():
                 break
             except ValueError:
                 print("Entrada inválida!")
+            except Entrada_muito_curta as e:
+                print(e)
 
         while True:
             try:
                 telefone = input("Insira o telefone do funcionário: ")
 
                 if int(telefone) <= 0:
-                    raise Valor_acima_de_zero
+                    raise Valor_abaixo_de_zero
                 
                 elif len(telefone) < 6:
                     raise Entrada_muito_curta
                 
                 elif len(telefone) > 12:
                     raise Entrada_muito_longa
+
                 break
             except ValueError:
                 print("Entrada inválida!")
+            except Valor_abaixo_de_zero as e:
+                print(e)
+            except Entrada_muito_curta as e:
+                print(e)
+            except Entrada_muito_longa as e:
+                print(e)
 
         while True:
             try:
                 cpf = input("Insira o CPF do funcionário: ")
 
                 if int(cpf) <= 0:
-                    raise Valor_acima_de_zero
+                    raise Valor_abaixo_de_zero
                 
                 elif len(cpf) < 9:
                     raise Entrada_muito_curta
@@ -46,13 +55,19 @@ class Tela_Funcionario():
                 break
             except ValueError:
                 print("Entrada inválida!")
+            except Valor_abaixo_de_zero as e:
+                print(e)
+            except Entrada_muito_curta as e:
+                print(e)
+            except Entrada_muito_longa as e:
+                print(e)
 
         while True:
             try:
                 salario = input("Insira o salário do funcionário: ")
 
                 if int(salario) <= 0:
-                    raise Valor_acima_de_zero
+                    raise Valor_abaixo_de_zero
                 break
             except ValueError:
                 print("Entrada inválida!")
@@ -75,7 +90,7 @@ class Tela_Funcionario():
                 cpf = input("Insira o CPF do funcionário que deseja selecionar: ")
 
                 if int(cpf) <= 0:
-                    raise Valor_acima_de_zero
+                    raise Valor_abaixo_de_zero
                 
                 elif len(cpf) < 9:
                     raise Entrada_muito_curta
@@ -85,6 +100,12 @@ class Tela_Funcionario():
                 break
             except ValueError:
                 print("Entrada inválida!")
+            except Valor_abaixo_de_zero as e:
+                print(e)
+            except Entrada_muito_curta as e:
+                print(e)
+            except Entrada_muito_longa as e:
+                print(e)
 
         return cpf
     

@@ -1,5 +1,6 @@
 from Entidades.Pedido.Forma_de_Pagamento import Forma_de_Pagamento
-from excecoes import Entrada_muito_curta, Forma_de_Pagamento_Invalida, Atendente_nao_encontrado, Valor_invalido
+from excecoes import Entrada_muito_curta, Forma_de_Pagamento_Invalida, Atendente_nao_encontrado, Valor_invalido, \
+    Entrada_muito_longa
 
 
 class Tela_Pedido():
@@ -18,10 +19,12 @@ class Tela_Pedido():
             try:
                 opcao = int(input("O que deseja fazer? "))
                 if opcao < 0 or opcao > 5:
-                    raise ValueError
+                    raise Valor_invalido("0 até 5")
                 return opcao
             except ValueError:
-                print("Valor invalido. Insira um valor entre 0 e 5.")
+                print("Digite um numero.")
+            except Valor_invalido as e:
+                print(e)
 
     def abre_tela_ver_pedidos(self):
         print("Opcões:")
@@ -35,23 +38,35 @@ class Tela_Pedido():
             try:
                 opcao = int(input("O que deseja fazer? "))
                 if opcao < 0 or opcao > 4:
-                    raise ValueError
+                    raise Valor_invalido("0 até 4")
                 return opcao
             except ValueError:
-                print("Valor invalido. Insira um valor entre 0 e 4.")
+                print("Digite um numero.")
+            except Valor_invalido as e:
+                print(e)
 
     def pegar_dados_pedido(self, lista_atendentes, lista_pizzas, lista_bebidas):
 
-        print("Insira os dados do novo pedido:")
+        print("Insira os dados do novo pedido.")
 
         while True:
             try:
                 cpf_cliente = input("Informe o cpf do cliente: ")
+
+                # verifica se tem apenas numeros
+                int(cpf_cliente)
+
                 if len(cpf_cliente) < 11:
                     raise Entrada_muito_curta
+                elif len(cpf_cliente) > 11:
+                    raise Entrada_muito_longa
                 break
             except ValueError:
-                print("Resposta invalida! Digite um cpf no formato XXXXXXXXXXX.")
+                print("Resposta invalida! Digite apenas numeros.")
+            except Entrada_muito_curta as e:
+                print(e)
+            except Entrada_muito_longa as e:
+                print(e)
 
         produtos = list()
 
@@ -66,15 +81,23 @@ class Tela_Pedido():
                 try:
                     escolha = int(input("O que deseja fazer?"))
                     if escolha < 1 or escolha > 3:
-                        raise Valor_invalido(" 1,2,3")
+                        raise Valor_invalido("1,2,3")
                     break
                 except ValueError:
                     print("Insira um numero.")
+                except Valor_invalido as e:
+                    print(e)
 
             if escolha == 1:
                 while True:
-
-                    pizza_escolhida = input("Insira o nome da pizza: ")
+                    while True:
+                        try:
+                            pizza_escolhida = input("Insira o nome da pizza: ")
+                            if len(pizza_escolhida) < 2:
+                                raise Entrada_muito_curta
+                            break
+                        except Entrada_muito_curta as e:
+                            print(e)
 
                     existe = False
 
@@ -91,8 +114,14 @@ class Tela_Pedido():
                     else:
                         break
             elif escolha == 2:
-
-                bebida_escolhida = input("Insira o nome da bebida: ")
+                while True:
+                    try:
+                        bebida_escolhida = input("Insira o nome da bebida: ")
+                        if len(bebida_escolhida) < 2:
+                            raise Entrada_muito_curta
+                        break
+                    except Entrada_muito_curta as e:
+                        print(e)
 
                 existe = False
 
@@ -112,11 +141,9 @@ class Tela_Pedido():
             elif escolha == 3:
                 break
 
-
         atendente_escolhido = self.escolher_atendente(lista_atendentes)
 
         forma_de_pagamento = self.pegar_forma_pagamento()
-
 
         return {"cpf": cpf_cliente, "produto": produtos, "atendente": atendente_escolhido, "forma_de_pagamento": forma_de_pagamento}
 
@@ -143,19 +170,20 @@ class Tela_Pedido():
             print(forma.value)
 
         while 1:
+            try:
+                forma_escolhida = input("Insira a forma de pagamento: ")
 
-            forma_escolhida = input("Insira a forma de pagamento: ")
+                existe = False
+                for forma in Forma_de_Pagamento:
+                    if forma_escolhida.upper() == forma.value.upper():
+                        existe = True
+                        break
 
-            existe = False
-            for forma in Forma_de_Pagamento:
-                if forma_escolhida.upper() == forma.value.upper():
-                    existe = True
-                    break
-
-            if not existe:
-                raise Forma_de_Pagamento_Invalida
-            else:
+                if not existe:
+                    raise Forma_de_Pagamento_Invalida
                 break
+            except Forma_de_Pagamento_Invalida as e:
+                print(e)
 
         return forma_escolhida
 
@@ -189,33 +217,39 @@ class Tela_Pedido():
     def escolher_cliente(self, lista_clientes):
 
         while True:
+            try:
+                nome_cliente = input("Insira o nome do cliente: ")
 
-            nome_cliente = input("Insira o nome do cliente: ")
+                cliente_escolhido = None
 
-            cliente_escolhido = None
+                existe = False
 
-            existe = False
+                if lista_clientes is not None:
+                    for cliente in lista_clientes:
+                        if nome_cliente.upper() == cliente.nome.upper():
+                            existe = True
+                            cliente_escolhido = cliente
 
-            for cliente in lista_clientes:
-                if nome_cliente.upper() == cliente.nome.upper():
-                    existe = True
-                    cliente_escolhido = cliente
+                if len(nome_cliente) < 2:
+                    raise Entrada_muito_curta
+                elif not existe:
+                    raise Atendente_nao_encontrado
 
-            if len(nome_cliente) < 2:
-                raise Entrada_muito_curta
-            elif not existe:
-                raise Atendente_nao_encontrado
-            else:
-                if cliente_escolhido is not None:
-                    return cliente_escolhido
+                return cliente_escolhido
+            except Entrada_muito_curta as e:
+                print(e)
+            except Atendente_nao_encontrado as e:
+                print(e)
 
     def escolher_valor(self):
         try:
             valor = float(input("Digite o valor: "))
             if valor < 0:
-                raise Valor_invalido(" acima de 0")
+                raise Valor_invalido("acima de 0")
             return valor
         except ValueError:
             print("Erro! Digite um valor.")
+        except Valor_invalido as e:
+            print(e)
 
 

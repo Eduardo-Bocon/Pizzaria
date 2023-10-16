@@ -42,27 +42,27 @@ class Tela_Produto:
                 if len(nome) < 2:
                     raise Entrada_muito_curta
                 break
-            except ValueError:
-                print("Entrada invalida.")
+            except Entrada_muito_curta as e:
+                print(e)
 
         while True:
             try:
                 preco_compra = float(input("Insira o preço de compra: "))
                 if preco_compra <= 0:
-                    raise Valor_invalido
+                    raise Valor_invalido("acima de 0")
                 break
             except ValueError:
                 print("Digite um numero.")
-            except Valor_invalido:
-                print("O valor tem que ser maior que 0.")
+            except Valor_invalido as e:
+                print(e)
 
         while True:
             try:
                 preco_venda = float(input("Insira o preço de venda: "))
                 if preco_venda <= 0:
-                    raise Valor_invalido(" maior que 0")
+                    raise Valor_invalido("maior que 0")
                 elif preco_venda <= preco_compra:
-                    raise Valor_invalido(" maior que o valor de compra")
+                    raise Valor_invalido("maior que o valor de compra")
                 break
 
             except ValueError:

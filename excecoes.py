@@ -3,7 +3,7 @@ class Entrada_muito_curta(Exception):
         self.mensagem = "Entrada muito curta!"
         super().__init__(self.mensagem)
 
-class Valor_acima_de_zero(Exception):
+class Valor_abaixo_de_zero(Exception):
     def __init__(self):
         self.mensagem = "Valor inválido, apenas valores acima de zero!"
         super().__init__(*self.mensagem)

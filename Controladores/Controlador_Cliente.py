@@ -8,7 +8,7 @@ from Entidades.Pessoa.Cliente.Endereco import Endereco
 class Controlador_Cliente():
 
     def __init__(self, controlador_pizzaria):
-        self.__lista_Clientes = []
+        self.__lista_Clientes = list()
         self.__tela_Cliente = Tela_Cliente()
         self.__controlador_pizzaria = controlador_pizzaria
 
