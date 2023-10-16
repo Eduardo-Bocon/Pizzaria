@@ -36,7 +36,7 @@ class Endereco():
         return self.__cidade
 
     @cidade.setter
-    def nome(self, cidade):
+    def cidade(self, cidade):
         self.__cidade = cidade
 
     @property

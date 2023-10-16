@@ -1,4 +1,3 @@
-from Controladores.Controlador_Cliente import Controlador_Cliente
 from excecoes import Entrada_muito_curta, Entrada_muito_longa, Valor_acima_de_zero
 
 
@@ -48,16 +47,16 @@ class Tela_Cliente():
             except ValueError:
                 print("Entrada inválida!")
 
-        endereco = Controlador_Cliente.pega_endereco()
+        endereco = self.pega_endereco()
 
-        return {"nome": nome, "telefone": telefone, "cpf": cpf, "endereco": endereco}
+        return {"nome": nome, "telefone": telefone, "cpf": cpf, "numero": endereco["numero"], "rua": endereco["rua"], "bairro": endereco["bairro"], "cidade": endereco["cidade"], "cep": endereco["cep"]}
     
     def pega_endereco(self):
         print("Insira seu endereço completo:")
 
         while True:
             try:
-                numero = input("Insira o número do endereço:")
+                numero = int(input("Insira o número do endereço:"))
                 if numero <= 0:
                     raise Valor_acima_de_zero
                 break

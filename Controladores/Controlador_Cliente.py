@@ -19,7 +19,8 @@ class Controlador_Cliente():
 
         try:
             if cliente == None:
-                cliente = Cliente(dados_cliente["nome"], dados_cliente["cpf"], dados_cliente["telefone"], dados_cliente["endereco"])
+                endereco = Endereco(numero=dados_cliente["numero"], rua=dados_cliente["rua"], bairro=dados_cliente["bairro"], cidade=dados_cliente["cidade"], cep=dados_cliente["cep"])
+                cliente = Cliente(nome=dados_cliente["nome"], cpf=dados_cliente["cpf"], telefone=dados_cliente["telefone"],endereco=endereco)
                 self.__lista_Clientes.append(cliente)
                 self.__tela_Cliente.mostra_mensagem("Cadastro de cliente realizado!")
 
@@ -52,7 +53,11 @@ class Controlador_Cliente():
             cliente.nome = novos_dados_cliente["nome"]
             cliente.cpf = novos_dados_cliente["cpf"]
             cliente.telefone = novos_dados_cliente["telefone"]
-            cliente.endereco = novos_dados_cliente["endereco"]
+            cliente.endereco.numero = novos_dados_cliente["numero"]
+            cliente.endereco.rua = novos_dados_cliente["rua"]
+            cliente.endereco.cidade = novos_dados_cliente["cidade"]
+            cliente.endereco.bairro = novos_dados_cliente["bairro"]
+            cliente.endereco.cep = novos_dados_cliente["cep"]
 
             self.ver_clientes()
             self.__tela_Cliente.mostra_mensagem("Modificação de cadastro de cliente realizado!")
@@ -61,7 +66,7 @@ class Controlador_Cliente():
             self.__tela_Cliente.mostra_mensagem("Cliente não cadastrado!")
 
     def ver_clientes(self):
-        if self.__lista_Clientes == None:
+        if self.__lista_Clientes is None:
             self.__tela_Cliente.mostra_mensagem("Nenhum cliente cadastrado!")
 
         else:
@@ -73,18 +78,6 @@ class Controlador_Cliente():
             if cpf == cliente.cpf:
                 return cliente
         return None
-    
-    def pega_endereco(self):
-        dados_endereco = self.__tela_Cliente.pega_endereco
-
-        numero = dados_endereco["numero"]
-        rua = dados_endereco["rua"]
-        cidade = dados_endereco["cidade"]
-        bairro = dados_endereco["bairro"]
-        cep = dados_endereco["cep"]
-
-        endereco = Endereco(numero, rua, cidade, bairro, cep)
-        return endereco
         
     def ver_clientes_fieis(self):
         if self.__lista_Clientes == None:
