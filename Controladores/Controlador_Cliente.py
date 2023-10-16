@@ -108,3 +108,6 @@ class Controlador_Cliente():
             
     def retornar(self):
         self.__controlador_pizzaria.abre_tela_geral()
+
+    def pegar_clientes(self):
+        return self.__lista_Clientes

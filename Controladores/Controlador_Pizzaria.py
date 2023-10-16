@@ -83,4 +83,7 @@ class Controlador_Pizzaria():
         return self.__contr_produto.pegar_bebidas()
 
     def pegar_cliente_por_cpf(self, cpf):
-        self.__contr_cliente.busca_clientes(cpf)
+        return self.__contr_cliente.busca_clientes(cpf)
+
+    def pegar_clientes(self):
+        return self.__contr_cliente.pegar_clientes()

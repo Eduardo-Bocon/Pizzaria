@@ -5,7 +5,6 @@ from Limites.Tela_Pedido import Tela_Pedido
 from Entidades.Pedido.Pedido import Pedido
 
 
-
 class Controlador_Pedido():
 
     def __init__(self, controlador_pizzaria):
@@ -48,22 +47,50 @@ class Controlador_Pedido():
                 return pedido
         return None
 
-    def ver_pedidos(self, cliente=None):
-        if cliente == None:
-            for pedido in self.__lista_pedidos:
+    def ver_pedidos(self):
+
+        for pedido in self.__lista_pedidos:
+            self.__tela.ver_pedido({"codigo": pedido.codigo, "produtos": pedido.produtos,
+                                    "nome_cliente": pedido.cliente.nome, "cpf_cliente": pedido.cliente.cpf,
+                                    "atendente": pedido.atendente, "valor": pedido.calcula_preco(),
+                                    "forma_de_pagamento": pedido.forma_pagamento, "data": pedido.data,
+                                    "entregue": pedido.entregue})
+
+    def ver_pedidos_com_filtro(self):
+        lista_opcoes = {1: self.ver_pedidos, 2: self.ver_pedidos_atendente, 3: self.ver_pedidos_cliente,
+                        4: self.ver_pedidos_por_valor,
+                        0: self.retornar}
+        while 1:
+            lista_opcoes[self.__tela.abre_tela_ver_pedidos()]()
+
+    def ver_pedidos_atendente(self):
+        atendente = self.__tela.escolher_atendente(self.__controlador_pizzaria.pegar_atendentes)
+        for pedido in self.__lista_pedidos:
+            if pedido.atendente == atendente:
                 self.__tela.ver_pedido({"codigo": pedido.codigo, "produtos": pedido.produtos,
                                         "nome_cliente": pedido.cliente.nome, "cpf_cliente": pedido.cliente.cpf,
                                         "atendente": pedido.atendente, "valor": pedido.calcula_preco(),
                                         "forma_de_pagamento": pedido.forma_pagamento, "data": pedido.data,
                                         "entregue": pedido.entregue})
-        else:
-            for pedido in self.__lista_pedidos:
-                if pedido.cliente.cpf == cliente.cpf:
-                    self.__tela.ver_pedido({"codigo": pedido.codigo, "produtos": pedido.produtos,
-                                            "nome_cliente": pedido.cliente.nome, "cpf_cliente": pedido.cliente.cpf,
-                                            "atendente": pedido.atendente, "valor": pedido.calcula_preco(),
-                                            "forma_de_pagamento": pedido.forma_pagamento, "data": pedido.data,
-                                            "entregue": pedido.entregue})
+    def ver_pedidos_cliente(self):
+        cliente = self.__tela.escolher_cliente(self.__controlador_pizzaria.pegar_clientes)
+        for pedido in self.__lista_pedidos:
+            if pedido.cliente == cliente:
+                self.__tela.ver_pedido({"codigo": pedido.codigo, "produtos": pedido.produtos,
+                                        "nome_cliente": pedido.cliente.nome, "cpf_cliente": pedido.cliente.cpf,
+                                        "atendente": pedido.atendente, "valor": pedido.calcula_preco(),
+                                        "forma_de_pagamento": pedido.forma_pagamento, "data": pedido.data,
+                                        "entregue": pedido.entregue})
+
+    def ver_pedidos_por_valor(self):
+        valor = self.__tela.escolher_valor()
+        for pedido in self.__lista_pedidos:
+            if pedido.calcula_preco() >= valor:
+                self.__tela.ver_pedido({"codigo": pedido.codigo, "produtos": pedido.produtos,
+                                        "nome_cliente": pedido.cliente.nome, "cpf_cliente": pedido.cliente.cpf,
+                                        "atendente": pedido.atendente, "valor": pedido.calcula_preco(),
+                                        "forma_de_pagamento": pedido.forma_pagamento, "data": pedido.data,
+                                        "entregue": pedido.entregue})
 
     def modificar_pedido(self):
         self.ver_pedidos()
@@ -89,8 +116,8 @@ class Controlador_Pedido():
             self.__tela.mostra_mensagem("Erro: pedido não existente")
 
     def abre_tela(self):
-        lista_opcoes = {1: self.fazer_pedido, 2: self.modificar_pedido, 3: self.deletar_pedido,
-                        4: self.ver_pedidos, 5: self.pedido_entregue,
+        lista_opcoes = {1: self.fazer_pedido, 2: self.modificar_pedido, 3: self.ver_pedidos_com_filtro,
+                        4: self.deletar_pedido, 5: self.pedido_entregue,
                         0: self.retornar}
 
         while 1:

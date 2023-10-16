@@ -21,6 +21,23 @@ class Tela_Pedido():
                     raise ValueError
                 return opcao
             except ValueError:
+                print("Valor invalido. Insira um valor entre 0 e 5.")
+
+    def abre_tela_ver_pedidos(self):
+        print("Opcões:")
+        print("1 - Ver todos os pedidos")
+        print("2 - Ver os pedidos de um atendente")
+        print("3 - Ver os pedidos de um cliente")
+        print("4 - Ver os pedidos acima de uma faixa de preço")
+        print("0 - Retornar")
+
+        while True:
+            try:
+                opcao = int(input("O que deseja fazer? "))
+                if opcao < 0 or opcao > 4:
+                    raise ValueError
+                return opcao
+            except ValueError:
                 print("Valor invalido. Insira um valor entre 0 e 4.")
 
     def pegar_dados_pedido(self, lista_atendentes, lista_pizzas, lista_bebidas):
@@ -96,26 +113,7 @@ class Tela_Pedido():
                 break
 
 
-        while True:
-
-            nome_atendente = input("Insira o nome do atendente: ")
-
-            atendente_escolhido = None
-
-            existe = False
-
-            for atendente in lista_atendentes:
-                if nome_atendente.upper() == atendente.nome.upper():
-                    existe = True
-                    atendente_escolhido = atendente
-
-            if len(nome_atendente) < 2:
-                 raise Entrada_muito_curta
-            elif not existe:
-                raise Atendente_nao_encontrado
-            else:
-                if atendente_escolhido != None:
-                    break
+        atendente_escolhido = self.escolher_atendente(lista_atendentes)
 
         forma_de_pagamento = self.pegar_forma_pagamento()
 
@@ -165,8 +163,59 @@ class Tela_Pedido():
         cod = input("Digite o código do pedido: ")
         return cod
 
+    def escolher_atendente(self, lista_atendentes):
 
+        while True:
 
+            nome_atendente = input("Insira o nome do atendente: ")
 
+            atendente_escolhido = None
+
+            existe = False
+
+            for atendente in lista_atendentes:
+                if nome_atendente.upper() == atendente.nome.upper():
+                    existe = True
+                    atendente_escolhido = atendente
+
+            if len(nome_atendente) < 2:
+                raise Entrada_muito_curta
+            elif not existe:
+                raise Atendente_nao_encontrado
+            else:
+                if atendente_escolhido is not None:
+                    return atendente_escolhido
+
+    def escolher_cliente(self, lista_clientes):
+
+        while True:
+
+            nome_cliente = input("Insira o nome do cliente: ")
+
+            cliente_escolhido = None
+
+            existe = False
+
+            for cliente in lista_clientes:
+                if nome_cliente.upper() == cliente.nome.upper():
+                    existe = True
+                    cliente_escolhido = cliente
+
+            if len(nome_cliente) < 2:
+                raise Entrada_muito_curta
+            elif not existe:
+                raise Atendente_nao_encontrado
+            else:
+                if cliente_escolhido is not None:
+                    return cliente_escolhido
+
+    def escolher_valor(self):
+        try:
+            valor = float(input("Digite o valor: "))
+            if valor < 0:
+                raise Valor_invalido(" acima de 0")
+            return valor
+        except ValueError:
+            print("Erro! Digite um valor.")
 
 
