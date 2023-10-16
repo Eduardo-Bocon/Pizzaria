@@ -14,6 +14,7 @@ class Controlador_Pedido():
         self.__proximo_codigo = 1
 
     def fazer_pedido(self):
+
         dados_pedido = self.__tela.pegar_dados_pedido(lista_atendentes=self.__controlador_pizzaria.pegar_atendentes(),
                                                       lista_pizzas=self.__controlador_pizzaria.pegar_pizzas(),
                                                       lista_bebidas=self.__controlador_pizzaria.pegar_bebidas())
@@ -28,6 +29,7 @@ class Controlador_Pedido():
                                            forma_de_pagamento=dados_pedido["forma_de_pagamento"],
                                            data=data, codigo=self.__proximo_codigo))
         self.__proximo_codigo += 1
+        self.__controlador_pizzaria.aumentar_pedidos_funcionario(dados_pedido["atendente"])
 
     def deletar_pedido(self):
 
@@ -183,7 +185,7 @@ class Controlador_Pedido():
             return {"produto": "Sem produtos cadastrados", "quantidade": "-"}
 
         for pedido in self.__lista_pedidos:
-            for produto in pedido:
+            for produto in pedido.produtos:
                 todos_os_produtos.append(produto)
 
         # faz a contagem de aparicoes

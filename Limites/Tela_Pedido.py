@@ -73,7 +73,7 @@ class Tela_Pedido():
 
         produtos = list()
 
-        print("Vamos ver os produtos do pedido.")
+        print("Agora vamos escolher os produtos do pedido.")
 
         while True:
             print("1 - adicionar pizza")
@@ -118,28 +118,29 @@ class Tela_Pedido():
                         break
             elif escolha == 2:
                 while True:
-                    try:
-                        bebida_escolhida = input("Insira o nome da bebida: ")
-                        if len(bebida_escolhida) < 2:
-                            raise Entrada_muito_curta
+                    while True:
+                        try:
+                            bebida_escolhida = input("Insira o nome da bebida: ")
+                            if len(bebida_escolhida) < 2:
+                                raise Entrada_muito_curta
+                            break
+                        except Entrada_muito_curta as e:
+                            print(e)
+
+                    existe = False
+
+                    for bebida in lista_bebidas:
+                        if bebida.tipo.upper() == bebida_escolhida.upper():
+                            existe = True
+                            if bebida.quantidade > 0:
+                                produtos.append(bebida)
+                                bebida.diminuir_estoque(1)
+                            else:
+                                print("Não temos essa bebida no estoque.")
+                    if not existe:
+                        print("Bebida não existe.")
+                    else:
                         break
-                    except Entrada_muito_curta as e:
-                        print(e)
-
-                existe = False
-
-                for bebida in lista_bebidas:
-                    if bebida.sabor.upper() == bebida_escolhida.upper():
-                        existe = True
-                        if bebida.quantidade > 0:
-                            produtos.append(bebida)
-                            bebida.diminuir_estoque(1)
-                        else:
-                            print("Não temos essa bebida no estoque.")
-                if not existe:
-                    print("Bebida não existe.")
-                else:
-                    break
 
             elif escolha == 3:
                 break
@@ -263,5 +264,6 @@ class Tela_Pedido():
             print("Erro! Digite um valor.")
         except Valor_invalido as e:
             print(e)
+
 
 

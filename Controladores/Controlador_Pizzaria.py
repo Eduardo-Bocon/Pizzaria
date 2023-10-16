@@ -87,3 +87,6 @@ class Controlador_Pizzaria():
 
     def pegar_clientes(self):
         return self.__contr_cliente.pegar_clientes()
+
+    def aumentar_pedidos_funcionario(self, funcionario):
+        self.__contr_funcionario.aumentar_pedidos_funcionario(funcionario)

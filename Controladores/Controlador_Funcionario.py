@@ -91,10 +91,11 @@ class Controlador_Funcionario():
     def pegar_salarios(self):
         salario = 0
         for funcionario in self.__lista_Funcionarios:
-            salario += funcionario.salario
+            salario += float(funcionario.salario)
         return salario
     
     def atendente_do_mes(self):
+        atendente_do_mes = None
         flag = False
         for funcionario in self.__lista_Funcionarios:
             if isinstance(funcionario, Atendente):
@@ -129,3 +130,8 @@ class Controlador_Funcionario():
             if isinstance(funcionario, Atendente):
                 atendentes.append(funcionario)
         return atendentes
+
+    def aumentar_pedidos_funcionario(self, funcionario):
+        for cada_funcionario in self.__lista_Funcionarios:
+            if cada_funcionario.cpf == funcionario.cpf:
+                cada_funcionario.vendas_mes += 1
