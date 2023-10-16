@@ -33,6 +33,9 @@ class Controlador_Produto():
                 if dados_novo_produto["tipo"].upper() == "PIZZA":
                     novo_produto = Pizza(preco_venda=dados_novo_produto["preco_venda"], preco_compra=dados_novo_produto["preco_compra"], quantidade=dados_novo_produto["quantidade"], sabor=dados_novo_produto["nome"])
                     self.__produtos.append(novo_produto)
+                elif dados_novo_produto["tipo"].upper() == "BEBIDA":
+                    novo_produto = Bebida(preco_venda=dados_novo_produto["preco_venda"], preco_compra=dados_novo_produto["preco_compra"], quantidade=dados_novo_produto["quantidade"], tipo=dados_novo_produto["nome"])
+                    self.__produtos.append(novo_produto)
             else:
                 raise Produto_ja_cadastrado(nome)
         except Produto_ja_cadastrado as e:
