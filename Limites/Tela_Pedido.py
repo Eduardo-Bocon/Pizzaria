@@ -146,7 +146,7 @@ class Tela_Pedido():
 
         forma_de_pagamento = self.pegar_forma_pagamento()
 
-        return {"cpf": cpf_cliente, "produto": produtos, "atendente": atendente_escolhido, "forma_de_pagamento": forma_de_pagamento}
+        return {"cpf": cpf_cliente, "produtos": produtos, "atendente": atendente_escolhido, "forma_de_pagamento": forma_de_pagamento}
 
     def ver_pedido(self, dados_pedido):
 
