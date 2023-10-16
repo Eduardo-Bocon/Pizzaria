@@ -96,12 +96,15 @@ class Tela_Pedido():
                     while True:
                         try:
                             pizza_escolhida = input("Insira o nome da pizza: ")
+                            if pizza_escolhida == "0":
+                                break
                             if len(pizza_escolhida) < 2:
                                 raise Entrada_muito_curta
                             break
                         except Entrada_muito_curta as e:
                             print(e)
-
+                    if pizza_escolhida == "0":
+                        break
                     existe = False
 
                     for pizza in lista_pizzas:
@@ -121,12 +124,15 @@ class Tela_Pedido():
                     while True:
                         try:
                             bebida_escolhida = input("Insira o nome da bebida: ")
+                            if bebida_escolhida == "0":
+                                break
                             if len(bebida_escolhida) < 2:
                                 raise Entrada_muito_curta
                             break
                         except Entrada_muito_curta as e:
                             print(e)
-
+                    if bebida_escolhida == "0":
+                        break
                     existe = False
 
                     for bebida in lista_bebidas:
