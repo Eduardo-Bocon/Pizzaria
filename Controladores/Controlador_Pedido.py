@@ -8,7 +8,7 @@ from Entidades.Pedido.Pedido import Pedido
 class Controlador_Pedido():
 
     def __init__(self, controlador_pizzaria):
-        self.__lista_pedidos = []
+        self.__lista_pedidos = list()
         self.__tela = Tela_Pedido()
         self.__controlador_pizzaria = controlador_pizzaria
         self.__proximo_codigo = 1
@@ -167,7 +167,7 @@ class Controlador_Pedido():
 
         todos_os_produtos = list()
 
-        if self.__lista_pedidos is None:
+        if not self.__lista_pedidos :
             return {"produto": "Sem produtos cadastrados", "quantidade": "-"}
 
         for pedido in self.__lista_pedidos:
