@@ -196,24 +196,28 @@ class Tela_Pedido():
 
         while True:
 
-            nome_atendente = input("Insira o nome do atendente: ")
+            try:
+                nome_atendente = input("Insira o nome do atendente: ")
 
-            atendente_escolhido = None
+                atendente_escolhido = None
 
-            existe = False
+                existe = False
 
-            for atendente in lista_atendentes:
-                if nome_atendente.upper() == atendente.nome.upper():
-                    existe = True
-                    atendente_escolhido = atendente
+                for atendente in lista_atendentes:
+                    if nome_atendente.upper() == atendente.nome.upper():
+                        existe = True
+                        atendente_escolhido = atendente
 
-            if len(nome_atendente) < 2:
-                raise Entrada_muito_curta
-            elif not existe:
-                raise Atendente_nao_encontrado
-            else:
-                if atendente_escolhido is not None:
-                    return atendente_escolhido
+                if len(nome_atendente) < 2:
+                    raise Entrada_muito_curta
+                elif not existe:
+                    raise Atendente_nao_encontrado
+                return atendente_escolhido
+
+            except Entrada_muito_curta as e:
+                print(e)
+            except Atendente_nao_encontrado as e:
+                print(e)
 
     def escolher_cliente(self, lista_clientes):
 
