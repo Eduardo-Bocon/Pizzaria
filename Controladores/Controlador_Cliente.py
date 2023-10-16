@@ -14,12 +14,14 @@ class Controlador_Cliente():
 
     def cadastrar_cliente(self):
         dados_cliente = self.__tela_Cliente.pega_dados_cliente()
+        endereco_cliente = self.pega_endereco()
         cpf = dados_cliente["cpf"]
         cliente = self.busca_clientes(cpf)
 
         try:
             if cliente == None:
-                cliente = Cliente(dados_cliente["nome"], dados_cliente["cpf"], dados_cliente["telefone"], dados_cliente["endereco"])
+
+                cliente = Cliente(dados_cliente["nome"], dados_cliente["cpf"], dados_cliente["telefone"], endereco_cliente)
                 self.__lista_Clientes.append(cliente)
                 self.__tela_Cliente.mostra_mensagem("Cadastro de cliente realizado!")
 
@@ -66,7 +68,8 @@ class Controlador_Cliente():
 
         else:
             for cliente in self.__lista_Clientes:
-                self.__tela_Cliente.mostra_clientes({"nome": cliente.nome, "cpf": cliente.cpf, "telefone": cliente.telefone, "cidade": cliente.endereco.cidade})
+                self.__tela_Cliente.mostra_clientes({"nome": cliente.nome, "cpf": cliente.cpf,
+                                                     "telefone": cliente.telefone, "cidade": cliente.endereco.cidade})
 
     def busca_clientes(self, cpf: str):
         for cliente in self.__lista_Clientes:
@@ -75,7 +78,7 @@ class Controlador_Cliente():
         return None
     
     def pega_endereco(self):
-        dados_endereco = self.__tela_Cliente.pega_endereco
+        dados_endereco = self.__tela_Cliente.pega_endereco()
 
         numero = dados_endereco["numero"]
         rua = dados_endereco["rua"]
@@ -83,7 +86,7 @@ class Controlador_Cliente():
         bairro = dados_endereco["bairro"]
         cep = dados_endereco["cep"]
 
-        endereco = Endereco(numero, rua, cidade, bairro, cep)
+        endereco = Endereco(numero=numero, rua=rua, cidade=cidade, bairro=bairro, cep=cep)
         return endereco
         
     def ver_clientes_fieis(self):

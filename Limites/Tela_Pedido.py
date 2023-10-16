@@ -37,6 +37,7 @@ class Tela_Pedido():
         while True:
             try:
                 opcao = int(input("O que deseja fazer? "))
+                print("")
                 if opcao < 0 or opcao > 4:
                     raise Valor_invalido("0 até 4")
                 return opcao

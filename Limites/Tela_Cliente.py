@@ -10,7 +10,7 @@ class Tela_Cliente():
         while True:
             try:
                 nome = input("Insira o nome do cliente: ")
-                if len(nome) < 4:
+                if len(nome) < 3:
                     raise Entrada_muito_curta
                 break
             except ValueError:
@@ -62,16 +62,14 @@ class Tela_Cliente():
             except Entrada_muito_longa as e:
                 print(e)
 
-        endereco = self.pega_endereco()
-
-        return {"nome": nome, "telefone": telefone, "cpf": cpf, "endereco": endereco}
+        return {"nome": nome, "telefone": telefone, "cpf": cpf}
     
     def pega_endereco(self):
         print("Insira seu endereço completo:")
 
         while True:
             try:
-                numero = input("Insira o número do endereço:")
+                numero = int(input("Insira o número do endereço:"))
                 if numero <= 0:
                     raise Valor_abaixo_de_zero
                 break
@@ -185,6 +183,7 @@ class Tela_Cliente():
         while True:
             try:
                 opcao = int(input("O que deseja fazer? "))
+                print("")
                 if opcao < 0 or opcao > 5:
                     raise ValueError
                 return opcao

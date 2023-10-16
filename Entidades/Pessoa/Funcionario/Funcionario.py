@@ -5,8 +5,8 @@ from abc import ABC, abstractmethod
 class Funcionario(Pessoa, ABC):
 
     @abstractmethod
-    def __init__(self, salario: float):
-        super.__init__()
+    def __init__(self, salario: float, nome:str, cpf:str, telefone:str):
+        super().__init__(nome=nome, cpf=cpf, telefone=telefone)
         self.__salario = salario
 
     @property

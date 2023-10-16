@@ -73,8 +73,13 @@ class Controlador_Produto():
 
     def pegar_produto(self, nome:str) -> Produto:
         for produto in self.__produtos:
-            if produto.nome == nome:
-                return produto
+            if isinstance(produto, Pizza):
+                if produto.sabor == nome:
+                    return produto
+            elif isinstance(produto, Bebida):
+                if produto.tipo == nome:
+                    return produto
+
         return None
 
     def deletar_produto(self):

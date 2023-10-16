@@ -8,13 +8,14 @@ class Tela_Produto:
         print("Opcões:")
         print("1 - Cadastrar Produto")
         print("2 - Modificar Produto")
-        print("3 - Ver Produtos")
-        print("4 - Deletar Produto")
+        print("3 - Deletar Produto")
+        print("4 - Ver Produtos")
         print("0 - Retornar")
 
         while True:
             try:
                 opcao = int(input("O que deseja fazer? "))
+                print("")
                 if opcao < 0 or opcao > 4:
                     raise ValueError
                 return opcao

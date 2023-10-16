@@ -13,6 +13,7 @@ class Tela_Geral():
         while True:
             try:
                 opcao = int(input("O que deseja fazer? "))
+                print("")
                 if opcao < 0 or opcao > 5:
                     raise ValueError
                 return opcao
