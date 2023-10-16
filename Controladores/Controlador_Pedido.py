@@ -14,9 +14,9 @@ class Controlador_Pedido():
         self.__proximo_codigo = 1
 
     def fazer_pedido(self):
-        dados_pedido = self.__tela.pegar_dados_pedido(lista_atendentes=self.__controlador_pizzaria.pegar_atendentes,
-                                                      lista_pizzas=self.__controlador_pizzaria.pegar_pizzas,
-                                                      lista_bebidas=self.__controlador_pizzaria.pegar_bebidas)
+        dados_pedido = self.__tela.pegar_dados_pedido(lista_atendentes=self.__controlador_pizzaria.pegar_atendentes(),
+                                                      lista_pizzas=self.__controlador_pizzaria.pegar_pizzas(),
+                                                      lista_bebidas=self.__controlador_pizzaria.pegar_bebidas())
 
         # pegando a data atual
         data = datetime.datetime.now()
@@ -166,6 +166,9 @@ class Controlador_Pedido():
         produto_mais_vendido = None
 
         todos_os_produtos = list()
+
+        if self.__lista_pedidos is None:
+            return {"produto": "Sem produtos cadastrados", "quantidade": "-"}
 
         for pedido in self.__lista_pedidos:
             for produto in pedido:

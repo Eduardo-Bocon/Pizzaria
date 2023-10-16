@@ -46,7 +46,7 @@ class Tela_Pedido():
             except Valor_invalido as e:
                 print(e)
 
-    def pegar_dados_pedido(self, lista_atendentes, lista_pizzas, lista_bebidas):
+    def pegar_dados_pedido(self, lista_atendentes: [], lista_pizzas: [], lista_bebidas: []):
 
         print("Insira os dados do novo pedido.")
 
@@ -57,7 +57,7 @@ class Tela_Pedido():
                 # verifica se tem apenas numeros
                 int(cpf_cliente)
 
-                if len(cpf_cliente) < 11:
+                if len(cpf_cliente) < 9:
                     raise Entrada_muito_curta
                 elif len(cpf_cliente) > 11:
                     raise Entrada_muito_longa

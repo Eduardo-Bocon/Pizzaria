@@ -31,7 +31,8 @@ class Tela_Pizzaria():
         if produto_mais_vendido is None:
             print("Não há pedidos com produtos.")
         else:
-            print("Produto mais vendido do mês: {}".format(produto_mais_vendido))
+            print("Produto mais vendido do mês: {}".format(produto_mais_vendido["produto"]))
+            print("Quantidade: {}".format(produto_mais_vendido["quantidade"]))
 
     def mostrar_financeiro(self, salarios, despesas, receitas):
         print("Total de salários: {}".format(salarios))
