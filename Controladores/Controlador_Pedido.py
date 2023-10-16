@@ -1,4 +1,5 @@
 import datetime
+from collections import Counter
 
 from Limites.Tela_Pedido import Tela_Pedido
 from Entidades.Pedido.Pedido import Pedido
@@ -113,3 +114,43 @@ class Controlador_Pedido():
 
         if not existe:
             self.__tela.mostra_mensagem("Erro: pedido não existente")
+
+    def pegar_receitas(self):
+
+        receitas = 0
+
+        for pedido in self.__lista_pedidos:
+            receitas += pedido.calcula_preco()
+
+        return receitas
+
+    def pegar_despesas(self):
+
+        despesas = 0
+
+        for pedido in self.__lista_pedidos:
+            despesas += pedido.calcula_gastos()
+
+        return despesas
+
+    def pegar_produto_mais_vendido(self):
+
+        quantidade = 0
+        produto_mais_vendido = None
+
+        todos_os_produtos = list()
+
+        for pedido in self.__lista_pedidos:
+            for produto in pedido:
+                todos_os_produtos.append(produto)
+
+        # faz a contagem de aparicoes
+        contador = Counter(todos_os_produtos)
+
+        # pega o mais vendido
+        produto_mais_vendido = contador.most_common(1)[0][0]
+
+        # pega a quantidade de vezes que apareceu
+        quantidade = contador.most_common(1)[0][1]
+
+        return {"produto": produto_mais_vendido, "quantidade": quantidade}

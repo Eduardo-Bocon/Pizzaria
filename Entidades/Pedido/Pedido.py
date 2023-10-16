@@ -3,12 +3,12 @@ from Entidades.Pessoa.Cliente.Cliente import Cliente
 from Entidades.Pessoa.Funcionario.Atendente import Atendente
 import datetime
 
-from Entidades.Produtos.Produto import Produto
+
 
 
 class Pedido:
     
-    def __init__(self, produtos:list(Produto),cliente: Cliente, atendente: Atendente, forma_de_pagamento: Forma_de_Pagamento, data: datetime, codigo: int):
+    def __init__(self, produtos:list(),cliente: Cliente, atendente: Atendente, forma_de_pagamento: Forma_de_Pagamento, data: datetime, codigo: int):
         self.__cliente = cliente
         self.__produtos = produtos
         self.__atendente = atendente
@@ -83,11 +83,11 @@ class Pedido:
 
         return preco
 
-    def calcula_lucro(self):
-        lucro = 0
+    def calcula_gastos(self):
+        gastos = 0
         for produto in self.__produtos:
-            lucro += produto.preco_venda - produto.preco_compra
+            gastos += produto.preco_compra
 
-        return lucro
+        return gastos
 
 
