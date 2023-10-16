@@ -24,3 +24,5 @@ class Cliente(Pessoa):
     @endereco.setter
     def endereco(self, endereco):
         self.__endereco = endereco
+
+

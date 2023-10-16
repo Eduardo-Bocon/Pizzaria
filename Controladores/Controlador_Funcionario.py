@@ -22,13 +22,13 @@ class Controlador_Funcionario():
             if funcionario == None:
 
                 if self.__Tela_Funcionario.escolhe_funcao() == 1:
-                    funcionario = Atendente(dados_funcionario["nome"], dados_funcionario["cpf"], dados_funcionario["telefone"], dados_funcionario["salario"])
+                    funcionario = Atendente(nome=dados_funcionario["nome"], cpf=dados_funcionario["cpf"], telefone=dados_funcionario["telefone"], salario=dados_funcionario["salario"])
                 elif self.__Tela_Funcionario.escolhe_funcao() == 2:
-                    funcionario = Gerente(dados_funcionario["nome"], dados_funcionario["cpf"], dados_funcionario["telefone"], dados_funcionario["salario"])
+                    funcionario = Gerente(nome=dados_funcionario["nome"], cpf=dados_funcionario["cpf"], telefone=dados_funcionario["telefone"], salario=dados_funcionario["salario"])
                 elif self.__Tela_Funcionario.escolhe_funcao() == 3:
-                    funcionario = Pizzaiolo(dados_funcionario["nome"], dados_funcionario["cpf"], dados_funcionario["telefone"], dados_funcionario["salario"])
+                    funcionario = Pizzaiolo(nome=dados_funcionario["nome"], cpf=dados_funcionario["cpf"], telefone=dados_funcionario["telefone"], salario=dados_funcionario["salario"])
                 elif self.__Tela_Funcionario.escolhe_funcao() == 4:
-                    funcionario = Entregador(dados_funcionario["nome"], dados_funcionario["cpf"], dados_funcionario["telefone"], dados_funcionario["salario"])
+                    funcionario = Entregador(nome=dados_funcionario["nome"], cpf=dados_funcionario["cpf"], telefone=dados_funcionario["telefone"], salario=dados_funcionario["salario"])
 
                 self.__lista_Funcionarios.append(funcionario)
                 self.__Tela_Funcionario.mostra_mensagem("Cadastro de funcionário realizado!")

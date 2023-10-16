@@ -6,7 +6,7 @@ class Tela_Pizzaria():
         print("1 - Ver atendente do mês")
         print("2 - Ver produto mais vendido")
         print("3 - Ver financeiro")
-        print("0 - Encerrar programa")
+        print("0 - Retornar")
 
         while True:
             try:

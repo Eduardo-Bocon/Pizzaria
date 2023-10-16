@@ -50,11 +50,12 @@ class Controlador_Cliente():
 
         if cliente is not None:
             novos_dados_cliente = self.__tela_Cliente.pega_dados_cliente()
+            novo_endereco = self.__tela_Cliente.pega_endereco()
 
             cliente.nome = novos_dados_cliente["nome"]
             cliente.cpf = novos_dados_cliente["cpf"]
             cliente.telefone = novos_dados_cliente["telefone"]
-            cliente.endereco = novos_dados_cliente["endereco"]
+            cliente.endereco = Endereco(numero=novo_endereco["numero"], rua=novo_endereco["rua"], bairro=novo_endereco["bairro"], cidade=novo_endereco["cidade"], cep=novo_endereco["cep"])
 
             self.ver_clientes()
             self.__tela_Cliente.mostra_mensagem("Modificação de cadastro de cliente realizado!")

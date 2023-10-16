@@ -1,4 +1,6 @@
 from Entidades.Pedido.Forma_de_Pagamento import Forma_de_Pagamento
+from Entidades.Produtos.Bebida import Bebida
+from Entidades.Produtos.Pizza import Pizza
 from excecoes import Entrada_muito_curta, Forma_de_Pagamento_Invalida, Atendente_nao_encontrado, Valor_invalido, \
     Entrada_muito_longa
 
@@ -151,10 +153,15 @@ class Tela_Pedido():
     def ver_pedido(self, dados_pedido):
 
         print("Código do pedido: ", dados_pedido["codigo"])
-        print("Lista de produtos: ", dados_pedido["produtos"])
+        print("Lista de produtos: ")
+        for produto in dados_pedido["produtos"]:
+            if isinstance(produto, Pizza):
+                print(produto.sabor)
+            elif isinstance(produto, Bebida):
+                print(produto.tipo)
         print("Cliente: ", dados_pedido["nome_cliente"])
         print("Cpf cliente: ", dados_pedido["cpf_cliente"])
-        print("Atendente: ", dados_pedido["atendente"])
+        print("Atendente: ", dados_pedido["atendente"].nome)
         print("Valor: ", dados_pedido["valor"])
         print("Forma de pagamento: ", dados_pedido["forma_de_pagamento"])
         print("Data: ", dados_pedido["data"])
@@ -192,7 +199,7 @@ class Tela_Pedido():
         cod = input("Digite o código do pedido: ")
         return cod
 
-    def escolher_atendente(self, lista_atendentes):
+    def escolher_atendente(self, lista_atendentes:[]):
 
         while True:
 
