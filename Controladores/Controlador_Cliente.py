@@ -53,11 +53,8 @@ class Controlador_Cliente():
             cliente.nome = novos_dados_cliente["nome"]
             cliente.cpf = novos_dados_cliente["cpf"]
             cliente.telefone = novos_dados_cliente["telefone"]
-            cliente.endereco.numero = novos_dados_cliente["numero"]
-            cliente.endereco.rua = novos_dados_cliente["rua"]
-            cliente.endereco.cidade = novos_dados_cliente["cidade"]
-            cliente.endereco.bairro = novos_dados_cliente["bairro"]
-            cliente.endereco.cep = novos_dados_cliente["cep"]
+            endereco_cliente = self.pega_endereco()
+            cliente.endereco = endereco_cliente
 
             self.ver_clientes()
             self.__tela_Cliente.mostra_mensagem("Modificação de cadastro de cliente realizado!")
