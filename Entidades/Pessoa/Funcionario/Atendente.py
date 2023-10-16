@@ -3,8 +3,8 @@ from Entidades.Pessoa.Funcionario.Funcionario import Funcionario
 
 class Atendente(Funcionario):
 
-    def __init__(self):
-        super.__init__()
+    def __init__(self, nome, cpf, telefone, salario):
+        super().__init__(nome, cpf, telefone, salario)
         self.__vendas_mes = 0
 
     @property

@@ -106,7 +106,7 @@ class Tela_Funcionario():
         print("1 - Cadastrar Funcionário")
         print("2 - Modificar Funcionário")
         print("3 - Deletar Funcionário")
-        print("4 - Ver Clientes")
+        print("4 - Ver Funcionários")
         print("0 - Retornar")
 
         while True:

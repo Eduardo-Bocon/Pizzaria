@@ -66,7 +66,7 @@ class Controlador_Cliente():
             self.__tela_Cliente.mostra_mensagem("Cliente não cadastrado!")
 
     def ver_clientes(self):
-        if self.__lista_Clientes is None:
+        if not self.__lista_Clientes:
             self.__tela_Cliente.mostra_mensagem("Nenhum cliente cadastrado!")
 
         else:

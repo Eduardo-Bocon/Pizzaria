@@ -71,8 +71,8 @@ class Controlador_Funcionario():
             self.__Tela_Funcionario.mostra_mensagem("Funcionário não cadastrado!")
 
     def ver_funcionarios(self):
-        if self.__lista_Funcionarios == None:
-            self.__Tela_Funcionario.mostra_mensagem("Nenhum Atendente cadastrado!")
+        if not self.__lista_Funcionarios:
+            self.__Tela_Funcionario.mostra_mensagem("Nenhum funcionário cadastrado!")
 
         else:
             for funcionario in self.__lista_Funcionarios:
@@ -86,7 +86,6 @@ class Controlador_Funcionario():
             for funcionario in self.__lista_Funcionarios:
                 if cpf == funcionario.cpf:
                     return funcionario
-            self.__Tela_Funcionario.mostra_mensagem("CPF de funcionário não cadastrado!")
     
     def pegar_salarios(self):
         salario = 0
