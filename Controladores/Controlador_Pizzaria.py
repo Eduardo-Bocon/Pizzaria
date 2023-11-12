@@ -1,25 +1,32 @@
 from Controladores.Controlador_Funcionario import Controlador_Funcionario
 from Controladores.Controlador_Pedido import Controlador_Pedido
-from Controladores.Controlador_Produto import Controlador_Produto
 from Controladores.Controlador_Cliente import Controlador_Cliente
+from Controladores.Controlador_Produto import Controlador_Produto
 from Entidades.Pizzaria.Pizzaria import Pizzaria
 from Limites.Tela_Pizzaria import Tela_Pizzaria
 from Limites.Tela_Geral import Tela_Geral
 
 
 class Controlador_Pizzaria():
+    __instance = None
 
     def __init__(self):
+        self.__tela_geral = Tela_Geral()
+
         self.__contr_produto = Controlador_Produto(self)
         self.__contr_pedido = Controlador_Pedido(self)
         self.__contr_funcionario = Controlador_Funcionario(self)
         self.__contr_cliente = Controlador_Cliente(self)
         self.__tela_pizzaria = Tela_Pizzaria()
-        self.__tela_geral = Tela_Geral()
         self.__pizzaria = Pizzaria()
 
-    def inicializa_sistema(self):
-        self.abre_tela_geral()
+    def __new__(cls):
+        if Controlador_Pizzaria.__instance is None:
+            Controlador_Pizzaria.__instance = object.__new__(cls)
+        return Controlador_Pizzaria.__instance
+
+    def run(self):
+        (botao, dados) = self.__tela_geral.open()
 
     def mostrar_financeiro(self):
         self.__tela_pizzaria.mostrar_financeiro(salarios=self.pegar_salarios(), despesas=self.pegar_despesas(), receitas=self.pegar_receitas())
@@ -48,14 +55,6 @@ class Controlador_Pizzaria():
         atendente = self.__contr_funcionario.atendente_do_mes()
         self.__tela_pizzaria.atendente_do_mes(atendente)
         self.__pizzaria.atendente_do_mes = atendente
-
-    def abre_tela_geral(self):
-        lista_opcoes = {1: self.__contr_produto.abre_tela, 2: self.__contr_cliente.abre_tela,
-                        3: self.__contr_funcionario.abre_tela, 4: self.__contr_pedido.abre_tela,
-                        5: self.abre_tela, 0: self.encerra_sistema}
-
-        while True:
-            lista_opcoes[self.__tela_geral.abre_tela_geral()]()
 
     def abre_tela(self):
 

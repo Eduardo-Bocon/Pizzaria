@@ -10,7 +10,7 @@ class Controlador_Pedido():
 
     def __init__(self, controlador_pizzaria):
         self.__lista_pedidos = list()
-        self.__tela = Tela_Pedido()
+        self.__tela = Tela_Pedido(self)
         self.__controlador_pizzaria = controlador_pizzaria
         self.__proximo_codigo = 1
 
