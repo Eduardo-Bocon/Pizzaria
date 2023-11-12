@@ -1,6 +1,7 @@
 import datetime
 from collections import Counter
 
+from Entidades.Pedido.Forma_de_Pagamento import Forma_de_Pagamento
 from Limites.Tela_Pedido import Tela_Pedido
 from Entidades.Pedido.Pedido import Pedido
 
@@ -149,9 +150,13 @@ class Controlador_Pedido():
         existe = False
 
         for pedido in self.__lista_pedidos:
-            if pedido.codigo == codigo:
+            print("Verificando pedido: {}".format(pedido.codigo))
+
+            if pedido.codigo == int(codigo):
                 pedido.entregue = True
                 existe = True
+            else:
+                print("{} não é igual a {}".format(pedido.codigo, codigo))
 
         if not existe:
             self.__tela.mostra_mensagem("Erro: pedido não existente")
@@ -198,3 +203,6 @@ class Controlador_Pedido():
         quantidade = contador.most_common(1)[0][1]
 
         return {"produto": produto_mais_vendido, "quantidade": quantidade}
+
+    def pegar_formas_pagamento(self):
+        return Forma_de_Pagamento

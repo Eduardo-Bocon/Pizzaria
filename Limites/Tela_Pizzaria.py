@@ -1,4 +1,3 @@
-from Entidades.Produtos.Pizza import Pizza
 
 
 class Tela_Pizzaria():
@@ -34,10 +33,7 @@ class Tela_Pizzaria():
         if produto_mais_vendido is None:
             print("Não há pedidos com produtos.")
         else:
-            if isinstance(produto_mais_vendido["produto"], Pizza):
-                print("Produto mais vendido do mês: {}".format(produto_mais_vendido["produto"].sabor))
-            else:
-                print("Produto mais vendido do mês: {}".format(produto_mais_vendido["produto"].tipo))
+            print("Produto mais vendido do mês: {}".format(produto_mais_vendido["produto"].nome))
             print("Quantidade: {}".format(produto_mais_vendido["quantidade"]))
 
     def mostrar_financeiro(self, salarios, despesas, receitas):

@@ -1,11 +1,12 @@
-from Entidades.Pedido.Forma_de_Pagamento import Forma_de_Pagamento
-from Entidades.Produtos.Bebida import Bebida
-from Entidades.Produtos.Pizza import Pizza
+from Controladores.Controlador_Pedido import Controlador_Pedido
 from excecoes import Entrada_muito_curta, Forma_de_Pagamento_Invalida, Atendente_nao_encontrado, Valor_invalido, \
     Entrada_muito_longa
 
 
 class Tela_Pedido():
+
+    def __init__(self, controlador:Controlador_Pedido):
+        self.__controlador = controlador
 
     def abre_tela(self):
         print("---- Tela Pedidos ----")
@@ -155,17 +156,15 @@ class Tela_Pedido():
 
         forma_de_pagamento = self.pegar_forma_pagamento()
 
-        return {"cpf": cpf_cliente, "produtos": produtos, "atendente": atendente_escolhido, "forma_de_pagamento": forma_de_pagamento}
+        return {"cpf": cpf_cliente, "produtos": produtos, "atendente": atendente_escolhido,
+                "forma_de_pagamento": forma_de_pagamento}
 
     def ver_pedido(self, dados_pedido):
 
         print("Código do pedido: ", dados_pedido["codigo"])
         print("Lista de produtos: ")
         for produto in dados_pedido["produtos"]:
-            if isinstance(produto, Pizza):
-                print(produto.sabor)
-            elif isinstance(produto, Bebida):
-                print(produto.tipo)
+            print(produto.nome)
         print("Cliente: ", dados_pedido["nome_cliente"])
         print("Cpf cliente: ", dados_pedido["cpf_cliente"])
         print("Atendente: ", dados_pedido["atendente"].nome)
@@ -181,7 +180,9 @@ class Tela_Pedido():
 
     def pegar_forma_pagamento(self):
 
-        for forma in Forma_de_Pagamento:
+        formas_pagamento = self.__controlador.pegar_formas_pagamento()
+
+        for forma in formas_pagamento:
             print(forma.value)
 
         while 1:
@@ -189,7 +190,7 @@ class Tela_Pedido():
                 forma_escolhida = input("Insira a forma de pagamento: ")
 
                 existe = False
-                for forma in Forma_de_Pagamento:
+                for forma in formas_pagamento:
                     if forma_escolhida.upper() == forma.value.upper():
                         existe = True
                         break
@@ -206,7 +207,7 @@ class Tela_Pedido():
         cod = input("Digite o código do pedido: ")
         return cod
 
-    def escolher_atendente(self, lista_atendentes:[]):
+    def escolher_atendente(self, lista_atendentes: []):
 
         while True:
 
@@ -270,6 +271,3 @@ class Tela_Pedido():
             print("Erro! Digite um valor.")
         except Valor_invalido as e:
             print(e)
-
-
-
