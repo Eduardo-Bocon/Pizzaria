@@ -110,7 +110,7 @@ class Tela_Pedido():
                     existe = False
 
                     for pizza in lista_pizzas:
-                        if pizza.sabor.upper() == pizza_escolhida.upper():
+                        if pizza.upper() == pizza_escolhida.upper():
                             existe = True
                             if pizza.quantidade > 0:
                                 produtos.append(pizza)
@@ -138,7 +138,7 @@ class Tela_Pedido():
                     existe = False
 
                     for bebida in lista_bebidas:
-                        if bebida.tipo.upper() == bebida_escolhida.upper():
+                        if bebida.upper() == bebida_escolhida.upper():
                             existe = True
                             if bebida.quantidade > 0:
                                 produtos.append(bebida)
@@ -220,7 +220,7 @@ class Tela_Pedido():
                 existe = False
 
                 for atendente in lista_atendentes:
-                    if nome_atendente.upper() == atendente.nome.upper():
+                    if nome_atendente.upper() == atendente.upper():
                         existe = True
                         atendente_escolhido = atendente
 
@@ -247,7 +247,7 @@ class Tela_Pedido():
 
                 if lista_clientes is not None:
                     for cliente in lista_clientes:
-                        if nome_cliente.upper() == cliente.nome.upper():
+                        if nome_cliente.upper() == cliente.upper():
                             existe = True
                             cliente_escolhido = cliente
 

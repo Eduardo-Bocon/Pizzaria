@@ -117,4 +117,8 @@ class Controlador_Cliente():
         self.__controlador_pizzaria.abre_tela_geral()
 
     def pegar_clientes(self):
-        return self.__lista_Clientes
+        clientes = list()
+        for cliente in self.__lista_Clientes:
+            if isinstance(cliente, Cliente):
+                clientes.append(cliente.nome)
+        return clientes

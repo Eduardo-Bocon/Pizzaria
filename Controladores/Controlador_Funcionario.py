@@ -128,7 +128,7 @@ class Controlador_Funcionario():
         atendentes = list()
         for funcionario in self.__lista_Funcionarios:
             if isinstance(funcionario, Atendente):
-                atendentes.append(funcionario)
+                atendentes.append(funcionario.nome)
         return atendentes
 
     def aumentar_pedidos_funcionario(self, funcionario):

@@ -100,12 +100,12 @@ class Controlador_Produto():
         pizzas = list()
         for produto in self.__produtos:
             if isinstance(produto, Pizza):
-                pizzas.append(produto)
+                pizzas.append(produto.nome)
         return pizzas
 
     def pegar_bebidas(self):
         bebidas = list()
         for produto in self.__produtos:
             if isinstance(produto, Bebida):
-                bebidas.append(produto)
+                bebidas.append(produto.nome)
         return bebidas
