@@ -4,8 +4,8 @@ from Entidades.Pessoa.Cliente.Endereco import Endereco
 
 class Cliente(Pessoa):
 
-    def __init__(self, nome: str, cpf: str, telefone: str, endereco: Endereco):
-        super().__init__(nome, cpf, telefone)
+    def __init__(self, nome:str, cpf:str, telefone:str, endereco:Endereco):
+        super().__init__(nome=nome, cpf=cpf, telefone=telefone)
         self.__quantidade_pedidos = 0
         self.__endereco = endereco
 
@@ -24,3 +24,5 @@ class Cliente(Pessoa):
     @endereco.setter
     def endereco(self, endereco):
         self.__endereco = endereco
+
+

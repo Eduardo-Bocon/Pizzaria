@@ -22,13 +22,13 @@ class Controlador_Funcionario():
             if funcionario == None:
 
                 if self.__Tela_Funcionario.escolhe_funcao() == 1:
-                    funcionario = Atendente(dados_funcionario["nome"], dados_funcionario["cpf"], dados_funcionario["telefone"], dados_funcionario["salario"])
+                    funcionario = Atendente(nome=dados_funcionario["nome"], cpf=dados_funcionario["cpf"], telefone=dados_funcionario["telefone"], salario=dados_funcionario["salario"])
                 elif self.__Tela_Funcionario.escolhe_funcao() == 2:
-                    funcionario = Gerente(dados_funcionario["nome"], dados_funcionario["cpf"], dados_funcionario["telefone"], dados_funcionario["salario"])
+                    funcionario = Gerente(nome=dados_funcionario["nome"], cpf=dados_funcionario["cpf"], telefone=dados_funcionario["telefone"], salario=dados_funcionario["salario"])
                 elif self.__Tela_Funcionario.escolhe_funcao() == 3:
-                    funcionario = Pizzaiolo(dados_funcionario["nome"], dados_funcionario["cpf"], dados_funcionario["telefone"], dados_funcionario["salario"])
+                    funcionario = Pizzaiolo(nome=dados_funcionario["nome"], cpf=dados_funcionario["cpf"], telefone=dados_funcionario["telefone"], salario=dados_funcionario["salario"])
                 elif self.__Tela_Funcionario.escolhe_funcao() == 4:
-                    funcionario = Entregador(dados_funcionario["nome"], dados_funcionario["cpf"], dados_funcionario["telefone"], dados_funcionario["salario"])
+                    funcionario = Entregador(nome=dados_funcionario["nome"], cpf=dados_funcionario["cpf"], telefone=dados_funcionario["telefone"], salario=dados_funcionario["salario"])
 
                 self.__lista_Funcionarios.append(funcionario)
                 self.__Tela_Funcionario.mostra_mensagem("Cadastro de funcionário realizado!")
@@ -72,28 +72,30 @@ class Controlador_Funcionario():
 
     def ver_funcionarios(self):
         if not self.__lista_Funcionarios:
-            self.__Tela_Funcionario.mostra_mensagem("Nenhum funcionário cadastrado!")
+            self.__Tela_Funcionario.mostra_mensagem("Nenhum funcionario cadastrado!")
 
         else:
             for funcionario in self.__lista_Funcionarios:
                 self.__Tela_Funcionario.mostra_funcionarios({"nome": funcionario.nome, "cpf": funcionario.cpf, "telefone": funcionario.telefone, "salario": funcionario.salario})
 
     def busca_funcionario(self, cpf: str):
-        if self.__lista_Funcionarios is None:
+        if not self.__lista_Funcionarios:
             self.__Tela_Funcionario.mostra_mensagem("Nenhum funcionário cadastrado!")
         
         else:
             for funcionario in self.__lista_Funcionarios:
                 if cpf == funcionario.cpf:
                     return funcionario
+            self.__Tela_Funcionario.mostra_mensagem("CPF de funcionário não cadastrado!")
     
     def pegar_salarios(self):
         salario = 0
         for funcionario in self.__lista_Funcionarios:
-            salario += funcionario.salario
+            salario += float(funcionario.salario)
         return salario
     
     def atendente_do_mes(self):
+        atendente_do_mes = None
         flag = False
         for funcionario in self.__lista_Funcionarios:
             if isinstance(funcionario, Atendente):
@@ -121,3 +123,15 @@ class Controlador_Funcionario():
 
     def retornar(self):
         self.__controlador_pizzaria.abre_tela_geral()
+
+    def pegar_atendentes(self):
+        atendentes = list()
+        for funcionario in self.__lista_Funcionarios:
+            if isinstance(funcionario, Atendente):
+                atendentes.append(funcionario.nome)
+        return atendentes
+
+    def aumentar_pedidos_funcionario(self, funcionario):
+        for cada_funcionario in self.__lista_Funcionarios:
+            if cada_funcionario.cpf == funcionario.cpf:
+                cada_funcionario.vendas_mes += 1

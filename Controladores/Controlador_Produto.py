@@ -1,6 +1,7 @@
-from Entidades.Produto.Produto import Produto
-from Entidades.Produto.Bebida import Bebida
-from Entidades.Produto.Pizza import Pizza
+
+from Entidades.Produtos import Produto
+from Entidades.Produtos.Bebida import Bebida
+from Entidades.Produtos.Pizza import Pizza
 from Limites.Tela_Produto import Tela_Produto
 from excecoes import Produto_ja_cadastrado
 
@@ -31,6 +32,9 @@ class Controlador_Produto():
             if novo_produto is None:
                 if dados_novo_produto["tipo"].upper() == "PIZZA":
                     novo_produto = Pizza(preco_venda=dados_novo_produto["preco_venda"], preco_compra=dados_novo_produto["preco_compra"], quantidade=dados_novo_produto["quantidade"], sabor=dados_novo_produto["nome"])
+                    self.__produtos.append(novo_produto)
+                elif dados_novo_produto["tipo"].upper() == "BEBIDA":
+                    novo_produto = Bebida(preco_venda=dados_novo_produto["preco_venda"], preco_compra=dados_novo_produto["preco_compra"], quantidade=dados_novo_produto["quantidade"], tipo=dados_novo_produto["nome"])
                     self.__produtos.append(novo_produto)
             else:
                 raise Produto_ja_cadastrado(nome)
@@ -72,8 +76,13 @@ class Controlador_Produto():
 
     def pegar_produto(self, nome:str) -> Produto:
         for produto in self.__produtos:
-            if produto.nome == nome:
-                return produto
+            if isinstance(produto, Pizza):
+                if produto.sabor == nome:
+                    return produto
+            elif isinstance(produto, Bebida):
+                if produto.tipo == nome:
+                    return produto
+
         return None
 
     def deletar_produto(self):
@@ -86,3 +95,17 @@ class Controlador_Produto():
             self.ver_produtos()
         else:
             self.__tela.mostra_mensagem("Erro: produto não existente")
+
+    def pegar_pizzas(self):
+        pizzas = list()
+        for produto in self.__produtos:
+            if isinstance(produto, Pizza):
+                pizzas.append(produto.nome)
+        return pizzas
+
+    def pegar_bebidas(self):
+        bebidas = list()
+        for produto in self.__produtos:
+            if isinstance(produto, Bebida):
+                bebidas.append(produto.nome)
+        return bebidas

@@ -1,4 +1,5 @@
-from excecoes import Entrada_muito_curta, Entrada_muito_longa, Valor_acima_de_zero
+
+from excecoes import Entrada_muito_curta, Entrada_muito_longa, Valor_abaixo_de_zero
 
 
 class Tela_Cliente():
@@ -9,18 +10,20 @@ class Tela_Cliente():
         while True:
             try:
                 nome = input("Insira o nome do cliente: ")
-                if len(nome) < 4:
+                if len(nome) < 3:
                     raise Entrada_muito_curta
                 break
             except ValueError:
                 print("Entrada inválida!")
+            except Entrada_muito_curta as e:
+                print(e)
 
         while True:
             try:
                 telefone = input("Insira o telefone do cliente: ")
 
                 if int(telefone) <= 0:
-                    raise Valor_acima_de_zero
+                    raise Valor_abaixo_de_zero
                 
                 elif len(telefone) < 6:
                     raise Entrada_muito_curta
@@ -30,13 +33,19 @@ class Tela_Cliente():
                 break
             except ValueError:
                 print("Entrada inválida!")
+            except Valor_abaixo_de_zero as e:
+                print(e)
+            except Entrada_muito_curta as e:
+                print(e)
+            except Entrada_muito_longa as e:
+                print(e)
 
         while True:
             try:
                 cpf = input("Insira o CPF do cliente: ")
 
                 if int(cpf) <= 0:
-                    raise Valor_acima_de_zero
+                    raise Valor_abaixo_de_zero
                 
                 elif len(cpf) < 9:
                     raise Entrada_muito_curta
@@ -46,10 +55,14 @@ class Tela_Cliente():
                 break
             except ValueError:
                 print("Entrada inválida!")
+            except Valor_abaixo_de_zero as e:
+                print(e)
+            except Entrada_muito_curta as e:
+                print(e)
+            except Entrada_muito_longa as e:
+                print(e)
 
-        endereco = self.pega_endereco()
-
-        return {"nome": nome, "telefone": telefone, "cpf": cpf, "numero": endereco["numero"], "rua": endereco["rua"], "bairro": endereco["bairro"], "cidade": endereco["cidade"], "cep": endereco["cep"]}
+        return {"nome": nome, "telefone": telefone, "cpf": cpf}
     
     def pega_endereco(self):
         print("Insira seu endereço completo:")
@@ -58,10 +71,12 @@ class Tela_Cliente():
             try:
                 numero = int(input("Insira o número do endereço:"))
                 if numero <= 0:
-                    raise Valor_acima_de_zero
+                    raise Valor_abaixo_de_zero
                 break
             except ValueError:
                 print("Inválido! Insira apenas números!")
+            except Valor_abaixo_de_zero as e:
+                print(e)
 
         while True:
             try:
@@ -71,6 +86,8 @@ class Tela_Cliente():
                 break
             except ValueError:
                 print("Entrada inválida!")
+            except Entrada_muito_curta as e:
+                print(e)
 
         while True:
             try:
@@ -80,6 +97,8 @@ class Tela_Cliente():
                 break
             except ValueError:
                 print("Entrada inválida!")
+            except Entrada_muito_curta as e:
+                print(e)
 
         while True:
             try:
@@ -89,13 +108,15 @@ class Tela_Cliente():
                 break
             except ValueError:
                 print("Entrada inválida!")
+            except Entrada_muito_curta as e:
+                print(e)
 
         while True:
             try:
                 cep = input("Insira o CEP do endereço: ")
 
                 if int(cep) <= 0:
-                    raise Valor_acima_de_zero
+                    raise Valor_abaixo_de_zero
                 
                 elif len(cep) < 8:
                     raise Entrada_muito_curta
@@ -105,6 +126,12 @@ class Tela_Cliente():
                 break
             except ValueError:
                 print("Entrada inválida!")
+            except Valor_abaixo_de_zero as e:
+                print(e)
+            except Entrada_muito_curta as e:
+                print(e)
+            except Entrada_muito_longa as e:
+                print(e)
 
         return {"numero": numero, "rua": rua, "bairro": bairro, "cidade": cidade, "cep": cep}
     
@@ -124,7 +151,7 @@ class Tela_Cliente():
                 cpf = input("Insira o CPF do cliente que deseja selecionar: ")
 
                 if int(cpf) <= 0:
-                    raise Valor_acima_de_zero
+                    raise Valor_abaixo_de_zero
                 
                 elif len(cpf) < 9:
                     raise Entrada_muito_curta
@@ -134,6 +161,12 @@ class Tela_Cliente():
                 break
             except ValueError:
                 print("Entrada inválida!")
+            except Valor_abaixo_de_zero as e:
+                print(e)
+            except Entrada_muito_curta as e:
+                print(e)
+            except Entrada_muito_longa as e:
+                print(e)
 
         return cpf
 
@@ -150,6 +183,7 @@ class Tela_Cliente():
         while True:
             try:
                 opcao = int(input("O que deseja fazer? "))
+                print("")
                 if opcao < 0 or opcao > 5:
                     raise ValueError
                 return opcao

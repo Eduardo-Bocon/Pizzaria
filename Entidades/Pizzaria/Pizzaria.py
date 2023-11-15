@@ -9,7 +9,6 @@ class Pizzaria:
     @property
     def receita(self) -> float:
         return self.__receita
-
     @receita.setter
     def receita(self, nova_receita):
         self.__receita = nova_receita

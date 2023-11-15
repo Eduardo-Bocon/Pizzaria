@@ -4,10 +4,19 @@ from abc import ABC, abstractmethod
 class Produto(ABC):
 
     @abstractmethod
-    def __init__(self, preco_venda:float, preco_compra:float, quantidade:int):
+    def __init__(self, nome:str, preco_venda:float, preco_compra:float, quantidade:int):
+        self.__nome = nome
         self.__preco_venda = preco_venda
         self.__preco_compra = preco_compra
         self.__quantidade = quantidade
+
+    @property
+    def nome(self):
+        return self.__nome
+
+    @nome.setter
+    def nome(self, novo_nome):
+        self.__nome = novo_nome
 
     @property
     def preco_venda(self):
@@ -30,8 +39,11 @@ class Produto(ABC):
         return self.__quantidade
 
     @quantidade.setter
-    def quantidade(self, novo_quantidade):
-        self.__quantidade = novo_quantidade
+    def quantidade(self, nova_quantidade):
+        self.__quantidade = nova_quantidade
 
+    def aumentar_estoque(self, quantidade: int):
+        self.__quantidade += quantidade
 
-
+    def diminuir_estoque(self, quantidade: int):
+        self.__quantidade -= quantidade

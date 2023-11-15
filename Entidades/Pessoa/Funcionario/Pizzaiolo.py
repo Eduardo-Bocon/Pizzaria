@@ -3,5 +3,6 @@ from Entidades.Pessoa.Funcionario.Funcionario import Funcionario
 
 class Pizzaiolo(Funcionario):
 
-    def __init__(self, nome, cpf, telefone, salario):
-        super().__init__(nome, cpf, telefone, salario)
+    def __init__(self, salario: float, nome: str, cpf: str, telefone: str):
+        super().__init__(salario=salario, nome=nome, cpf=cpf, telefone=telefone)
+
