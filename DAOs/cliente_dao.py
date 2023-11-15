@@ -1,5 +1,5 @@
 from DAOs.dao import DAO
-from Entidades.Pessoa.Cliente import Cliente
+from Entidades.Pessoa.Cliente.Cliente import Cliente
 
 
 class ClienteDAO(DAO):
