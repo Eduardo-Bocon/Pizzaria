@@ -47,6 +47,3 @@ class Produto(ABC):
 
     def diminuir_estoque(self, quantidade: int):
         self.__quantidade -= quantidade
-
-
-
