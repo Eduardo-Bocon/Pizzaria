@@ -25,6 +25,22 @@ class Controlador_Pizzaria():
             Controlador_Pizzaria.__instance = object.__new__(cls)
         return Controlador_Pizzaria.__instance
 
+    @property
+    def contr_produto(self):
+        return self.__contr_produto
+
+    @property
+    def contr_pedido(self):
+        return self.__contr_pedido
+
+    @property
+    def contr_funcionario(self):
+        return self.__contr_funcionario
+
+    @property
+    def contr_cliente(self):
+        return self.__contr_cliente
+
     def run(self):
         (botao, dados) = self.__tela_geral.open()
 

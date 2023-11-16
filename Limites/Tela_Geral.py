@@ -7,9 +7,20 @@ class Tela_Geral():
         self.init_components()
 
     def init_components(self):
-        print("componentes visuais iniciados")
+        print("componentes visuais iniciados geral")
         sg.ChangeLookAndFeel('DarkRed1')
-        layout = [[sg.Button('Produtos')], [sg.Button('Clientes')],[sg.Button('Funcionarios')],[sg.Button('Pedidos')], [sg.Button('Pizzaria')],[sg.Button('Sair')]]
+        layout = [
+            [sg.Text('Bem vindo á nossa PIZZARIA!', font=("Helvica",25))],
+            [sg.Text('Para onde desejas ir?', font=("Helvica",15))],
+            [sg.Radio('Produtos',"RD1", key='1')],
+            [sg.Radio('Clientes',"RD1", key='2')],
+            [sg.Radio('Funcionarios',"RD1", key='3')],
+            [sg.Radio('Pedidos',"RD1", key='4')],
+            [sg.Radio('Pizzaria',"RD1", key='5')],
+            [sg.Radio('Finalizar sistema',"RD1", key='0')],
+            [sg.Button('Confirmar'), sg.Cancel('Cancelar')]
+        ]
+
         self.__window = sg.Window('Pizzaria', default_element_size=(40,1), size=(1000,500)).Layout(layout)
 
     def open(self):
@@ -20,21 +31,22 @@ class Tela_Geral():
         self.__window.Close()
 
     def abre_tela_geral(self):
-        print("---- Tela Geral ----")
-        print("Opcões:")
-        print("1 - Ir para tela dos produtos")
-        print("2 - Ir para tela dos clientes")
-        print("3 - Ir para tela dos funcionários")
-        print("4 - Ir para tela de pedidos")
-        print("5 - Ir para tela da pizzaria")
-        print("0 - Encerrar programa")
+        # fazer aqui tratamento dos dados, caso a entrada seja diferente do esperado
+        self.init_components()
+        button, values = self.__window.Read()
+        opcao = 0
+        if values['1']:
+            opcao = 1
+        if values['2']:
+            opcao = 2
+        if values['3']:
+            opcao = 3
+        if values['4']:
+            opcao = 4
+        if values['5']:
+            opcao = 5
 
-        while True:
-            try:
-                opcao = int(input("O que deseja fazer? "))
-                print("")
-                if opcao < 0 or opcao > 5:
-                    raise ValueError
-                return opcao
-            except ValueError:
-                print("Valor invalido. Insira um valor entre 0 e 5.")
+        if values['0'] or button in (None,'Cancelar'):
+            opcao = 0
+        self.close()
+        return opcao    
