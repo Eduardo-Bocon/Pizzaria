@@ -1,4 +1,4 @@
-
+from DAOs.produto_dao import ProdutoDAO
 from Entidades.Produtos import Produto
 from Entidades.Produtos.Bebida import Bebida
 from Entidades.Produtos.Pizza import Pizza
@@ -6,18 +6,19 @@ from Limites.Tela_Produto import Tela_Produto
 from excecoes import Produto_ja_cadastrado
 
 
-class Controlador_Produto():
+class ControladorProduto():
 
     def __init__(self, controlador_pizzaria):
         self.__tela = Tela_Produto()
-        self.__produtos = []
+        self.__produto_DAO = ProdutoDAO()
         self.__controlador_pizzaria = controlador_pizzaria
 
     def retornar(self):
         self.__controlador_pizzaria.abre_tela_geral()
 
     def abre_tela(self):
-        lista_opcoes = {1: self.cadastrar_produto, 2: self.modificar_produto, 3: self.deletar_produto, 4: self.ver_produtos,
+        lista_opcoes = {1: self.cadastrar_produto, 2: self.modificar_produto, 3: self.deletar_produto,
+                        4: self.ver_produtos,
                         0: self.retornar}
 
         while 1:
@@ -31,11 +32,14 @@ class Controlador_Produto():
         try:
             if novo_produto is None:
                 if dados_novo_produto["tipo"].upper() == "PIZZA":
-                    novo_produto = Pizza(preco_venda=dados_novo_produto["preco_venda"], preco_compra=dados_novo_produto["preco_compra"], quantidade=dados_novo_produto["quantidade"], sabor=dados_novo_produto["nome"])
-                    self.__produtos.append(novo_produto)
+                    novo_produto = Pizza(preco_venda=dados_novo_produto["preco_venda"],
+                                         preco_compra=dados_novo_produto["preco_compra"],
+                                         quantidade=dados_novo_produto["quantidade"], sabor=dados_novo_produto["nome"])
                 elif dados_novo_produto["tipo"].upper() == "BEBIDA":
-                    novo_produto = Bebida(preco_venda=dados_novo_produto["preco_venda"], preco_compra=dados_novo_produto["preco_compra"], quantidade=dados_novo_produto["quantidade"], tipo=dados_novo_produto["nome"])
-                    self.__produtos.append(novo_produto)
+                    novo_produto = Bebida(preco_venda=dados_novo_produto["preco_venda"],
+                                          preco_compra=dados_novo_produto["preco_compra"],
+                                          quantidade=dados_novo_produto["quantidade"], tipo=dados_novo_produto["nome"])
+                self.__produto_DAO.add(novo_produto)
             else:
                 raise Produto_ja_cadastrado(nome)
         except Produto_ja_cadastrado as e:
@@ -65,24 +69,23 @@ class Controlador_Produto():
             self.__tela.mostra_mensagem("Erro: produto não existente")
 
     def ver_produtos(self):
-        if self.__produtos is None:
+        if not self.__produto_DAO.get_all():
             self.__tela.mostra_mensagem("Nenhum produto cadastrado.")
         else:
-            for produto in self.__produtos:
+            for produto in self.__produto_DAO.get_all():
                 if isinstance(produto, Pizza):
-                    self.__tela.ver_produto({"nome": produto.sabor, "tipo": "Pizza", "preco_compra": produto.preco_compra, "preco_venda": produto.preco_venda, "quantidade": produto.quantidade})
+                    self.__tela.ver_produto(
+                        {"nome": produto.sabor, "tipo": "Pizza", "preco_compra": produto.preco_compra,
+                         "preco_venda": produto.preco_venda, "quantidade": produto.quantidade})
                 elif isinstance(produto, Bebida):
-                    self.__tela.ver_produto({"nome": produto.tipo, "tipo": "Bebida", "preco_compra": produto.preco_compra, "preco_venda": produto.preco_venda, "quantidade": produto.quantidade})
+                    self.__tela.ver_produto(
+                        {"nome": produto.tipo, "tipo": "Bebida", "preco_compra": produto.preco_compra,
+                         "preco_venda": produto.preco_venda, "quantidade": produto.quantidade})
 
-    def pegar_produto(self, nome:str) -> Produto:
-        for produto in self.__produtos:
-            if isinstance(produto, Pizza):
-                if produto.sabor == nome:
-                    return produto
-            elif isinstance(produto, Bebida):
-                if produto.tipo == nome:
-                    return produto
-
+    def pegar_produto(self, nome: str) -> Produto:
+        for produto in self.__produto_DAO.get_all():
+            if produto.nome == nome:
+                return produto
         return None
 
     def deletar_produto(self):
@@ -91,21 +94,21 @@ class Controlador_Produto():
         produto = self.pegar_produto(nome)
 
         if produto is not None:
-            self.__produtos.remove(produto)
+            self.__produto_DAO.remove(produto)
             self.ver_produtos()
         else:
             self.__tela.mostra_mensagem("Erro: produto não existente")
 
     def pegar_pizzas(self):
         pizzas = list()
-        for produto in self.__produtos:
+        for produto in self.__produto_DAO.get_all():
             if isinstance(produto, Pizza):
                 pizzas.append(produto.nome)
         return pizzas
 
     def pegar_bebidas(self):
         bebidas = list()
-        for produto in self.__produtos:
+        for produto in self.__produto_DAO.get_all():
             if isinstance(produto, Bebida):
                 bebidas.append(produto.nome)
         return bebidas

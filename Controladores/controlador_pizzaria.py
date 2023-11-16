@@ -1,29 +1,29 @@
-from Controladores.Controlador_Funcionario import Controlador_Funcionario
-from Controladores.Controlador_Pedido import Controlador_Pedido
-from Controladores.Controlador_Cliente import Controlador_Cliente
-from Controladores.Controlador_Produto import Controlador_Produto
+from Controladores.controlador_funcionario import ControladorFuncionario
+from Controladores.controlador_pedido import ControladorPedido
+from Controladores.controlador_cliente import ControladorCliente
+from Controladores.controlador_produto import ControladorProduto
 from Entidades.Pizzaria.Pizzaria import Pizzaria
 from Limites.Tela_Pizzaria import Tela_Pizzaria
 from Limites.Tela_Geral import Tela_Geral
 
 
-class Controlador_Pizzaria():
+class ControladorPizzaria():
     __instance = None
 
     def __init__(self):
         self.__tela_geral = Tela_Geral()
 
-        self.__contr_produto = Controlador_Produto(self)
-        self.__contr_pedido = Controlador_Pedido(self)
-        self.__contr_funcionario = Controlador_Funcionario(self)
-        self.__contr_cliente = Controlador_Cliente(self)
+        self.__contr_produto = ControladorProduto(self)
+        self.__contr_pedido = ControladorPedido(self)
+        self.__contr_funcionario = ControladorFuncionario(self)
+        self.__contr_cliente = ControladorCliente(self)
         self.__tela_pizzaria = Tela_Pizzaria()
         self.__pizzaria = Pizzaria()
 
     def __new__(cls):
-        if Controlador_Pizzaria.__instance is None:
-            Controlador_Pizzaria.__instance = object.__new__(cls)
-        return Controlador_Pizzaria.__instance
+        if ControladorPizzaria.__instance is None:
+            ControladorPizzaria.__instance = object.__new__(cls)
+        return ControladorPizzaria.__instance
 
     @property
     def contr_produto(self):

@@ -1,12 +1,12 @@
-import Controladores.Controlador_Pedido
-from Controladores import Controlador_Pedido
+
+from Controladores.controlador_pedido import *
 from excecoes import Entrada_muito_curta, Forma_de_Pagamento_Invalida, Atendente_nao_encontrado, Valor_invalido, \
     Entrada_muito_longa
 
 
 class Tela_Pedido():
 
-    def __init__(self, controlador: Controlador_Pedido):
+    def __init__(self, controlador: ControladorPedido):
         self.__controlador = controlador
 
     def abre_tela(self):

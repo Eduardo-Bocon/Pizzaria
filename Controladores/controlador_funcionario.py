@@ -1,4 +1,4 @@
-
+from DAOs.funcionario_dao import FuncionarioDAO
 from Entidades.Pessoa.Funcionario.Atendente import Atendente
 from Entidades.Pessoa.Funcionario.Gerente import Gerente
 from Entidades.Pessoa.Funcionario.Pizzaiolo import Pizzaiolo
@@ -6,10 +6,11 @@ from Entidades.Pessoa.Funcionario.Entregador import Entregador
 from Limites.Tela_Funcionario import Tela_Funcionario
 from excecoes import Funcionario_ja_cadastrado
 
-class Controlador_Funcionario():
+
+class ControladorFuncionario():
 
     def __init__(self, controlador_pizzaria):
-        self.__lista_Funcionarios = []
+        self.__funcionario_DAO = FuncionarioDAO()
         self.__Tela_Funcionario = Tela_Funcionario()
         self.__controlador_pizzaria = controlador_pizzaria
 
@@ -22,15 +23,22 @@ class Controlador_Funcionario():
             if funcionario == None:
 
                 if self.__Tela_Funcionario.escolhe_funcao() == 1:
-                    funcionario = Atendente(nome=dados_funcionario["nome"], cpf=dados_funcionario["cpf"], telefone=dados_funcionario["telefone"], salario=dados_funcionario["salario"])
+                    funcionario = Atendente(nome=dados_funcionario["nome"], cpf=dados_funcionario["cpf"],
+                                            telefone=dados_funcionario["telefone"],
+                                            salario=dados_funcionario["salario"])
                 elif self.__Tela_Funcionario.escolhe_funcao() == 2:
-                    funcionario = Gerente(nome=dados_funcionario["nome"], cpf=dados_funcionario["cpf"], telefone=dados_funcionario["telefone"], salario=dados_funcionario["salario"])
+                    funcionario = Gerente(nome=dados_funcionario["nome"], cpf=dados_funcionario["cpf"],
+                                          telefone=dados_funcionario["telefone"], salario=dados_funcionario["salario"])
                 elif self.__Tela_Funcionario.escolhe_funcao() == 3:
-                    funcionario = Pizzaiolo(nome=dados_funcionario["nome"], cpf=dados_funcionario["cpf"], telefone=dados_funcionario["telefone"], salario=dados_funcionario["salario"])
+                    funcionario = Pizzaiolo(nome=dados_funcionario["nome"], cpf=dados_funcionario["cpf"],
+                                            telefone=dados_funcionario["telefone"],
+                                            salario=dados_funcionario["salario"])
                 elif self.__Tela_Funcionario.escolhe_funcao() == 4:
-                    funcionario = Entregador(nome=dados_funcionario["nome"], cpf=dados_funcionario["cpf"], telefone=dados_funcionario["telefone"], salario=dados_funcionario["salario"])
+                    funcionario = Entregador(nome=dados_funcionario["nome"], cpf=dados_funcionario["cpf"],
+                                             telefone=dados_funcionario["telefone"],
+                                             salario=dados_funcionario["salario"])
 
-                self.__lista_Funcionarios.append(funcionario)
+                self.__funcionario_DAO.add(funcionario)
                 self.__Tela_Funcionario.mostra_mensagem("Cadastro de funcionário realizado!")
 
             else:
@@ -44,7 +52,7 @@ class Controlador_Funcionario():
         funcionario = self.busca_funcionario(busca_funcionario)
 
         if funcionario is not None:
-            self.__lista_Funcionarios.remove(funcionario)
+            self.__funcionario_DAO.remove(funcionario)
             self.__Tela_Funcionario.mostra_mensagem("Remoção de cadastro de funcionário realizado!")
             self.ver_funcionarios()
 
@@ -66,48 +74,50 @@ class Controlador_Funcionario():
 
             self.ver_funcionarios()
             self.__Tela_Funcionario.mostra_mensagem("Modificação de cadastro de funcionário realizado!")
-        
+
         else:
             self.__Tela_Funcionario.mostra_mensagem("Funcionário não cadastrado!")
 
     def ver_funcionarios(self):
-        if not self.__lista_Funcionarios:
+        if not self.__funcionario_DAO.get_all():
             self.__Tela_Funcionario.mostra_mensagem("Nenhum funcionario cadastrado!")
 
         else:
-            for funcionario in self.__lista_Funcionarios:
-                self.__Tela_Funcionario.mostra_funcionarios({"nome": funcionario.nome, "cpf": funcionario.cpf, "telefone": funcionario.telefone, "salario": funcionario.salario})
+            for funcionario in self.__funcionario_DAO.get_all():
+                self.__Tela_Funcionario.mostra_funcionarios(
+                    {"nome": funcionario.nome, "cpf": funcionario.cpf, "telefone": funcionario.telefone,
+                     "salario": funcionario.salario})
 
     def busca_funcionario(self, cpf: str):
-        if not self.__lista_Funcionarios:
+        if not self.__funcionario_DAO.get_all():
             self.__Tela_Funcionario.mostra_mensagem("Nenhum funcionário cadastrado!")
-        
+
         else:
-            for funcionario in self.__lista_Funcionarios:
+            for funcionario in self.__funcionario_DAO.get_all():
                 if cpf == funcionario.cpf:
                     return funcionario
             self.__Tela_Funcionario.mostra_mensagem("CPF de funcionário não cadastrado!")
-    
+
     def pegar_salarios(self):
         salario = 0
-        for funcionario in self.__lista_Funcionarios:
+        for funcionario in self.__funcionario_DAO.get_all():
             salario += float(funcionario.salario)
         return salario
-    
+
     def atendente_do_mes(self):
         atendente_do_mes = None
         flag = False
-        for funcionario in self.__lista_Funcionarios:
+        for funcionario in self.__funcionario_DAO.get_all():
             if isinstance(funcionario, Atendente):
                 flag = True
 
-        if flag == False:
+        if not flag:
             self.__Tela_Funcionario.mostra_mensagem("Nenhum funcionário atendente cadastrado!")
 
         else:
             vendas_atendente_do_mes = 0
 
-            for funcionario in self.__lista_Funcionarios:
+            for funcionario in self.__funcionario_DAO.get_all():
                 if isinstance(funcionario, Atendente):
                     if funcionario.vendas_mes > vendas_atendente_do_mes:
                         vendas_atendente_do_mes = funcionario.vendas_mes
@@ -116,7 +126,8 @@ class Controlador_Funcionario():
             return atendente_do_mes
 
     def abre_tela(self):
-        lista_opcoes = {1: self.cadastrar_funcionario, 2: self.modificar_funcionario, 3: self.deletar_funcionario, 4: self.ver_funcionarios, 0: self.retornar}
+        lista_opcoes = {1: self.cadastrar_funcionario, 2: self.modificar_funcionario, 3: self.deletar_funcionario,
+                        4: self.ver_funcionarios, 0: self.retornar}
 
         while True:
             lista_opcoes[self.__Tela_Funcionario.abre_tela()]()
@@ -126,12 +137,12 @@ class Controlador_Funcionario():
 
     def pegar_atendentes(self):
         atendentes = list()
-        for funcionario in self.__lista_Funcionarios:
+        for funcionario in self.__funcionario_DAO.get_all():
             if isinstance(funcionario, Atendente):
                 atendentes.append(funcionario.nome)
         return atendentes
 
-    def aumentar_pedidos_funcionario(self, funcionario):
-        for cada_funcionario in self.__lista_Funcionarios:
-            if cada_funcionario.cpf == funcionario.cpf:
+    def aumentar_pedidos_funcionario(self, nome_funcionario):
+        for cada_funcionario in self.__funcionario_DAO.get_all():
+            if cada_funcionario.nome.upper() == nome_funcionario.upper():
                 cada_funcionario.vendas_mes += 1

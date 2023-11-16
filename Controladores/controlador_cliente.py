@@ -1,13 +1,14 @@
+from DAOs.cliente_dao import ClienteDAO
 from Limites.Tela_Cliente import Tela_Cliente
 from Entidades.Pessoa.Cliente.Cliente import Cliente
 from excecoes import Cliente_ja_cadastrado
 from Entidades.Pessoa.Cliente.Endereco import Endereco
 
 
-class Controlador_Cliente():
+class ControladorCliente():
 
     def __init__(self, controlador_pizzaria):
-        self.__lista_Clientes = list()
+        self.__cliente_DAO = ClienteDAO()
         self.__tela_Cliente = Tela_Cliente()
         self.__controlador_pizzaria = controlador_pizzaria
 
@@ -22,7 +23,7 @@ class Controlador_Cliente():
                 endereco_cliente = Endereco(dados_endereco["numero"], dados_endereco["rua"], dados_endereco["cidade"], dados_endereco["bairro"], dados_endereco["cep"])
                 cliente = Cliente(dados_cliente["nome"], dados_cliente["cpf"],
                                   dados_cliente["telefone"], endereco_cliente)
-                self.__lista_Clientes.append(cliente)
+                self.__cliente_DAO.add(cliente)
                 self.__tela_Cliente.mostra_mensagem("Cadastro de cliente realizado!")
 
             else:
@@ -36,7 +37,7 @@ class Controlador_Cliente():
         cliente = self.busca_clientes(busca_cliente)
 
         if cliente is not None:
-            self.__lista_Clientes.remove(cliente)
+            self.__cliente_DAO.remove(cliente)
             self.ver_clientes()
             self.__tela_Cliente.mostra_mensagem("Remoção de cadastro de cliente realizado!")
 
@@ -64,34 +65,34 @@ class Controlador_Cliente():
             self.__tela_Cliente.mostra_mensagem("Cliente não cadastrado!")
 
     def ver_clientes(self):
-        if not self.__lista_Clientes:
+        if not self.__cliente_DAO.get_all():
             self.__tela_Cliente.mostra_mensagem("Nenhum cliente cadastrado!")
 
         else:
-            for cliente in self.__lista_Clientes:
+            for cliente in self.__cliente_DAO.get_all():
                 self.__tela_Cliente.mostra_clientes({"nome": cliente.nome, "cpf": cliente.cpf,
                                                      "telefone": cliente.telefone, "cidade": cliente.endereco.cidade})
 
     def busca_clientes(self, cpf: str):
-        for cliente in self.__lista_Clientes:
+        for cliente in self.__cliente_DAO.get_all():
             if cpf == cliente.cpf:
                 return cliente
         return None
 
     def ver_clientes_fieis(self):
-        if self.__lista_Clientes == None:
+        if not self.__cliente_DAO.get_all():
             self.__tela_Cliente.mostra_mensagem("Nenhum cliente cadastrado!")
 
         else:
             flag = False
-            for cliente in self.__lista_Clientes:
+            for cliente in self.__cliente_DAO.get_all():
                 if cliente.quantidade_pedidos >= 5:
                     self.__tela_Cliente.mostra_clientes(
                         {"nome": cliente.nome, "cpf": cliente.cpf, "telefone": cliente.telefone,
                          "cidade": cliente.endereco.cidade})
                     flag = True
 
-            if flag == False:
+            if not flag:
                 self.__tela_Cliente.mostra_mensagem("Sem clientes Fiéis!")
 
     def abre_tela(self):
@@ -106,7 +107,7 @@ class Controlador_Cliente():
 
     def pegar_clientes(self):
         clientes = list()
-        for cliente in self.__lista_Clientes:
+        for cliente in self.__cliente_DAO.get_all():
             if isinstance(cliente, Cliente):
                 clientes.append(cliente.nome)
         return clientes

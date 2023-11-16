@@ -1,15 +1,16 @@
 import datetime
 from collections import Counter
 
+from DAOs.pedido_dao import PedidoDAO
 from Entidades.Pedido.Forma_de_Pagamento import Forma_de_Pagamento
 from Limites.Tela_Pedido import Tela_Pedido
 from Entidades.Pedido.Pedido import Pedido
 
 
-class Controlador_Pedido():
+class ControladorPedido():
 
     def __init__(self, controlador_pizzaria):
-        self.__lista_pedidos = list()
+        self.__pedido_DAO = PedidoDAO()
         self.__tela = Tela_Pedido(self)
         self.__controlador_pizzaria = controlador_pizzaria
         self.__proximo_codigo = 1
@@ -23,12 +24,14 @@ class Controlador_Pedido():
         # pegando a data atual
         data = datetime.datetime.now()
 
-        self.__lista_pedidos.append(Pedido(produtos=dados_pedido["produtos"],
-                                           cliente=self.__controlador_pizzaria.pegar_cliente_por_cpf(
-                                               dados_pedido["cpf"]),
-                                           atendente=dados_pedido["atendente"],
-                                           forma_de_pagamento=dados_pedido["forma_de_pagamento"],
-                                           data=data, codigo=self.__proximo_codigo))
+        pedido = Pedido(produtos=dados_pedido["produtos"],
+                        cliente=self.__controlador_pizzaria.pegar_cliente_por_cpf(
+                            dados_pedido["cpf"]),
+                        atendente=dados_pedido["atendente"],
+                        forma_de_pagamento=dados_pedido["forma_de_pagamento"],
+                        data=data, codigo=self.__proximo_codigo)
+
+        self.__pedido_DAO.add(pedido)
         self.__proximo_codigo += 1
         self.__controlador_pizzaria.aumentar_pedidos_funcionario(dados_pedido["atendente"])
 
@@ -39,20 +42,20 @@ class Controlador_Pedido():
         pedido = self.pegar_pedido(codigo)
 
         if pedido is not None:
-            self.__lista_pedidos.remove(pedido)
+            self.__pedido_DAO.remove(pedido)
             self.ver_pedidos()
         else:
             self.__tela.mostra_mensagem("Erro: pedido não existente")
 
     def pegar_pedido(self, codigo):
-        for pedido in self.__lista_pedidos:
+        for pedido in self.__pedido_DAO.get_all():
             if pedido.codigo == codigo:
                 return pedido
         return None
 
     def ver_pedidos(self):
 
-        for pedido in self.__lista_pedidos:
+        for pedido in self.__pedido_DAO.get_all():
             self.__tela.ver_pedido({"codigo": pedido.codigo, "produtos": pedido.produtos,
                                     "nome_cliente": pedido.cliente.nome, "cpf_cliente": pedido.cliente.cpf,
                                     "atendente": pedido.atendente, "valor": pedido.calcula_preco(),
@@ -69,7 +72,7 @@ class Controlador_Pedido():
     def ver_pedidos_atendente(self):
         atendente = self.__tela.escolher_atendente(self.__controlador_pizzaria.pegar_atendentes())
         existe = False
-        for pedido in self.__lista_pedidos:
+        for pedido in self.__pedido_DAO.get_all():
             if pedido.atendente == atendente:
                 existe = True
                 self.__tela.ver_pedido({"codigo": pedido.codigo, "produtos": pedido.produtos,
@@ -79,10 +82,11 @@ class Controlador_Pedido():
                                         "entregue": pedido.entregue})
         if not existe:
             self.__tela.mostra_mensagem("Não tem pedidos com esse atendente.")
+
     def ver_pedidos_cliente(self):
         cliente = self.__tela.escolher_cliente(self.__controlador_pizzaria.pegar_clientes())
         existe = False
-        for pedido in self.__lista_pedidos:
+        for pedido in self.__pedido_DAO.get_all():
             if pedido.cliente == cliente:
                 existe = True
                 self.__tela.ver_pedido({"codigo": pedido.codigo, "produtos": pedido.produtos,
@@ -96,7 +100,7 @@ class Controlador_Pedido():
     def ver_pedidos_por_valor(self):
         valor = self.__tela.escolher_valor()
         existe = False
-        for pedido in self.__lista_pedidos:
+        for pedido in self.__pedido_DAO.get_all():
             if pedido.calcula_preco() >= valor:
                 existe = True
                 self.__tela.ver_pedido({"codigo": pedido.codigo, "produtos": pedido.produtos,
@@ -149,7 +153,7 @@ class Controlador_Pedido():
 
         existe = False
 
-        for pedido in self.__lista_pedidos:
+        for pedido in self.__pedido_DAO.get_all():
             print("Verificando pedido: {}".format(pedido.codigo))
 
             if pedido.codigo == int(codigo):
@@ -165,7 +169,7 @@ class Controlador_Pedido():
 
         receitas = 0
 
-        for pedido in self.__lista_pedidos:
+        for pedido in self.__pedido_DAO.get_all():
             receitas += pedido.calcula_preco()
 
         return receitas
@@ -174,7 +178,7 @@ class Controlador_Pedido():
 
         despesas = 0
 
-        for pedido in self.__lista_pedidos:
+        for pedido in self.__pedido_DAO.get_all():
             despesas += pedido.calcula_gastos()
 
         return despesas
@@ -186,10 +190,10 @@ class Controlador_Pedido():
 
         todos_os_produtos = list()
 
-        if not self.__lista_pedidos :
+        if not self.__pedido_DAO.get_all():
             return {"produto": "Sem produtos cadastrados", "quantidade": "-"}
 
-        for pedido in self.__lista_pedidos:
+        for pedido in self.__pedido_DAO.get_all():
             for produto in pedido.produtos:
                 todos_os_produtos.append(produto)
 

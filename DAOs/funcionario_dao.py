@@ -18,6 +18,6 @@ class FuncionarioDAO(DAO):
         if isinstance(key, str):
             return super().get(key)
 
-    def remove(selfself, key:str):
+    def remove(self, key:str):
         if(isinstance(key, str)):
             return super().remove(key)
