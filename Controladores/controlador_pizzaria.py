@@ -1,7 +1,7 @@
 from Controladores.controlador_funcionario import ControladorFuncionario
 from Controladores.controlador_pedido import ControladorPedido
 from Controladores.controlador_cliente import ControladorCliente
-from Controladores.controlador_produto import ControladorProduto
+from Controladores.controlador_produto import *
 from Entidades.Pizzaria.Pizzaria import Pizzaria
 from Limites.Tela_Pizzaria import Tela_Pizzaria
 from Limites.Tela_Geral import Tela_Geral
@@ -42,7 +42,7 @@ class ControladorPizzaria():
         return self.__contr_cliente
 
     def run(self):
-        (botao, dados) = self.__tela_geral.open()
+        self.abre_tela_geral()
 
     def mostrar_financeiro(self):
         self.__tela_pizzaria.mostrar_financeiro(salarios=self.pegar_salarios(), despesas=self.pegar_despesas(), receitas=self.pegar_receitas())
@@ -71,6 +71,14 @@ class ControladorPizzaria():
         atendente = self.__contr_funcionario.atendente_do_mes()
         self.__tela_pizzaria.atendente_do_mes(atendente)
         self.__pizzaria.atendente_do_mes = atendente
+
+    def abre_tela_geral(self):
+        lista_opcoes = {1: self.__contr_produto.abre_tela, 2: self.__contr_cliente.abre_tela,
+                        3: self.__contr_funcionario.abre_tela, 4: self.__contr_pedido.abre_tela,
+                        5: self.abre_tela, 0: self.encerra_sistema}
+
+        while True:
+            lista_opcoes[self.__tela_geral.abre_tela_geral()]()
 
     def abre_tela(self):
 

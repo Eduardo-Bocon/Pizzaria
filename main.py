@@ -1,5 +1,5 @@
-from Controladores.controlador_pizzaria import Controlador_Pizzaria
+from Controladores.controlador_pizzaria import ControladorPizzaria
 
 if __name__ == '__main__':
-    controlador_pizzaria = Controlador_Pizzaria()
+    controlador_pizzaria = ControladorPizzaria()
     controlador_pizzaria.run()

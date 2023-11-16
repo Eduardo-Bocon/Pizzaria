@@ -33,14 +33,14 @@ class Tela_Pizzaria():
         self.init_components()
         button, values = self.__window.Read()
         opcao = 0
-        if values['1']:
+        print(button)
+        if button == 1:
             opcao = 1
-        if values['2']:
+        if button == 2:
             opcao = 2
-        if values['3']:
+        if button == 3:
             opcao = 3
-
-        if values['0'] or button in (None,'Cancelar'):
+        if button == 0 or button in (None,'Cancelar'):
             opcao = 0
         self.close()
         return opcao

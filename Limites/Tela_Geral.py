@@ -34,6 +34,7 @@ class Tela_Geral():
         # fazer aqui tratamento dos dados, caso a entrada seja diferente do esperado
         self.init_components()
         button, values = self.__window.Read()
+        print(values)
         opcao = 0
         if values['1']:
             opcao = 1
