@@ -33,7 +33,7 @@ class Tela_Pizzaria():
         self.init_components()
         button, values = self.__window.Read()
         opcao = 0
-        print(button)
+
         if button == 1:
             opcao = 1
         if button == 2:

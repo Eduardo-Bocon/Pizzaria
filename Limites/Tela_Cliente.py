@@ -240,25 +240,23 @@ class Tela_Cliente():
 
         self.close()
         return cpf
-
+    
     def abre_tela(self):
-        self.init_opcoes()
-        button, values = self.open()
+        self.init_components()
+        button, values = self.__window.Read()
+        opcao = 0
 
-        if values['1']:
+        if button == 1:
             opcao = 1
-        if values['2']:
+        if button == 2:
             opcao = 2
-        if values['3']:
+        if button == 3:
             opcao = 3
-        if values['4']:
+        if button == 4:
             opcao = 4
-        if values['5']:
+        if button == 5:
             opcao = 5
-
-        # cobre os casos de Retornar, fechar janela, ou clicar cancelar
-        #Isso faz com que retornemos a tela do sistema caso qualquer uma dessas coisas aconteca
-        if values['0'] or button in (None, 'Cancelar'):
+        if button == 0 or button in (None,'Cancelar'):
             opcao = 0
         self.close()
         return opcao
