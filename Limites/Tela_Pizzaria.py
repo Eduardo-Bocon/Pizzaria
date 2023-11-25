@@ -9,18 +9,18 @@ class Tela_Pizzaria():
 
     def init_components(self):
         print("componentes visuais iniciados pizzaria")
-        sg.ChangeLookAndFeel('DarkRed1')
+        sg.ChangeLookAndFeel('DarkBrown1')
 
         layout = [
-            [sg.Text('---- Tela Pizzaria ----')],
-            [sg.Button('Ver atendente do mês', key='1')],
-            [sg.Button('Ver produto mais vendido', key='2')],
-            [sg.Button('Ver financeiro', key='3')],
-            [sg.Button('Retornar', key='0')],
-            [sg.Submit("Selecionar"), sg.Cancel("Retornar")]
+            [sg.Column([[sg.Text('Tela Pizzaria', font=("Palatino Linotype", 60))]], justification='center', pad=((0,0), (60,40)))],
+            [sg.Column([[sg.Image("Imagens\839860.png", subsample=3)]], justification='center')],
+            [sg.Column([[sg.Button('Ver atendente do mês', key='1', font=("Palatino Linotype", 20), size=(15,1), pad=((300,300), (0,0)))]], justification='left')],
+            [sg.Column([[sg.Button('Ver produto mais vendido', key='2', font=("Palatino Linotype", 20), size=(15,1))]], justification='right')],
+            [sg.Column([[sg.Button('Ver financeiro', key='3', font=("Palatino Linotype", 20), size=(15,1),  pad=((300,300), (0,0)))]], justification='left')],
+            [sg.Column([[sg.Button('Retornar', key='0', font=("Palatino Linotype", 20), size=(15,1),  pad=((300,300), (0,0)))]], justification='right')],
         ]
 
-        self.__window = sg.Window('Pizzaria', default_element_size=(40,1), size=(1000,500)).Layout(layout)
+        self.__window = sg.Window('Pizzaria', default_element_size=(40,1), size=(1920,1080), icon="Imagens\pizza icone.ico").Layout(layout)
 
     def open(self):
         button, values = self.__window.Read()
