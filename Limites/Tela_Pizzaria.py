@@ -10,17 +10,21 @@ class Tela_Pizzaria():
     def init_components(self):
         print("componentes visuais iniciados pizzaria")
         sg.ChangeLookAndFeel('DarkBrown1')
+        font = ("Palatino Linotype", 10)
+        pad = (200,200), (0,0)
+        size = (18,1)
 
         layout = [
-            [sg.Column([[sg.Text('Tela Pizzaria', font=("Palatino Linotype", 60))]], justification='center', pad=((0,0), (60,40)))],
-            [sg.Column([[sg.Image("Imagens\839860.png", subsample=3)]], justification='center')],
-            [sg.Column([[sg.Button('Ver atendente do mês', key='1', font=("Palatino Linotype", 20), size=(15,1), pad=((300,300), (0,0)))]], justification='left')],
-            [sg.Column([[sg.Button('Ver produto mais vendido', key='2', font=("Palatino Linotype", 20), size=(15,1))]], justification='right')],
-            [sg.Column([[sg.Button('Ver financeiro', key='3', font=("Palatino Linotype", 20), size=(15,1),  pad=((300,300), (0,0)))]], justification='left')],
-            [sg.Column([[sg.Button('Retornar', key='0', font=("Palatino Linotype", 20), size=(15,1),  pad=((300,300), (0,0)))]], justification='right')],
+            [sg.Column([[sg.Text('Tela Pizzaria', font=("Palatino Linotype", 30))]], justification='center', pad=((0,0), (20,20)))],
+            [sg.Column([[sg.Image("Imagens\estatisticas.png", subsample=3)]], justification='center')],
+            [sg.Column([[sg.Text('O que você deseja fazer?', font=("Palatino Linotype", 20), pad=15)]], justification='center')],
+            [sg.Column([[sg.Button('Ver atendente do mês', key='1', font=font, size=size, pad=pad)]], justification='left')],
+            [sg.Column([[sg.Button('Ver produto mais vendido', key='2', font=font, size=size)]], justification='center')],
+            [sg.Column([[sg.Button('Ver financeiro', key='3', font=font, size=size,  pad=pad)]], justification='right')],
+            [sg.Column([[sg.Button('Retornar', key='0', font=font, size=size,  pad=pad)]], justification='right')],
         ]
 
-        self.__window = sg.Window('Pizzaria', default_element_size=(40,1), size=(1920,1080), icon="Imagens\pizza icone.ico").Layout(layout)
+        self.__window = sg.Window('Pizzaria', default_element_size=(40,1), size=(1250,620), icon="Imagens\pizza icone.ico").Layout(layout)
 
     def open(self):
         button, values = self.__window.Read()
@@ -33,7 +37,7 @@ class Tela_Pizzaria():
         self.init_components()
         button, values = self.__window.Read()
         opcao = 0
-        print(button)
+
         if button == 1:
             opcao = 1
         if button == 2:

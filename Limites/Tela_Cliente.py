@@ -10,20 +10,24 @@ class Tela_Cliente():
 
     def init_components(self):
         print("componentes visuais iniciados cliente")
-        sg.ChangeLookAndFeel('DarkRed1')
+        sg.ChangeLookAndFeel('DarkBrown1')
+        font = ("Palatino Linotype", 10)
+        pad = (200,200), (0,0)
+        size = (18,1)
 
         layout = [
-            [sg.Text('---- Tela Clientes ----')],
-            [sg.Button('Cadastrar Cliente', key='1')],
-            [sg.Button('Modificar Cliente', key='2')],
-            [sg.Button('Deletar Cliente', key='3')],
-            [sg.Button('Ver Clientes', key='4')],
-            [sg.Button('Ver Clientes Fiéis', key='5')],
-            [sg.Button('Retornar', key='0')],
-            [sg.Submit("Selecionar"), sg.Cancel("Retornar")]
+            [sg.Column([[sg.Text('Tela Clientes', font=("Palatino Linotype", 30))]], justification='center', pad=((0,0), (20,20)))],
+            [sg.Column([[sg.Image("Imagens\cliente.png", subsample=3)]], justification='center')],
+            [sg.Column([[sg.Text('O que você deseja fazer?', font=("Palatino Linotype", 20), pad=15)]], justification='center')],
+            [sg.Column([[sg.Button('Cadastrar Cliente', key='1', font=font, size=size, pad=pad)]], justification='left')],
+            [sg.Column([[sg.Button('Modificar Cliente', key='2', font=font, size=size, pad=pad)]], justification='center')],
+            [sg.Column([[sg.Button('Deletar Cliente', key='3', font=font, size=size,  pad=pad)]], justification='right')],
+            [sg.Column([[sg.Button('Ver Clientes', key='4', font=font, size=size,  pad=pad)]], justification='left')],
+            [sg.Column([[sg.Button('Ver Clientes Fiéis', key='5', font=font, size=size,  pad=pad)]], justification='center')],
+            [sg.Column([[sg.Button('Retornar', key='0', font=font, size=size,  pad=pad)]], justification='right')],
         ]
 
-        self.__window = sg.Window('Pizzaria', default_element_size=(40,1), size=(1000,500)).Layout(layout)
+        self.__window = sg.Window('Pizzaria', default_element_size=(40,1), size=(1250,620), icon="Imagens\pizza icone.ico").Layout(layout)
 
     def open(self):
         button, values = self.__window.Read()
@@ -33,15 +37,22 @@ class Tela_Cliente():
         self.__window.Close()
 
     def pega_dados_cliente(self):
-        sg.ChangeLookAndFeel('DarkRed1')
+        print("componentes visuais iniciados pega dados cliente")
+        sg.ChangeLookAndFeel('DarkBrown1')
+        font = ("Palatino Linotype", 10)
+        pad = (200,200), (0,0)
+        size = (18,1)
+
         layout = [
-            [sg.Text('-------- Dados do Cliente ----------', font=("Helvica", 25))],
-            [sg.Text('Nome:', size=(15, 1)), sg.InputText('', key='nome')],
-            [sg.Text('Telefone:', size=(15, 1)), sg.InputText('', key='telefone')],
-            [sg.Text('CPF:', size=(15, 1)), sg.InputText('', key='cpf')],
-            [sg.Button('Confirmar'), sg.Cancel('Cancelar')]
+            [sg.Column([[sg.Text('Dados Cliente', font=("Palatino Linotype", 30))]], justification='center', pad=((0,0), (20,20)))],
+            [sg.Column([[sg.Text('Insira:', font=("Palatino Linotype", 20), pad=15), sg.InputText('', key='nome')]], justification='center')],
+            [sg.Column([[sg.Text('Nome:', font=font, size=size, pad=pad), sg.InputText('', key='nome')]], justification='left')],
+            [sg.Column([[sg.Text('Telefone:', font=font, size=size, pad=pad), sg.InputText('', key='telefone')]], justification='right')],
+            [sg.Column([[sg.Text('CPF:', font=font, size=size, pad=pad), sg.InputText('', key='cpf')]], justification='left')],
+            [sg.Column([[sg.Button('Confirmar', font=font, size=size, pad=pad)], sg.Cancel('Retornar')], justification='left')],
         ]
-        self.__window = sg.Window('Pizzaria').Layout(layout)
+
+        self.__window = sg.Window('Pizzaria', default_element_size=(40,1), size=(1250,620), icon="Imagens\pizza icone.ico").Layout(layout)
 
         button, values = self.open()
         nome = values['nome']
@@ -50,7 +61,6 @@ class Tela_Cliente():
 
         while True:
             try:
-                nome = input("Insira o nome do cliente: ")
                 if len(nome) < 3:
                     raise Entrada_muito_curta
                 break
@@ -61,8 +71,6 @@ class Tela_Cliente():
 
         while True:
             try:
-                telefone = input("Insira o telefone do cliente: ")
-
                 if int(telefone) <= 0:
                     raise Valor_abaixo_de_zero
                 
@@ -83,8 +91,6 @@ class Tela_Cliente():
 
         while True:
             try:
-                cpf = input("Insira o CPF do cliente: ")
-
                 if int(cpf) <= 0:
                     raise Valor_abaixo_de_zero
                 
@@ -107,17 +113,24 @@ class Tela_Cliente():
         return {"nome": nome, "telefone": telefone, "cpf": cpf}
     
     def pega_endereco(self):
-        sg.ChangeLookAndFeel('DarkRed1')
+        print("componentes visuais iniciados pega endereço")
+        sg.ChangeLookAndFeel('DarkBrown1')
+        font = ("Palatino Linotype", 10)
+        pad = (200,200), (0,0)
+        size = (18,1)
+
         layout = [
-            [sg.Text('-------- Endereço ----------', font=("Helvica", 25))],
-            [sg.Text('numero:', size=(15, 1)), sg.InputText('', key='numero')],
-            [sg.Text('rua:', size=(15, 1)), sg.InputText('', key='rua')],
-            [sg.Text('bairro:', size=(15, 1)), sg.InputText('', key='bairro')],
-            [sg.Text('cidade:', size=(15, 1)), sg.InputText('', key='cidade')],
-            [sg.Text('cep:', size=(15, 1)), sg.InputText('', key='cep')],
-            [sg.Button('Confirmar'), sg.Cancel('Cancelar')]
+            [sg.Column([[sg.Text('Dados Endereço', font=("Palatino Linotype", 30))]], justification='center', pad=((0,0), (20,20)))],
+            [sg.Column([[sg.Text('Insira:', font=("Palatino Linotype", 20), pad=15), sg.InputText('', key='nome')]], justification='center')],
+            [sg.Column([[sg.Text('Número:', font=font, size=size, pad=pad), sg.InputText('', key='numero')]], justification='left')],
+            [sg.Column([[sg.Text('Rua:', font=font, size=size, pad=pad), sg.InputText('', key='rua')]], justification='right')],
+            [sg.Column([[sg.Text('Bairro:', font=font, size=size, pad=pad), sg.InputText('', key='bairro')]], justification='left')],
+            [sg.Column([[sg.Text('Cidade:', font=font, size=size, pad=pad), sg.InputText('', key='cidade')]], justification='right')],
+            [sg.Column([[sg.Text('CEP:', font=font, size=size, pad=pad), sg.InputText('', key='cep')]], justification='left')],
+            [sg.Column([[sg.Button('Confirmar', font=font, size=size, pad=pad)], sg.Cancel('Retornar')], justification='left')],
         ]
-        self.__window = sg.Window('Sistema de livros').Layout(layout)
+
+        self.__window = sg.Window('Pizzaria', default_element_size=(40,1), size=(1250,620), icon="Imagens\pizza icone.ico").Layout(layout)
 
         button, values = self.open()
         numero = values['numero']
@@ -198,22 +211,28 @@ class Tela_Cliente():
             string_todos_clientes = string_todos_clientes + "Telefone do cliente: ", dado["telefone"] + '\n'
             string_todos_clientes = string_todos_clientes + "Cidade do endereço do cliente: ", dado["cidade"] + '\n\n'
 
-        sg.Popup('-------- Clientes Cadastrados ----------', string_todos_clientes)
+        sg.Popup('Clientes Cadastrados', string_todos_clientes)
 
     def mostra_mensagem(self, mensagem: str):
         sg.popup("", mensagem)
 
     def seleciona_cliente(self):
-        sg.ChangeLookAndFeel('DarkRed1')
+        print("componentes visuais iniciados seleciona cliente")
+        sg.ChangeLookAndFeel('DarkBrown1')
+        font = ("Palatino Linotype", 10)
+        pad = (200,200), (0,0)
+        size = (18,1)
+
         while True:
             try:
                 layout = [
-                    [sg.Text('-------- SELECIONAR AMIGO ----------', font=("Helvica", 25))],
-                    [sg.Text('Digite o CPF do amigo que deseja selecionar:', font=("Helvica", 15))],
-                    [sg.Text('CPF:', size=(15, 1)), sg.InputText('', key='cpf')],
-                    [sg.Button('Confirmar'), sg.Cancel('Cancelar')]
+                    [sg.Column([[sg.Text('Selecionar Cliente', font=("Palatino Linotype", 30))]], justification='center', pad=((0,0), (20,20)))],
+                    [sg.Column([[sg.Text('Digite o CPF do cliente que deseja selecionar::', font=("Palatino Linotype", 20), pad=15), sg.InputText('', key='nome')]], justification='center')],
+                    [sg.Column([[sg.Text('CPF:', font=font, size=size, pad=pad), sg.InputText('', key='cpf')]], justification='left')],
+                    [sg.Column([[sg.Button('Confirmar', font=font, size=size, pad=pad)], sg.Cancel('Retornar')], justification='left')],
                 ]
-                self.__window = sg.Window('Seleciona amigo').Layout(layout)
+
+                self.__window = sg.Window('Pizzaria', default_element_size=(40,1), size=(1250,620), icon="Imagens\pizza icone.ico").Layout(layout)
                 
                 button, values = self.open()
                 cpf = values['cpf']
@@ -240,25 +259,26 @@ class Tela_Cliente():
 
         self.close()
         return cpf
-
+    
     def abre_tela(self):
-        self.init_opcoes()
-        button, values = self.open()
+        # fazer aqui tratamento dos dados, caso a entrada seja diferente do esperado
+        self.init_components()
+        button, values = self.__window.Read()
+        button = int(button)
 
-        if values['1']:
+        if button == 1:
             opcao = 1
-        if values['2']:
+        if button == 2:
             opcao = 2
-        if values['3']:
+        if button == 3:
             opcao = 3
-        if values['4']:
+        if button == 4:
             opcao = 4
-        if values['5']:
+        if button == 5:
             opcao = 5
 
-        # cobre os casos de Retornar, fechar janela, ou clicar cancelar
-        #Isso faz com que retornemos a tela do sistema caso qualquer uma dessas coisas aconteca
-        if values['0'] or button in (None, 'Cancelar'):
+        if button == 0 or button in (None,'Cancelar'):
             opcao = 0
+
         self.close()
         return opcao
