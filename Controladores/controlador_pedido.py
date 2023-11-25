@@ -5,6 +5,7 @@ from DAOs.pedido_dao import PedidoDAO
 from Entidades.Pedido.Forma_de_Pagamento import Forma_de_Pagamento
 from Limites.Tela_Pedido import Tela_Pedido
 from Entidades.Pedido.Pedido import Pedido
+from excecoes import Pedido_ja_cadastrado
 
 
 class ControladorPedido():
@@ -21,19 +22,26 @@ class ControladorPedido():
                                                       lista_pizzas=self.__controlador_pizzaria.pegar_pizzas(),
                                                       lista_bebidas=self.__controlador_pizzaria.pegar_bebidas())
 
-        # pegando a data atual
-        data = datetime.datetime.now()
+        try:
+            if dados_pedido is not None:
+                # pegando a data atual
+                data = datetime.datetime.now()
+                
+                pedido = Pedido(produtos=dados_pedido["produtos"],
+                                cliente=self.__controlador_pizzaria.pegar_cliente_por_cpf(
+                                    dados_pedido["cpf"]),
+                                atendente=dados_pedido["atendente"],
+                                forma_de_pagamento=dados_pedido["forma_de_pagamento"],
+                                data=data, codigo=self.__proximo_codigo)
 
-        pedido = Pedido(produtos=dados_pedido["produtos"],
-                        cliente=self.__controlador_pizzaria.pegar_cliente_por_cpf(
-                            dados_pedido["cpf"]),
-                        atendente=dados_pedido["atendente"],
-                        forma_de_pagamento=dados_pedido["forma_de_pagamento"],
-                        data=data, codigo=self.__proximo_codigo)
+                self.__pedido_DAO.add(pedido)
+                self.__proximo_codigo += 1
+                self.__controlador_pizzaria.aumentar_pedidos_funcionario(dados_pedido["atendente"])
 
-        self.__pedido_DAO.add(pedido)
-        self.__proximo_codigo += 1
-        self.__controlador_pizzaria.aumentar_pedidos_funcionario(dados_pedido["atendente"])
+            else:
+                raise Pedido_ja_cadastrado(dados_pedido)
+        except Pedido_ja_cadastrado as e:
+            self.__tela.mostra_mensagem(e)
 
     def deletar_pedido(self):
         self.ver_pedidos()
