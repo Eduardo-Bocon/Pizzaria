@@ -1,26 +1,57 @@
 from excecoes import Entrada_muito_curta, Valor_invalido
+import PySimpleGUI as sg
 
 
 class Tela_Produto:
 
-    def abre_tela(self):
-        print("---- Tela Produtos ----")
-        print("Opcões:")
-        print("1 - Cadastrar Produto")
-        print("2 - Modificar Produto")
-        print("3 - Deletar Produto")
-        print("4 - Ver Produtos")
-        print("0 - Retornar")
+    def __init__(self):
+        self.__window = None
 
-        while True:
-            try:
-                opcao = int(input("O que deseja fazer? "))
-                print("")
-                if opcao < 0 or opcao > 4:
-                    raise ValueError
-                return opcao
-            except ValueError:
-                print("Valor invalido. Insira um valor entre 0 e 4.")
+    def init_components(self, lista_pizzas):
+        print("componentes visuais iniciados geral")
+        sg.ChangeLookAndFeel('DarkBrown1')
+        font = ("Palatino Linotype", 30)
+        layout = [
+            [sg.Column([[sg.Text('Produtos', font=("Palatino Linotype", 60))]],
+                       justification='center', pad=((0, 0), (60, 40)))],
+            [sg.Column([[sg.Image("Imagens\pizza (1).png", subsample=3)]], justification='center')],
+            [sg.Column([[sg.Text('Para onde você quer ir?', font=("Palatino Linotype", 50), pad=30)]],
+                       justification='center')],
+
+            [sg.Column([[sg.Listbox(values=lista_pizzas, size=(100, 10))]])],
+
+            [sg.Column([[sg.Button('Cadastrar novo produto', key='1', font=("Palatino Linotype", 20), size=(20, 2),
+                                   pad=((0, 0), (0, 0)))], [sg.Button('Ver produto', key='2', font=("Palatino Linotype", 20), size=(20, 2), pad=((0, 0), (50, 0)))]], justification='right')],
+
+        ]
+
+        self.__window = sg.Window('Pizzaria', default_element_size=(40, 1), size=(1920, 1080),
+                                  icon="Imagens\pizza icone.ico").Layout(layout)
+
+    def abre_tela(self, lista_pizzas):
+        # fazer aqui tratamento dos dados, caso a entrada seja diferente do esperado
+        self.init_components(lista_pizzas)
+        button, values = self.__window.Read()
+        button = int(button)
+        opcao = 0
+
+        if button == 1:
+            opcao = 1
+        if button == 2:
+            opcao = 2
+        if button == 3:
+            opcao = 3
+        if button == 4:
+            opcao = 4
+        if button == 5:
+            opcao = 5
+
+        if button == 0 or button in (None, 'Cancelar'):
+            opcao = 0
+
+        print(opcao)
+        self.close()
+        return opcao
 
     def mostra_mensagem(self, mensagem):
         print(mensagem)
@@ -96,6 +127,9 @@ class Tela_Produto:
     def escolher_produto(self) -> str:
         nome = input("Digite o nome do produto: ")
         return nome
+
+    def close(self):
+        self.__window.Close()
 
 
 

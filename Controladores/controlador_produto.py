@@ -22,7 +22,7 @@ class ControladorProduto():
                         0: self.retornar}
 
         while 1:
-            lista_opcoes[self.__tela.abre_tela()]()
+            lista_opcoes[self.__tela.abre_tela(self.pegar_pizzas())]()
 
     def cadastrar_produto(self):
         dados_novo_produto = self.__tela.pegar_dados_produto()
@@ -34,11 +34,11 @@ class ControladorProduto():
                 if dados_novo_produto["tipo"].upper() == "PIZZA":
                     novo_produto = Pizza(preco_venda=dados_novo_produto["preco_venda"],
                                          preco_compra=dados_novo_produto["preco_compra"],
-                                         quantidade=dados_novo_produto["quantidade"], sabor=dados_novo_produto["nome"])
+                                         quantidade=dados_novo_produto["quantidade"], nome=dados_novo_produto["nome"])
                 elif dados_novo_produto["tipo"].upper() == "BEBIDA":
                     novo_produto = Bebida(preco_venda=dados_novo_produto["preco_venda"],
                                           preco_compra=dados_novo_produto["preco_compra"],
-                                          quantidade=dados_novo_produto["quantidade"], tipo=dados_novo_produto["nome"])
+                                          quantidade=dados_novo_produto["quantidade"], nome=dados_novo_produto["nome"])
                 self.__produto_DAO.add(novo_produto)
             else:
                 raise Produto_ja_cadastrado(nome)
@@ -75,11 +75,11 @@ class ControladorProduto():
             for produto in self.__produto_DAO.get_all():
                 if isinstance(produto, Pizza):
                     self.__tela.ver_produto(
-                        {"nome": produto.sabor, "tipo": "Pizza", "preco_compra": produto.preco_compra,
+                        {"nome": produto.nome, "tipo": "Pizza", "preco_compra": produto.preco_compra,
                          "preco_venda": produto.preco_venda, "quantidade": produto.quantidade})
                 elif isinstance(produto, Bebida):
                     self.__tela.ver_produto(
-                        {"nome": produto.tipo, "tipo": "Bebida", "preco_compra": produto.preco_compra,
+                        {"nome": produto.nome, "tipo": "Bebida", "preco_compra": produto.preco_compra,
                          "preco_venda": produto.preco_venda, "quantidade": produto.quantidade})
 
     def pegar_produto(self, nome: str) -> Produto:
