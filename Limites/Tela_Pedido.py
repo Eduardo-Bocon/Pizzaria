@@ -1,53 +1,85 @@
-
+import PySimpleGUI as sg
 from excecoes import Entrada_muito_curta, Forma_de_Pagamento_Invalida, Atendente_nao_encontrado, Valor_invalido, \
     Entrada_muito_longa
 
 
 class Tela_Pedido():
-
+    
     def __init__(self, controlador):
+        self.__window = None
+        self.init_components()
         self.__controlador = controlador
 
-    def abre_tela(self):
-        print("---- Tela Pedidos ----")
-        print("Opcões:")
-        print("1 - Fazer pedido")
-        print("2 - Modificar pedido")
-        print("3 - Ver pedidos")
-        print("4 - Deletar pedido")
-        print("5 - Confirmar entrega pedido")
-        print("0 - Retornar")
+    def init_components(self):
+        print("componentes visuais iniciados pedido")
+        sg.ChangeLookAndFeel('DarkBrown1')
+        font = ("Palatino Linotype", 10)
+        pad = (200,200), (0,0)
+        size = (18,1)
 
-        while True:
-            try:
-                opcao = int(input("O que deseja fazer? "))
-                if opcao < 0 or opcao > 5:
-                    raise Valor_invalido("0 até 5")
-                return opcao
-            except ValueError:
-                print("Digite um numero.")
-            except Valor_invalido as e:
-                print(e)
+        layout = [
+            [sg.Column([[sg.Text('Tela Pedido', font=("Palatino Linotype", 30))]], justification='center', pad=((0,0), (20,20)))],
+            [sg.Column([[sg.Image("Imagens\pedido.png", subsample=3)]], justification='center')],
+            [sg.Column([[sg.Text('O que você deseja fazer?', font=("Palatino Linotype", 20), pad=15)]], justification='center')],
+            [sg.Column([[sg.Button('Fazer pedido', key='1', font=font, size=size, pad=pad)]], justification='left')],
+            [sg.Column([[sg.Button('Modificar pedido', key='2', font=font, size=size, pad=pad)]], justification='center')],
+            [sg.Column([[sg.Button('Ver pedidos', key='3', font=font, size=size,  pad=pad)]], justification='right')],
+            [sg.Column([[sg.Button('Deletar pedido', key='4', font=font, size=size,  pad=pad)]], justification='left')],
+            [sg.Column([[sg.Button('Confirmar entrega pedido', key='5', font=font, size=size,  pad=pad)]], justification='center')],
+            [sg.Column([[sg.Button('Retornar', key='0', font=font, size=size,  pad=pad)]], justification='right')],
+        ]
+
+        self.__window = sg.Window('Pizzaria', default_element_size=(40,1), size=(1250,620), icon="Imagens\pizza icone.ico").Layout(layout)
+
+    def open(self):
+        button, values = self.__window.Read()
+        return button, values
+
+    def close(self):
+        self.__window.Close()
+
+    def abre_tela(self):
+        # fazer aqui tratamento dos dados, caso a entrada seja diferente do esperado
+        self.init_components()
+        button, values = self.__window.Read()
+        button = int(button)
+
+        if button == 1:
+            opcao = 1
+        if button == 2:
+            opcao = 2
+        if button == 3:
+            opcao = 3
+        if button == 4:
+            opcao = 4
+        if button == 5:
+            opcao = 5
+
+        if button == 0 or button in (None,'Cancelar'):
+            opcao = 0
+
+        self.close()
+        return opcao
 
     def abre_tela_ver_pedidos(self):
-        print("Opcões:")
-        print("1 - Ver todos os pedidos")
-        print("2 - Ver os pedidos de um atendente")
-        print("3 - Ver os pedidos de um cliente")
-        print("4 - Ver os pedidos acima de uma faixa de preço")
-        print("0 - Retornar")
+        print("componentes visuais iniciados ver pedidos")
+        sg.ChangeLookAndFeel('DarkBrown1')
+        font = ("Palatino Linotype", 10)
+        pad = (200,200), (0,0)
+        size = (18,1)
 
-        while True:
-            try:
-                opcao = int(input("O que deseja fazer? "))
-                print("")
-                if opcao < 0 or opcao > 4:
-                    raise Valor_invalido("0 até 4")
-                return opcao
-            except ValueError:
-                print("Digite um numero.")
-            except Valor_invalido as e:
-                print(e)
+        layout = [
+            [sg.Column([[sg.Text('Tela Ver Pedidos', font=("Palatino Linotype", 30))]], justification='center', pad=((0,0), (20,20)))],
+            [sg.Column([[sg.Image("Imagens\pedido.png", subsample=3)]], justification='center')],
+            [sg.Column([[sg.Text('O que você deseja fazer?', font=("Palatino Linotype", 20), pad=15)]], justification='center')],
+            [sg.Column([[sg.Button('Ver todos os pedidos', key='1', font=font, size=size, pad=pad)]], justification='left')],
+            [sg.Column([[sg.Button('Ver os pedidos de um atendente', key='2', font=font, size=size, pad=pad)]], justification='right')],
+            [sg.Column([[sg.Button('Ver os pedidos de um cliente', key='3', font=font, size=size,  pad=pad)]], justification='left')],
+            [sg.Column([[sg.Button('Ver os pedidos acima de uma faixa de preço', key='4', font=font, size=size,  pad=pad)]], justification='right')],
+            [sg.Column([[sg.Button('Retornar', key='0', font=font, size=size,  pad=pad)]], justification='right')],
+        ]
+
+        self.__window = sg.Window('Pizzaria', default_element_size=(40,1), size=(1250,620), icon="Imagens\pizza icone.ico").Layout(layout)
 
     def pegar_dados_pedido(self, lista_atendentes: [], lista_pizzas: [], lista_bebidas: []):
 

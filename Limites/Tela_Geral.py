@@ -9,20 +9,23 @@ class Tela_Geral():
     def init_components(self, ):
         print("componentes visuais iniciados geral")
         sg.ChangeLookAndFeel('DarkBrown1')
-        font = ("Palatino Linotype", 30)
+        font = ("Palatino Linotype", 10)
+        pad = (200,200), (0,0)
+        size = (18,1)
+
         layout = [
-            [sg.Column([[sg.Text('Bem vindo á nossa PIZZARIA!', font=("Palatino Linotype", 60))]], justification='center', pad=((0,0), (60,40)))],
+            [sg.Column([[sg.Text('Bem vindo á nossa PIZZARIA!', font=("Palatino Linotype", 30))]], justification='center', pad=((0,0), (20,20)))],
             [sg.Column([[sg.Image("Imagens\pizza.png", subsample=3)]], justification='center')],
-            [sg.Column([[sg.Text('Para onde você quer ir?', font=("Palatino Linotype", 50), pad=30)]], justification='center')],
-            [sg.Column([[sg.Button('Produtos', key='1', font=("Palatino Linotype", 20), size=(15,1), pad=((300,300), (0,0)))]], justification='left')],
-            [sg.Column([[sg.Button('Clientes', key='2', font=("Palatino Linotype", 20), size=(15,1))]], justification='center')],
-            [sg.Column([[sg.Button('Funcionarios', key='3', font=("Palatino Linotype", 20), size=(15,1),  pad=((300,300), (0,0)))]], justification='right')],
-            [sg.Column([[sg.Button('Pedidos', key='4', font=("Palatino Linotype", 20), size=(15,1),  pad=((300,300), (0,0)))]], justification='left')],
-            [sg.Column([[sg.Button('Pizzaria', key='5', font=("Palatino Linotype", 20), size=(15,1))]], justification='center')],
-            [sg.Column([[sg.Button('Finalizar sistema', key='0', font=("Palatino Linotype", 20), size=(15,1),  pad=((300,300), (0,0)))]], justification='right')]
+            [sg.Column([[sg.Text('Para onde você quer ir?', font=("Palatino Linotype", 20), pad=15)]], justification='center')],
+            [sg.Column([[sg.Button('Produtos', key='1', font=font, size=size, pad=pad)]], justification='left')],
+            [sg.Column([[sg.Button('Clientes', key='2', font=font, size=size)]], justification='center')],
+            [sg.Column([[sg.Button('Funcionarios', key='3', font=font, size=size,  pad=pad)]], justification='right')],
+            [sg.Column([[sg.Button('Pedidos', key='4', font=font, size=size,  pad=pad)]], justification='left')],
+            [sg.Column([[sg.Button('Pizzaria', key='5', font=font, size=size)]], justification='center')],
+            [sg.Column([[sg.Button('Finalizar sistema', key='0', font=font, size=size,  pad=pad)]], justification='right')]
         ]
 
-        self.__window = sg.Window('Pizzaria', default_element_size=(40,1), size=(1920,1080), icon="Imagens\pizza icone.ico").Layout(layout)
+        self.__window = sg.Window('Pizzaria', default_element_size=(40,1), size=(1250,620), icon="Imagens\pizza icone.ico").Layout(layout)
 
     def open(self):
         button, values = self.__window.Read()

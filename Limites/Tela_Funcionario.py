@@ -1,14 +1,67 @@
+import PySimpleGUI as sg
 from excecoes import Entrada_muito_curta, Entrada_muito_longa, Valor_abaixo_de_zero
 
 
 class Tela_Funcionario():
 
+    def __init__(self):
+        self.__window = None
+        self.init_components()
+
+    def init_components(self):
+        print("componentes visuais iniciados funcionario")
+        sg.ChangeLookAndFeel('DarkBrown1')
+        font = ("Palatino Linotype", 10)
+        pad = (200,200), (0,0)
+        size = (18,1)
+
+        layout = [
+            [sg.Column([[sg.Text('Tela Funcionários', font=("Palatino Linotype", 30))]], justification='center', pad=((0,0), (20,20)))],
+            [sg.Column([[sg.Image("Imagens\carteira-de-identidade.png", subsample=3)]], justification='center')],
+            [sg.Column([[sg.Text('O que você deseja fazer?', font=("Palatino Linotype", 20), pad=15)]], justification='center')],
+            [sg.Column([[sg.Button('Cadastrar Funcionário', key='1', font=font, size=size, pad=pad)]], justification='left')],
+            [sg.Column([[sg.Button('Modificar Funcionário', key='2', font=font, size=size, pad=pad)]], justification='center')],
+            [sg.Column([[sg.Button('Deletar Funcionário', key='3', font=font, size=size,  pad=pad)]], justification='right')],
+            [sg.Column([[sg.Button('Ver Funcionarios', key='4', font=font, size=size,  pad=pad)]], justification='left')],
+            [sg.Column([[sg.Button('Retornar', key='0', font=font, size=size,  pad=pad)]], justification='right')],
+        ]
+
+        self.__window = sg.Window('Pizzaria', default_element_size=(40,1), size=(1250,620), icon="Imagens\pizza icone.ico").Layout(layout)
+
+    def open(self):
+        button, values = self.__window.Read()
+        return button, values
+
+    def close(self):
+        self.__window.Close()
+
     def pega_dados_funcionario(self):
-        print("Insira os dados do funcionário.")
+        print("componentes visuais iniciados pega dados funcionario")
+        sg.ChangeLookAndFeel('DarkBrown1')
+        font = ("Palatino Linotype", 10)
+        pad = (200,200), (0,0)
+        size = (18,1)
+
+        layout = [
+            [sg.Column([[sg.Text('Dados Funcionário', font=("Palatino Linotype", 30))]], justification='center', pad=((0,0), (20,20)))],
+            [sg.Column([[sg.Text('Insira:', font=("Palatino Linotype", 20), pad=15), sg.InputText('', key='nome')]], justification='center')],
+            [sg.Column([[sg.Text('Nome:', font=font, size=size, pad=pad), sg.InputText('', key='nome')]], justification='left')],
+            [sg.Column([[sg.Text('Telefone:', font=font, size=size, pad=pad), sg.InputText('', key='telefone')]], justification='center')],
+            [sg.Column([[sg.Text('CPF:', font=font, size=size, pad=pad), sg.InputText('', key='cpf')]], justification='right')],
+            [sg.Column([[sg.Text('Salário:', font=font, size=size, pad=pad), sg.InputText('', key='salario')]], justification='left')],
+            [sg.Column([[sg.Button('Confirmar', font=font, size=size, pad=pad)], sg.Cancel('Retornar')], justification='center')],
+        ]
+
+        self.__window = sg.Window('Pizzaria', default_element_size=(40,1), size=(1250,620), icon="Imagens\pizza icone.ico").Layout(layout)
+
+        button, values = self.open()
+        nome = values['nome']
+        telefone = values['telefone']
+        cpf = values['cpf']
+        salario = values['salario']
 
         while True:
             try:
-                nome = input("Insira o nome do funcionário: ")
                 if len(nome) < 4:
                     raise Entrada_muito_curta
                 break
@@ -19,8 +72,6 @@ class Tela_Funcionario():
 
         while True:
             try:
-                telefone = input("Insira o telefone do funcionário: ")
-
                 if int(telefone) <= 0:
                     raise Valor_abaixo_de_zero
                 
@@ -42,8 +93,6 @@ class Tela_Funcionario():
 
         while True:
             try:
-                cpf = input("Insira o CPF do funcionário: ")
-
                 if int(cpf) <= 0:
                     raise Valor_abaixo_de_zero
                 
@@ -64,8 +113,6 @@ class Tela_Funcionario():
 
         while True:
             try:
-                salario = input("Insira o salário do funcionário: ")
-
                 if int(salario) <= 0:
                     raise Valor_abaixo_de_zero
                 break
@@ -75,19 +122,36 @@ class Tela_Funcionario():
         return {"nome": nome, "telefone": telefone, "cpf": cpf, "salario": salario}
 
     def mostra_funcionarios(self, dados_funcionario):
-        print("Nome do funcionário: ", dados_funcionario["nome"])
-        print("CPF do funcionário: ", dados_funcionario["cpf"])
-        print("Telefone do funcionário: ", dados_funcionario["telefone"])
-        print("Salário do funcionário: ", dados_funcionario["salario"])
-        print("\n")
+        sg.Popup("Nome do funcionário: ", dados_funcionario["nome"])
+        sg.Popup("CPF do funcionário: ", dados_funcionario["cpf"])
+        sg.Popup("Telefone do funcionário: ", dados_funcionario["telefone"])
+        sg.Popup("Salário do funcionário: ", dados_funcionario["salario"])
+        sg.Popup("")
 
     def mostra_mensagem(self, mensagem: str):
-        print(mensagem)
+        sg.popup("", mensagem)
 
     def seleciona_funcionario(self):
+        print("componentes visuais iniciados seleciona funcionario")
+        sg.ChangeLookAndFeel('DarkBrown1')
+        font = ("Palatino Linotype", 10)
+        pad = (200,200), (0,0)
+        size = (18,1)
+
         while True:
             try:
-                cpf = input("Insira o CPF do funcionário que deseja selecionar: ")
+                layout = [
+                    [sg.Column([[sg.Text('Selecionar Funcionário', font=("Palatino Linotype", 30))]], justification='center', pad=((0,0), (20,20)))],
+                    [sg.Column([[sg.Text('Digite o CPF do funcionário que deseja selecionar::', font=("Palatino Linotype", 20), pad=15), sg.InputText('', key='nome')]], justification='center')],
+                    [sg.Column([[sg.Text('CPF:', font=font, size=size, pad=pad), sg.InputText('', key='cpf')]], justification='left')],
+                    [sg.Column([[sg.Button('Confirmar', font=font, size=size, pad=pad)], sg.Cancel('Retornar')], justification='left')],
+                ]
+
+                self.__window = sg.Window('Pizzaria', default_element_size=(40,1), size=(1250,620), icon="Imagens\pizza icone.ico").Layout(layout)
+                
+                button, values = self.open()
+                cpf = values['cpf']
+                self.close()
 
                 if int(cpf) <= 0:
                     raise Valor_abaixo_de_zero
@@ -107,35 +171,49 @@ class Tela_Funcionario():
             except Entrada_muito_longa as e:
                 print(e)
 
+        self.close()
         return cpf
     
     def escolhe_funcao(self):
-        print("1 - Atendente; 2 - Gerente; 3 - Pizzaiolo, 4 - Entregador")
+        print("componentes visuais iniciados escolhe funcao")
+        sg.ChangeLookAndFeel('DarkBrown1')
+        font = ("Palatino Linotype", 10)
+        pad = (200,200), (0,0)
+        size = (18,1)
 
         while True:
-            try:
-                funcao = int(input("Insira o número da função do funcionário:"))
-                if funcao < 1 or funcao > 4:
-                    raise ValueError
-                return funcao
-            except ValueError:
-                print("Valor inválido, insira um valor entre 1 e 4!")
+            layout = [
+                [sg.Column([[sg.Button('Atendente', key='1', font=font, size=size, pad=pad)]], justification='left')],
+                [sg.Column([[sg.Button('Gerente', key='2', font=font, size=size, pad=pad)]], justification='center')],
+                [sg.Column([[sg.Button('Pizzaiolo', key='3', font=font, size=size,  pad=pad)]], justification='right')],
+                [sg.Column([[sg.Button('Entregador', key='4', font=font, size=size,  pad=pad)]], justification='left')],
+            ]
+
+            self.__window = sg.Window('Pizzaria', default_element_size=(40,1), size=(1250,620), icon="Imagens\pizza icone.ico").Layout(layout)
+            
+            button, values = self.open()
+            funcao = button
+            self.close()
+            return funcao
+
 
     def abre_tela(self):
-        print("---- Tela Funcionários ----")
-        print("Opcões:")
-        print("1 - Cadastrar Funcionário")
-        print("2 - Modificar Funcionário")
-        print("3 - Deletar Funcionário")
-        print("4 - Ver Funcionarios")
-        print("0 - Retornar")
+        # fazer aqui tratamento dos dados, caso a entrada seja diferente do esperado
+        self.init_components()
+        button, values = self.__window.Read()
+        button = int(button)
 
-        while True:
-            try:
-                opcao = int(input("O que deseja fazer? "))
-                print("")
-                if opcao < 0 or opcao > 4:
-                    raise ValueError
-                return opcao
-            except ValueError:
-                print("Valor inválido, insira um valor entre 0 e 4!")
+        if button == 1:
+            opcao = 1
+        if button == 2:
+            opcao = 2
+        if button == 3:
+            opcao = 3
+        if button == 4:
+            opcao = 4
+
+        if button == 0 or button in (None,'Cancelar'):
+            opcao = 0
+
+        self.close()
+        return opcao
