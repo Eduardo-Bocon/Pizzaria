@@ -47,30 +47,36 @@ class ControladorProduto():
 
     def modificar_produto(self):
         self.ver_produtos()
-        nome = self.__tela.escolher_produto()
-        produto = self.pegar_produto(nome)
 
-        if (produto is not None):
-            novos_dados_produto = self.__tela.pegar_dados_produto()
-
-            if novos_dados_produto["tipo"].upper() == "PIZZA":
-                produto.sabor = novos_dados_produto["nome"]
-            elif novos_dados_produto["tipo"].upper() == "BEBIDA":
-                produto.tipo = novos_dados_produto["nome"]
-            else:
-                return
-
-            produto.preco_venda = novos_dados_produto["preco_venda"]
-            produto.preco_compra = novos_dados_produto["preco_compra"]
-            produto.quantidade = novos_dados_produto["quantidade"]
-
-            self.ver_produtos()
+        if not self.__produto_DAO.get_all():
+            pass
+        
         else:
-            self.__tela.mostra_mensagem("Erro: produto não existente")
+            nome = self.__tela.escolher_produto()
+            produto = self.pegar_produto(nome)
+
+            if (produto is not None):
+                novos_dados_produto = self.__tela.pegar_dados_produto()
+
+                if novos_dados_produto["tipo"].upper() == "PIZZA":
+                    produto.sabor = novos_dados_produto["nome"]
+                elif novos_dados_produto["tipo"].upper() == "BEBIDA":
+                    produto.tipo = novos_dados_produto["nome"]
+                else:
+                    return
+
+                produto.preco_venda = novos_dados_produto["preco_venda"]
+                produto.preco_compra = novos_dados_produto["preco_compra"]
+                produto.quantidade = novos_dados_produto["quantidade"]
+
+                self.ver_produtos()
+            else:
+                self.__tela.mostra_mensagem("Erro: produto não existente")
 
     def ver_produtos(self):
         if not self.__produto_DAO.get_all():
             self.__tela.mostra_mensagem("Nenhum produto cadastrado.")
+            
         else:
             for produto in self.__produto_DAO.get_all():
                 if isinstance(produto, Pizza):
@@ -90,14 +96,20 @@ class ControladorProduto():
 
     def deletar_produto(self):
         self.ver_produtos()
-        nome = self.__tela.escolher_produto()
-        produto = self.pegar_produto(nome)
 
-        if produto is not None:
-            self.__produto_DAO.remove(produto)
-            self.ver_produtos()
+        
+        if not self.__produto_DAO.get_all():
+            pass
+        
         else:
-            self.__tela.mostra_mensagem("Erro: produto não existente")
+            nome = self.__tela.escolher_produto()
+            produto = self.pegar_produto(nome)
+
+            if produto is not None:
+                self.__produto_DAO.remove(produto)
+                self.ver_produtos()
+            else:
+                self.__tela.mostra_mensagem("Erro: produto não existente")
 
     def pegar_pizzas(self):
         pizzas = list()

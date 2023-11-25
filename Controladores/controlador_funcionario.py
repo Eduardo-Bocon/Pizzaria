@@ -48,39 +48,49 @@ class ControladorFuncionario():
 
     def deletar_funcionario(self):
         self.ver_funcionarios()
-        busca_funcionario = self.__Tela_Funcionario.seleciona_funcionario()
-        funcionario = self.busca_funcionario(busca_funcionario)
 
-        if funcionario is not None:
-            self.__funcionario_DAO.remove(funcionario)
-            self.__Tela_Funcionario.mostra_mensagem("Remoção de cadastro de funcionário realizado!")
-            self.ver_funcionarios()
-
+        if not self.__funcionario_DAO.get_all():
+            pass
+        
         else:
-            self.__Tela_Funcionario.mostra_mensagem("Funcionário não cadastrado!")
+            busca_funcionario = self.__Tela_Funcionario.seleciona_funcionario()
+            funcionario = self.busca_funcionario(busca_funcionario)
+
+            if funcionario is not None:
+                self.__funcionario_DAO.remove(funcionario)
+                self.__Tela_Funcionario.mostra_mensagem("Remoção de cadastro de funcionário realizado!")
+                self.ver_funcionarios()
+
+            else:
+                self.__Tela_Funcionario.mostra_mensagem("Funcionário não cadastrado!")
 
     def modificar_funcionario(self):
         self.ver_funcionarios()
-        busca_funcionario = self.__Tela_Funcionario.seleciona_funcionario()
-        funcionario = self.busca_funcionario(busca_funcionario)
 
-        if funcionario is not None:
-            novos_dados_funcionario = self.__Tela_Funcionario.pega_dados_funcionario()
-
-            funcionario.nome = novos_dados_funcionario["nome"]
-            funcionario.cpf = novos_dados_funcionario["cpf"]
-            funcionario.telefone = novos_dados_funcionario["telefone"]
-            funcionario.salario = novos_dados_funcionario["salario"]
-
-            self.ver_funcionarios()
-            self.__Tela_Funcionario.mostra_mensagem("Modificação de cadastro de funcionário realizado!")
-
+        if not self.__funcionario_DAO.get_all():
+            pass
+        
         else:
-            self.__Tela_Funcionario.mostra_mensagem("Funcionário não cadastrado!")
+            busca_funcionario = self.__Tela_Funcionario.seleciona_funcionario()
+            funcionario = self.busca_funcionario(busca_funcionario)
+
+            if funcionario is not None:
+                novos_dados_funcionario = self.__Tela_Funcionario.pega_dados_funcionario()
+
+                funcionario.nome = novos_dados_funcionario["nome"]
+                funcionario.cpf = novos_dados_funcionario["cpf"]
+                funcionario.telefone = novos_dados_funcionario["telefone"]
+                funcionario.salario = novos_dados_funcionario["salario"]
+
+                self.ver_funcionarios()
+                self.__Tela_Funcionario.mostra_mensagem("Modificação de cadastro de funcionário realizado!")
+
+            else:
+                self.__Tela_Funcionario.mostra_mensagem("Funcionário não cadastrado!")
 
     def ver_funcionarios(self):
         if not self.__funcionario_DAO.get_all():
-            self.__Tela_Funcionario.mostra_mensagem("Nenhum funcionario cadastrado!")
+            self.__Tela_Funcionario.mostra_mensagem("Nenhum funcionário cadastrado!")
 
         else:
             for funcionario in self.__funcionario_DAO.get_all():

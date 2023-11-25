@@ -45,11 +45,12 @@ class Tela_Cliente():
 
         layout = [
             [sg.Column([[sg.Text('Dados Cliente', font=("Palatino Linotype", 30))]], justification='center', pad=((0,0), (20,20)))],
-            [sg.Column([[sg.Text('Insira:', font=("Palatino Linotype", 20), pad=15), sg.InputText('', key='nome')]], justification='center')],
+            [sg.Column([[sg.Text('Insira:', font=("Palatino Linotype", 20), pad=15)]], justification='left')],
             [sg.Column([[sg.Text('Nome:', font=font, size=size, pad=pad), sg.InputText('', key='nome')]], justification='left')],
-            [sg.Column([[sg.Text('Telefone:', font=font, size=size, pad=pad), sg.InputText('', key='telefone')]], justification='right')],
+            [sg.Column([[sg.Text('Telefone:', font=font, size=size, pad=pad), sg.InputText('', key='telefone')]], justification='left')],
             [sg.Column([[sg.Text('CPF:', font=font, size=size, pad=pad), sg.InputText('', key='cpf')]], justification='left')],
-            [sg.Column([[sg.Button('Confirmar', font=font, size=size, pad=pad)], sg.Cancel('Retornar')], justification='left')],
+            [sg.Column([[sg.Button('Confirmar', font=font, size=size, pad=pad)]], justification='center')],
+            [sg.Column([[sg.Button('Retornar', key='0', font=font, size=size,  pad=pad)]], justification='center')]
         ]
 
         self.__window = sg.Window('Pizzaria', default_element_size=(40,1), size=(1250,620), icon="Imagens\pizza icone.ico").Layout(layout)
@@ -121,23 +122,25 @@ class Tela_Cliente():
 
         layout = [
             [sg.Column([[sg.Text('Dados Endereço', font=("Palatino Linotype", 30))]], justification='center', pad=((0,0), (20,20)))],
-            [sg.Column([[sg.Text('Insira:', font=("Palatino Linotype", 20), pad=15), sg.InputText('', key='nome')]], justification='center')],
+            [sg.Column([[sg.Text('Insira:', font=("Palatino Linotype", 20), pad=15)]], justification='left')],
             [sg.Column([[sg.Text('Número:', font=font, size=size, pad=pad), sg.InputText('', key='numero')]], justification='left')],
-            [sg.Column([[sg.Text('Rua:', font=font, size=size, pad=pad), sg.InputText('', key='rua')]], justification='right')],
+            [sg.Column([[sg.Text('Rua:', font=font, size=size, pad=pad), sg.InputText('', key='rua')]], justification='left')],
             [sg.Column([[sg.Text('Bairro:', font=font, size=size, pad=pad), sg.InputText('', key='bairro')]], justification='left')],
-            [sg.Column([[sg.Text('Cidade:', font=font, size=size, pad=pad), sg.InputText('', key='cidade')]], justification='right')],
+            [sg.Column([[sg.Text('Cidade:', font=font, size=size, pad=pad), sg.InputText('', key='cidade')]], justification='left')],
             [sg.Column([[sg.Text('CEP:', font=font, size=size, pad=pad), sg.InputText('', key='cep')]], justification='left')],
-            [sg.Column([[sg.Button('Confirmar', font=font, size=size, pad=pad)], sg.Cancel('Retornar')], justification='left')],
+            [sg.Column([[sg.Button('Confirmar', font=font, size=size, pad=pad)]], justification='center')],
+            [sg.Column([[sg.Button('Retornar', key='0', font=font, size=size,  pad=pad)]], justification='center')]
         ]
 
         self.__window = sg.Window('Pizzaria', default_element_size=(40,1), size=(1250,620), icon="Imagens\pizza icone.ico").Layout(layout)
 
         button, values = self.open()
-        numero = values['numero']
+
+        numero = int(values['numero'])
         rua = values['rua']
         bairro = values['bairro']
         cidade = values['cidade']
-        cep = values['cep']
+        cep = int(values['cep'])
 
         while True:
             try:
@@ -227,9 +230,10 @@ class Tela_Cliente():
             try:
                 layout = [
                     [sg.Column([[sg.Text('Selecionar Cliente', font=("Palatino Linotype", 30))]], justification='center', pad=((0,0), (20,20)))],
-                    [sg.Column([[sg.Text('Digite o CPF do cliente que deseja selecionar::', font=("Palatino Linotype", 20), pad=15), sg.InputText('', key='nome')]], justification='center')],
+                    [sg.Column([[sg.Text('Digite o CPF do cliente que deseja selecionar:', font=("Palatino Linotype", 20), pad=15)]], justification='left')],
                     [sg.Column([[sg.Text('CPF:', font=font, size=size, pad=pad), sg.InputText('', key='cpf')]], justification='left')],
-                    [sg.Column([[sg.Button('Confirmar', font=font, size=size, pad=pad)], sg.Cancel('Retornar')], justification='left')],
+                    [sg.Column([[sg.Button('Confirmar', font=font, size=size, pad=pad)]], justification='center')],
+                    [sg.Column([[sg.Button('Retornar', key='0', font=font, size=size,  pad=pad)]], justification='center')]
                 ]
 
                 self.__window = sg.Window('Pizzaria', default_element_size=(40,1), size=(1250,620), icon="Imagens\pizza icone.ico").Layout(layout)
