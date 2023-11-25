@@ -33,36 +33,46 @@ class ControladorCliente():
 
     def deletar_cliente(self):
         self.ver_clientes()
-        busca_cliente = self.__tela_Cliente.seleciona_cliente()
-        cliente = self.busca_clientes(busca_cliente)
 
-        if cliente is not None:
-            self.__cliente_DAO.remove(cliente)
-            self.ver_clientes()
-            self.__tela_Cliente.mostra_mensagem("Remoção de cadastro de cliente realizado!")
-
+        if not self.__cliente_DAO.get_all():
+            pass
+        
         else:
-            self.__tela_Cliente.mostra_mensagem("Cliente não cadastrado!")
+            busca_cliente = self.__tela_Cliente.seleciona_cliente()
+            cliente = self.busca_clientes(busca_cliente)
+
+            if cliente is not None:
+                self.__cliente_DAO.remove(cliente)
+                self.ver_clientes()
+                self.__tela_Cliente.mostra_mensagem("Remoção de cadastro de cliente realizado!")
+
+            else:
+                self.__tela_Cliente.mostra_mensagem("Cliente não cadastrado!")
 
     def modificar_cliente(self):
         self.ver_clientes()
-        busca_cliente = self.__tela_Cliente.seleciona_cliente()
-        cliente = self.busca_clientes(busca_cliente)
 
-        if cliente is not None:
-            novos_dados_cliente = self.__tela_Cliente.pega_dados_cliente()
-            novo_endereco = self.__tela_Cliente.pega_endereco()
-
-            cliente.nome = novos_dados_cliente["nome"]
-            cliente.cpf = novos_dados_cliente["cpf"]
-            cliente.telefone = novos_dados_cliente["telefone"]
-            cliente.endereco = Endereco(numero=novo_endereco["numero"], rua=novo_endereco["rua"], bairro=novo_endereco["bairro"], cidade=novo_endereco["cidade"], cep=novo_endereco["cep"])
-
-            self.ver_clientes()
-            self.__tela_Cliente.mostra_mensagem("Modificação de cadastro de cliente realizado!")
-
+        if not self.__cliente_DAO.get_all():
+            pass
+        
         else:
-            self.__tela_Cliente.mostra_mensagem("Cliente não cadastrado!")
+            busca_cliente = self.__tela_Cliente.seleciona_cliente()
+            cliente = self.busca_clientes(busca_cliente)
+
+            if cliente is not None:
+                novos_dados_cliente = self.__tela_Cliente.pega_dados_cliente()
+                novo_endereco = self.__tela_Cliente.pega_endereco()
+
+                cliente.nome = novos_dados_cliente["nome"]
+                cliente.cpf = novos_dados_cliente["cpf"]
+                cliente.telefone = novos_dados_cliente["telefone"]
+                cliente.endereco = Endereco(numero=novo_endereco["numero"], rua=novo_endereco["rua"], bairro=novo_endereco["bairro"], cidade=novo_endereco["cidade"], cep=novo_endereco["cep"])
+
+                self.ver_clientes()
+                self.__tela_Cliente.mostra_mensagem("Modificação de cadastro de cliente realizado!")
+
+            else:
+                self.__tela_Cliente.mostra_mensagem("Cliente não cadastrado!")
 
     def ver_clientes(self):
         if not self.__cliente_DAO.get_all():

@@ -23,6 +23,11 @@ class Produto_ja_cadastrado(Exception):
         self.mensagem = "O produto {} já existe"
         super().__init__(self.mensagem.format(produto))
 
+class Pedido_ja_cadastrado(Exception):
+    def __init__(self, pedido):
+        self.mensagem = "O pedido {} já existe"
+        super().__init__(self.mensagem.format(pedido))
+
 class Cliente_ja_cadastrado(Exception):
     def __init__(self, cliente):
         self.mensagem = "O cliente {} já está cadastrado"

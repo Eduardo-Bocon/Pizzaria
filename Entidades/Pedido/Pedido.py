@@ -4,8 +4,6 @@ from Entidades.Pessoa.Funcionario.Atendente import Atendente
 import datetime
 
 
-
-
 class Pedido:
     
     def __init__(self, produtos:list(),cliente: Cliente, atendente: Atendente, forma_de_pagamento: Forma_de_Pagamento, data: datetime, codigo: int):
@@ -89,5 +87,3 @@ class Pedido:
             gastos += produto.preco_compra
 
         return gastos
-
-
