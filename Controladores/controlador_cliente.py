@@ -14,7 +14,7 @@ class ControladorCliente():
 
     def cadastrar_cliente(self):
         dados_endereco = self.__tela_Cliente.pega_endereco()
-        dados_cliente = self.__tela_Cliente.pega_dados_cliente()
+        dados_cliente = self.__tela_Cliente.pega_dados_cliente(modificando=False)
         cpf = dados_cliente["cpf"]
         cliente = self.busca_clientes(cpf)
 
@@ -42,7 +42,7 @@ class ControladorCliente():
             cliente = self.busca_clientes(busca_cliente)
 
             if cliente is not None:
-                self.__cliente_DAO.remove(cliente)
+                self.__cliente_DAO.remove(cliente.cpf)
                 self.ver_clientes()
                 self.__tela_Cliente.mostra_mensagem("Remoção de cadastro de cliente realizado!")
 
@@ -60,13 +60,14 @@ class ControladorCliente():
             cliente = self.busca_clientes(busca_cliente)
 
             if cliente is not None:
-                novos_dados_cliente = self.__tela_Cliente.pega_dados_cliente()
-                novo_endereco = self.__tela_Cliente.pega_endereco()
+                novos_dados_cliente = self.__tela_Cliente.pega_dados_cliente({"nome":cliente.nome, "telefone":cliente.telefone})
+                novo_endereco = self.__tela_Cliente.pega_endereco({"numero":cliente.endereco.numero, "rua":cliente.endereco.rua, "bairro":cliente.endereco.bairro, "cidade":cliente.endereco.cidade, "cep":cliente.endereco.cep})
 
                 cliente.nome = novos_dados_cliente["nome"]
-                cliente.cpf = novos_dados_cliente["cpf"]
                 cliente.telefone = novos_dados_cliente["telefone"]
                 cliente.endereco = Endereco(numero=novo_endereco["numero"], rua=novo_endereco["rua"], bairro=novo_endereco["bairro"], cidade=novo_endereco["cidade"], cep=novo_endereco["cep"])
+
+                self.__cliente_DAO.update(cliente)
 
                 self.ver_clientes()
                 self.__tela_Cliente.mostra_mensagem("Modificação de cadastro de cliente realizado!")

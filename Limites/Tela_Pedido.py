@@ -7,7 +7,6 @@ class Tela_Pedido():
     
     def __init__(self, controlador):
         self.__window = None
-        self.init_components()
         self.__controlador = controlador
 
     def init_components(self):

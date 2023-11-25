@@ -4,7 +4,7 @@ class Tela_Geral():
 
     def __init__(self):
         self.__window = None
-        self.init_components()
+
 
     def init_components(self):
         print("componentes visuais iniciados geral")

@@ -6,7 +6,7 @@ class Tela_Funcionario():
 
     def __init__(self):
         self.__window = None
-        self.init_components()
+
 
     def init_components(self):
         print("componentes visuais iniciados funcionario")

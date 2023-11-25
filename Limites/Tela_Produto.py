@@ -11,25 +11,34 @@ class Tela_Produto:
     def close(self):
         self.__window.Close()
 
+    def open(self):
+        button, values = self.__window.Read()
+        return button, values
+
     def init_components(self, lista_pizzas):
-        print("componentes visuais iniciados geral")
+
         sg.ChangeLookAndFeel('DarkBrown1')
-        font = ("Palatino Linotype", 30)
+        font = ("Palatino Linotype", 10)
+        pad = (200, 200), (0, 0)
+        size = (18, 1)
+
         layout = [
-            [sg.Column([[sg.Text('Produtos', font=("Palatino Linotype", 60))]],
-                       justification='center', pad=((0, 0), (60, 40)))],
+            [sg.Column([[sg.Text('Tela Produtos', font=("Palatino Linotype", 30))]], justification='center',
+                       pad=((0, 0), (20, 20)))],
             [sg.Column([[sg.Image("Imagens\pizza (1).png", subsample=3)]], justification='center')],
-            [sg.Column([[sg.Text('Para onde você quer ir?', font=("Palatino Linotype", 50), pad=30)]],
+            [sg.Column([[sg.Text('O que você deseja fazer?', font=("Palatino Linotype", 20), pad=15)]],
                        justification='center')],
-
-            [sg.Column([[sg.Listbox(values=lista_pizzas, size=(100, 10))]])],
-
-            [sg.Column([[sg.Button('Cadastrar novo produto', key='1', font=("Palatino Linotype", 20), size=(20, 2),
-                                   pad=((0, 0), (0, 0)))], [sg.Button('Ver produto', key='2', font=("Palatino Linotype", 20), size=(20, 2), pad=((0, 0), (50, 0)))]], justification='right')],
-
+            [sg.Column([[sg.Button('Cadastrar Produto', key='1', font=font, size=size, pad=pad)]],
+                       justification='left')],
+            [sg.Column([[sg.Button('Modificar Produto', key='2', font=font, size=size, pad=pad)]],
+                       justification='center')],
+            [sg.Column([[sg.Button('Deletar Produto', key='3', font=font, size=size, pad=pad)]],
+                       justification='right')],
+            [sg.Column([[sg.Button('Ver Produtos', key='4', font=font, size=size, pad=pad)]], justification='left')],
+            [sg.Column([[sg.Button('Retornar', key='0', font=font, size=size, pad=pad)]], justification='right')],
         ]
 
-        self.__window = sg.Window('Pizzaria', default_element_size=(40, 1), size=(1920, 1080),
+        self.__window = sg.Window('Pizzaria', default_element_size=(40, 1), size=(1250,620),
                                   icon="Imagens\pizza icone.ico").Layout(layout)
 
     def abre_tela(self, lista_pizzas):
