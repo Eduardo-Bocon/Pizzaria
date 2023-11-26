@@ -14,7 +14,7 @@ class ControladorCliente():
 
     def cadastrar_cliente(self):
         dados_endereco = self.__tela_Cliente.pega_endereco()
-        dados_cliente = self.__tela_Cliente.pega_dados_cliente(modificando=False)
+        dados_cliente = self.__tela_Cliente.pega_dados_cliente()
         cpf = dados_cliente["cpf"]
         cliente = self.busca_clientes(cpf)
 

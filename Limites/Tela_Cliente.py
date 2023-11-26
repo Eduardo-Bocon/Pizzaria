@@ -36,14 +36,14 @@ class Tela_Cliente():
     def close(self):
         self.__window.Close()
 
-    def pega_dados_cliente(self, cliente = None):
+    def pega_dados_cliente(self, dados_antigos = None):
         print("componentes visuais iniciados pega dados cliente")
         sg.ChangeLookAndFeel('DarkBrown1')
         font = ("Palatino Linotype", 10)
         pad = (200,200), (0,0)
         size = (18,1)
 
-        if cliente is None:
+        if dados_antigos is None:
             layout = [
                 [sg.Column([[sg.Text('Dados Cliente', font=("Palatino Linotype", 30))]], justification='center', pad=((0,0), (20,20)))],
                 [sg.Column([[sg.Text('Insira:', font=("Palatino Linotype", 20), pad=15)]], justification='center')],
@@ -51,19 +51,17 @@ class Tela_Cliente():
                 [sg.Column([[sg.Text('Telefone:', font=font, size=size, pad=pad), sg.InputText('', key='telefone')]], justification='left')],
                 [sg.Column([[sg.Text('CPF:', font=font, size=size, pad=pad), sg.InputText('', key='cpf')]], justification='left')],
                 [sg.Column([[sg.Button('Confirmar', font=font, size=size, pad=pad)]], justification='center')],
-                [sg.Column([[sg.Button('Retornar', key='0', font=font, size=size,  pad=pad)]], justification='center')]
             ]
         else:
             layout = [
                 [sg.Column([[sg.Text('Dados Cliente', font=("Palatino Linotype", 30))]], justification='center',
                            pad=((0, 0), (20, 20)))],
                 [sg.Column([[sg.Text('Insira:', font=("Palatino Linotype", 20), pad=15)]], justification='center')],
-                [sg.Column([[sg.Text('Nome:', font=font, size=size, pad=pad), sg.InputText(key='nome', default_text=cliente["nome"])]],
+                [sg.Column([[sg.Text('Nome:', font=font, size=size, pad=pad), sg.InputText(key='nome', default_text=dados_antigos["nome"])]],
                            justification='left')],
-                [sg.Column([[sg.Text('Telefone:', font=font, size=size, pad=pad), sg.InputText(key='telefone', default_text=cliente["telefone"])]],
+                [sg.Column([[sg.Text('Telefone:', font=font, size=size, pad=pad), sg.InputText(key='telefone', default_text=dados_antigos["telefone"])]],
                            justification='left')],
                 [sg.Column([[sg.Button('Confirmar', font=font, size=size, pad=pad)]], justification='center')],
-                [sg.Column([[sg.Button('Retornar', key='0', font=font, size=size, pad=pad)]], justification='center')]
             ]
 
         self.__window = sg.Window('Pizzaria', default_element_size=(40,1), size=(1250,620), icon="Imagens\pizza icone.ico").Layout(layout)
@@ -74,7 +72,7 @@ class Tela_Cliente():
             button, values = self.open()
             nome = values['nome']
             telefone = values['telefone']
-            if cliente is not None:
+            if dados_antigos is None:
                 cpf = 0
             else:
                 cpf = values['cpf']
@@ -140,23 +138,42 @@ class Tela_Cliente():
         self.close()
         return {"nome": nome, "telefone": telefone, "cpf": cpf}
     
-    def pega_endereco(self, cliente = None):
+    def pega_endereco(self, dados_antigos = None):
         print("componentes visuais iniciados pega endereço")
         sg.ChangeLookAndFeel('DarkBrown1')
         font = ("Palatino Linotype", 10)
         pad = (200,200), (0,0)
         size = (18,1)
 
-        layout = [
-            [sg.Column([[sg.Text('Dados Endereço', font=("Palatino Linotype", 30))]], justification='center', pad=((0,0), (20,20)))],
-            [sg.Column([[sg.Text('Insira:', font=("Palatino Linotype", 20), pad=15)]], justification='center')],
-            [sg.Column([[sg.Text('Número:', font=font, size=size, pad=pad), sg.InputText(default_text=cliente["numero"], key='numero')]], justification='left')],
-            [sg.Column([[sg.Text('Rua:', font=font, size=size, pad=pad), sg.InputText(default_text=cliente["rua"], key='rua')]], justification='left')],
-            [sg.Column([[sg.Text('Bairro:', font=font, size=size, pad=pad), sg.InputText(default_text=cliente["bairro"], key='bairro')]], justification='left')],
-            [sg.Column([[sg.Text('Cidade:', font=font, size=size, pad=pad), sg.InputText(default_text=cliente["cidade"], key='cidade')]], justification='left')],
-            [sg.Column([[sg.Text('CEP:', font=font, size=size, pad=pad), sg.InputText(default_text=cliente["cep"], key='cep')]], justification='left')],
-            [sg.Column([[sg.Button('Confirmar', key='1', font=font, size=size, pad=pad)]], justification='left')],
-        ]
+        if dados_antigos is not None:
+            layout = [
+                [sg.Column([[sg.Text('Dados Endereço', font=("Palatino Linotype", 30))]], justification='center', pad=((0,0), (20,20)))],
+                [sg.Column([[sg.Text('Insira:', font=("Palatino Linotype", 20), pad=15)]], justification='center')],
+                [sg.Column([[sg.Text('Número:', font=font, size=size, pad=pad), sg.InputText(default_text=dados_antigos["numero"], key='numero')]], justification='left')],
+                [sg.Column([[sg.Text('Rua:', font=font, size=size, pad=pad), sg.InputText(default_text=dados_antigos["rua"], key='rua')]], justification='left')],
+                [sg.Column([[sg.Text('Bairro:', font=font, size=size, pad=pad), sg.InputText(default_text=dados_antigos["bairro"], key='bairro')]], justification='left')],
+                [sg.Column([[sg.Text('Cidade:', font=font, size=size, pad=pad), sg.InputText(default_text=dados_antigos["cidade"], key='cidade')]], justification='left')],
+                [sg.Column([[sg.Text('CEP:', font=font, size=size, pad=pad), sg.InputText(default_text=dados_antigos["cep"], key='cep')]], justification='left')],
+                [sg.Column([[sg.Button('Confirmar', key='1', font=font, size=size, pad=pad)]], justification='left')],
+            ]
+        else:
+            layout = [
+                [sg.Column([[sg.Text('Dados Endereço', font=("Palatino Linotype", 30))]], justification='center',
+                           pad=((0, 0), (20, 20)))],
+                [sg.Column([[sg.Text('Insira:', font=("Palatino Linotype", 20), pad=15)]], justification='center')],
+                [sg.Column([[sg.Text('Número:', font=font, size=size, pad=pad),
+                             sg.InputText("", key='numero')]], justification='left')],
+                [sg.Column([[sg.Text('Rua:', font=font, size=size, pad=pad),
+                             sg.InputText('', key='rua')]], justification='left')],
+                [sg.Column([[sg.Text('Bairro:', font=font, size=size, pad=pad),
+                             sg.InputText('', key='bairro')]], justification='left')],
+                [sg.Column([[sg.Text('Cidade:', font=font, size=size, pad=pad),
+                             sg.InputText('', key='cidade')]], justification='left')],
+                [sg.Column([[sg.Text('CEP:', font=font, size=size, pad=pad),
+                             sg.InputText('', key='cep')]], justification='left')],
+                [sg.Column([[sg.Button('Confirmar', key='1', font=font, size=size, pad=pad)]], justification='left')],
+            ]
+
 
         self.__window = sg.Window('Pizzaria', default_element_size=(40,1), size=(1250,620), icon="Imagens\pizza icone.ico").Layout(layout)
 
@@ -242,8 +259,7 @@ class Tela_Cliente():
     
     def mostra_clientes(self, dados_cliente):
 
-        string_todos_clientes = ""
-        string_todos_clientes = string_todos_clientes + "Nome do cliente: " + dados_cliente["nome"] + '\n'
+        string_todos_clientes = "Nome do cliente: " + dados_cliente["nome"] + '\n'
         string_todos_clientes = string_todos_clientes + "CPF do cliente: "+ dados_cliente["cpf"] + '\n'
         string_todos_clientes = string_todos_clientes + "Telefone do cliente: "+ dados_cliente["telefone"] + '\n'
         string_todos_clientes = string_todos_clientes + "Cidade do endereço do cliente: "+ dados_cliente["cidade"] + '\n\n'

@@ -7,11 +7,14 @@ class FuncionarioDAO(DAO):
         super().__init__('funcionarios.pkl')
 
     def add(self, funcionario):
-        if((funcionario is not None) and (isinstance(funcionario, Atendente) or isinstance(funcionario, Entregador) or isinstance(funcionario, Gerente) or isinstance(funcionario, Pizzaiolo)) and isinstance(funcionario.cpf, str)):
+        print("Chegou na função de add")
+        print(funcionario.cpf)
+        if isinstance(funcionario.cpf, str):
+            print("Adicionou")
             super().add(funcionario.cpf, funcionario)
 
     def update(self, funcionario):
-        if((funcionario is not None) and (isinstance(funcionario, Atendente) or isinstance(funcionario, Entregador) or isinstance(funcionario, Gerente) or isinstance(funcionario, Pizzaiolo)) and isinstance(funcionario.cpf, str)):
+        if (funcionario is not None) and (isinstance(funcionario, Atendente.Atendente) or isinstance(funcionario, Entregador.Entregador) or isinstance(funcionario, Gerente.Gerente) or isinstance(funcionario, Pizzaiolo.Pizzaiolo)) and isinstance(funcionario.cpf, str):
             super().update(funcionario.cpf, funcionario)
 
     def get(self, key:str):
