@@ -38,13 +38,13 @@ class Tela_Pizzaria():
         button, values = self.__window.Read()
         opcao = 0
 
-        if button == 1:
+        if button == "1":
             opcao = 1
-        if button == 2:
+        if button == "2":
             opcao = 2
-        if button == 3:
+        if button == "3":
             opcao = 3
-        if button == 0 or button in (None,'Cancelar'):
+        if button == "0" or button in (None,'Cancelar'):
             opcao = 0
         self.close()
         return opcao
@@ -53,6 +53,7 @@ class Tela_Pizzaria():
         sg.popup("", mensagem)
 
     def atendente_do_mes(self, atendente_do_mes):
+
         if atendente_do_mes is None:
             sg.Popup("Não há pedidos com atendentes.")
         else:
@@ -62,12 +63,13 @@ class Tela_Pizzaria():
         if produto_mais_vendido is None:
             sg.Popup("Não há pedidos com produtos.")
         else:
-            sg.Popup("Produto mais vendido do mês: ", produto_mais_vendido["produto"].nome)
-            sg.Popup("Quantidade: ", produto_mais_vendido["quantidade"])
+            texto = "Produto mais vendido do mês: {}\nQuantidade: {}".format(produto_mais_vendido["produto"],produto_mais_vendido["quantidade"])
+            sg.Popup(texto)
 
     def mostrar_financeiro(self, salarios, despesas, receitas):
-        sg.Popup("Total de salários: ", (salarios))
-        sg.Popup("Total de despesas: ", (despesas))
-        sg.Popup("Total de receitas: ", (receitas))
-        sg.Popup("Lucro total: ", (receitas - despesas))
-        sg.Popup("")
+        texto = "Total de salários: " + str(salarios) + '\n'
+        texto = texto + "Total de despesas: " + str(despesas) + '\n'
+        texto = texto + "Total de receitas: " + str(receitas) + '\n'
+        texto = texto + "Lucro total: " + str(receitas - despesas) + '\n\n'
+
+        sg.Popup(texto)
