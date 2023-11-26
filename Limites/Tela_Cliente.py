@@ -75,7 +75,7 @@ class Tela_Cliente():
             if dados_antigos is None:
                 cpf = 0
             else:
-                cpf = values['cpf']
+                cpf = dados_antigos['cpf']
 
             try:
                 if len(nome) < 3:
@@ -251,18 +251,31 @@ class Tela_Cliente():
                 self.mostra_mensagem("CEP:" + str(e))
 
             if not erro:
-                print("AAAAA")
                 break
 
         self.close()
         return {"numero": numero, "rua": rua, "bairro": bairro, "cidade": cidade, "cep": cep}
     
-    def mostra_clientes(self, dados_cliente):
+    def mostra_cliente(self, dados_cliente):
 
         string_todos_clientes = "Nome do cliente: " + dados_cliente["nome"] + '\n'
         string_todos_clientes = string_todos_clientes + "CPF do cliente: "+ dados_cliente["cpf"] + '\n'
         string_todos_clientes = string_todos_clientes + "Telefone do cliente: "+ dados_cliente["telefone"] + '\n'
         string_todos_clientes = string_todos_clientes + "Cidade do endereço do cliente: "+ dados_cliente["cidade"] + '\n\n'
+
+        sg.Popup('Clientes Cadastrados', string_todos_clientes)
+
+    def mostra_clientes(self, dados_clientes):
+
+        string_todos_clientes = ""
+        for cliente in dados_clientes:
+            string_todos_clientes = string_todos_clientes + "Nome do cliente: " + cliente["nome"] + '\n'
+            string_todos_clientes = string_todos_clientes + "CPF do cliente: " + str(
+                cliente["cpf"]) + '\n'
+            string_todos_clientes = string_todos_clientes + "Telefone do cliente: " + cliente[
+                "telefone"] + '\n'
+            string_todos_clientes = string_todos_clientes + "Cidade: " + cliente[
+                "cidade"] + '\n\n'
 
         sg.Popup('Clientes Cadastrados', string_todos_clientes)
 

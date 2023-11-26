@@ -60,7 +60,7 @@ class ControladorCliente():
             cliente = self.busca_clientes(busca_cliente)
 
             if cliente is not None:
-                novos_dados_cliente = self.__tela_Cliente.pega_dados_cliente({"nome":cliente.nome, "telefone":cliente.telefone})
+                novos_dados_cliente = self.__tela_Cliente.pega_dados_cliente({"nome":cliente.nome, "telefone":cliente.telefone, "cpf":cliente.cpf})
                 novo_endereco = self.__tela_Cliente.pega_endereco({"numero":cliente.endereco.numero, "rua":cliente.endereco.rua, "bairro":cliente.endereco.bairro, "cidade":cliente.endereco.cidade, "cep":cliente.endereco.cep})
 
                 cliente.nome = novos_dados_cliente["nome"]
@@ -80,9 +80,12 @@ class ControladorCliente():
             self.__tela_Cliente.mostra_mensagem("Nenhum cliente cadastrado!")
 
         else:
+            lista_clientes = []
             for cliente in self.__cliente_DAO.get_all():
-                self.__tela_Cliente.mostra_clientes({"nome": cliente.nome, "cpf": cliente.cpf,
-                                                     "telefone": cliente.telefone, "cidade": cliente.endereco.cidade})
+                lista_clientes.append({"nome": cliente.nome, "cpf": cliente.cpf, "telefone": cliente.telefone,
+                     "cidade": cliente.endereco.cidade})
+            self.__tela_Cliente.mostra_clientes(lista_clientes)
+
 
     def busca_clientes(self, cpf: str):
         for cliente in self.__cliente_DAO.get_all():
@@ -98,7 +101,7 @@ class ControladorCliente():
             flag = False
             for cliente in self.__cliente_DAO.get_all():
                 if cliente.quantidade_pedidos >= 5:
-                    self.__tela_Cliente.mostra_clientes(
+                    self.__tela_Cliente.mostra_cliente(
                         {"nome": cliente.nome, "cpf": cliente.cpf, "telefone": cliente.telefone,
                          "cidade": cliente.endereco.cidade})
                     flag = True
