@@ -307,7 +307,7 @@ class Tela_Cliente():
                 ]
 
                 self.__window = sg.Window('Pizzaria', default_element_size=(40,1), size=(1250,620), icon="Imagens\pizza icone.ico").Layout(layout)
-                
+
                 button, values = self.open()
                 cpf = values['cpf']
                 self.close()
