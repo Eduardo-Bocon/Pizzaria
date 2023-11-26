@@ -51,6 +51,7 @@ class Tela_Cliente():
                 [sg.Column([[sg.Text('Telefone:', font=font, size=size, pad=pad), sg.InputText('', key='telefone')]], justification='left')],
                 [sg.Column([[sg.Text('CPF:', font=font, size=size, pad=pad), sg.InputText('', key='cpf')]], justification='left')],
                 [sg.Column([[sg.Button('Confirmar', font=font, size=size, pad=pad)]], justification='center')],
+                [sg.Column([[sg.Button('Retornar', key='0', font=font, size=size,  pad=pad)]], justification='right')],
             ]
         else:
             layout = [
@@ -62,6 +63,7 @@ class Tela_Cliente():
                 [sg.Column([[sg.Text('Telefone:', font=font, size=size, pad=pad), sg.InputText(key='telefone', default_text=dados_antigos["telefone"])]],
                            justification='left')],
                 [sg.Column([[sg.Button('Confirmar', font=font, size=size, pad=pad)]], justification='center')],
+                [sg.Column([[sg.Button('Retornar', key='0', font=font, size=size,  pad=pad)]], justification='right')],
             ]
 
         self.__window = sg.Window('Pizzaria', default_element_size=(40,1), size=(1250,620), icon="Imagens\pizza icone.ico").Layout(layout)
@@ -154,6 +156,7 @@ class Tela_Cliente():
                 [sg.Column([[sg.Text('Cidade:', font=font, size=size, pad=pad), sg.InputText(default_text=dados_antigos["cidade"], key='cidade')]], justification='left')],
                 [sg.Column([[sg.Text('CEP:', font=font, size=size, pad=pad), sg.InputText(default_text=dados_antigos["cep"], key='cep')]], justification='left')],
                 [sg.Column([[sg.Button('Confirmar', key='1', font=font, size=size, pad=pad)]], justification='left')],
+                [sg.Column([[sg.Button('Retornar', key='0', font=font, size=size,  pad=pad)]], justification='right')],
             ]
         else:
             layout = [
@@ -171,6 +174,8 @@ class Tela_Cliente():
                 [sg.Column([[sg.Text('CEP:', font=font, size=size, pad=pad),
                              sg.InputText('', key='cep')]], justification='left')],
                 [sg.Column([[sg.Button('Confirmar', key='1', font=font, size=size, pad=pad)]], justification='left')],
+                [sg.Column([[sg.Button('Retornar', key='0', font=font, size=size,  pad=pad)]], justification='right')],
+
             ]
 
 
@@ -258,12 +263,13 @@ class Tela_Cliente():
     
     def mostra_cliente(self, dados_cliente):
 
-        string_todos_clientes = "Nome do cliente: " + dados_cliente["nome"] + '\n'
-        string_todos_clientes = string_todos_clientes + "CPF do cliente: "+ dados_cliente["cpf"] + '\n'
-        string_todos_clientes = string_todos_clientes + "Telefone do cliente: "+ dados_cliente["telefone"] + '\n'
-        string_todos_clientes = string_todos_clientes + "Cidade do endereço do cliente: "+ dados_cliente["cidade"] + '\n\n'
+        string_cliente = ""
+        string_cliente = "Nome do cliente: " + dados_cliente["nome"] + '\n'
+        string_cliente = string_cliente + "CPF do cliente: "+ dados_cliente["cpf"] + '\n'
+        string_cliente = string_cliente + "Telefone do cliente: "+ dados_cliente["telefone"] + '\n'
+        string_cliente = string_cliente + "Cidade do endereço do cliente: "+ dados_cliente["cidade"] + '\n\n'
 
-        sg.Popup('Clientes Cadastrados', string_todos_clientes)
+        sg.Popup('Clientes Cadastrados', string_cliente)
 
     def mostra_clientes(self, dados_clientes):
 
@@ -296,6 +302,8 @@ class Tela_Cliente():
                     [sg.Column([[sg.Text('Digite o CPF do cliente que deseja selecionar:', font=("Palatino Linotype", 20), pad=15)]], justification='left')],
                     [sg.Column([[sg.Text('CPF:', font=font, size=size, pad=pad), sg.InputText('', key='cpf')]], justification='left')],
                     [sg.Column([[sg.Button('Confirmar', font=font, size=size, pad=pad)]], justification='left')],
+                    [sg.Column([[sg.Button('Retornar', key='0', font=font, size=size,  pad=pad)]], justification='right')],
+
                 ]
 
                 self.__window = sg.Window('Pizzaria', default_element_size=(40,1), size=(1250,620), icon="Imagens\pizza icone.ico").Layout(layout)
@@ -315,13 +323,13 @@ class Tela_Cliente():
                 break
 
             except ValueError:
-                print("CPF: Entrada inválida!")
+                self.mostra_mensagem("CPF: Entrada inválida!")
             except Valor_abaixo_de_zero as e:
-                print("CPF:"+ str(e))
+                self.mostra_mensagem("CPF:"+ str(e))
             except Entrada_muito_curta as e:
-                print("CPF:" + str(e))
+                self.mostra_mensagem("CPF:" + str(e))
             except Entrada_muito_longa as e:
-                print("CPF:"+ str(e))
+                self.mostra_mensagem("CPF:"+ str(e))
 
         self.close()
         return cpf

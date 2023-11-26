@@ -54,6 +54,5 @@ class Tela_Geral():
         if button == 0 or button in (None,'Cancelar'):
             opcao = 0
 
-        print(opcao)
         self.close()
         return opcao    

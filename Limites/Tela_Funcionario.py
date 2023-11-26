@@ -62,7 +62,7 @@ class Tela_Funcionario():
                 [sg.Column([[sg.Text('Salário:', font=font, size=size, pad=pad), sg.InputText('', key='salario')]],
                            justification='left')],
                 [sg.Column([[sg.Button('Confirmar', font=font, size=size, pad=pad)]], justification='center')],
-
+                [sg.Column([[sg.Button('Retornar', key='0', font=font, size=size,  pad=pad)]], justification='right')],
             ]
         else:
             layout = [
@@ -79,7 +79,7 @@ class Tela_Funcionario():
                              sg.InputText(default_text=dados_antigos["salario"], key='salario')]],
                            justification='left')],
                 [sg.Column([[sg.Button('Confirmar', font=font, size=size, pad=pad)]], justification='center')],
-
+                [sg.Column([[sg.Button('Retornar', key='0', font=font, size=size,  pad=pad)]], justification='right')],
             ]
 
         self.__window = sg.Window('Pizzaria', default_element_size=(40, 1), size=(1250, 620),
@@ -196,6 +196,7 @@ class Tela_Funcionario():
                     [sg.Column([[sg.Text('CPF:', font=font, size=size, pad=pad), sg.InputText('', key='cpf')]],
                                justification='left')],
                     [sg.Column([[sg.Button('Confirmar', font=font, size=size, pad=pad)]], justification='center')],
+                    [sg.Column([[sg.Button('Retornar', key='0', font=font, size=size,  pad=pad)]], justification='right')],
                 ]
 
                 self.__window = sg.Window('Pizzaria', default_element_size=(40, 1), size=(1250, 620),
@@ -215,13 +216,13 @@ class Tela_Funcionario():
                     raise Entrada_muito_longa
                 break
             except ValueError:
-                print("Entrada inválida!")
+                self.mostra_mensagem("Entrada inválida!")
             except Valor_abaixo_de_zero as e:
-                print(e)
+                self.mostra_mensagem(e)
             except Entrada_muito_curta as e:
-                print(e)
+                self.mostra_mensagem(e)
             except Entrada_muito_longa as e:
-                print(e)
+                self.mostra_mensagem(e)
 
         self.close()
         return cpf
@@ -239,6 +240,7 @@ class Tela_Funcionario():
                 [sg.Column([[sg.Button('Gerente', key='2', font=font, size=size, pad=pad)]], justification='center')],
                 [sg.Column([[sg.Button('Pizzaiolo', key='3', font=font, size=size, pad=pad)]], justification='center')],
                 [sg.Column([[sg.Button('Entregador', key='4', font=font, size=size, pad=pad)]], justification='center')],
+                [sg.Column([[sg.Button('Retornar', key='0', font=font, size=size,  pad=pad)]], justification='right')],
             ]
 
             self.__window = sg.Window('Pizzaria', default_element_size=(40, 1), size=(1250, 620),

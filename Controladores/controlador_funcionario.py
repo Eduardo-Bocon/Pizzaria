@@ -39,7 +39,6 @@ class ControladorFuncionario():
                     funcionario = Entregador(nome=dados_funcionario["nome"], cpf=dados_funcionario["cpf"],
                                              telefone=dados_funcionario["telefone"],
                                              salario=dados_funcionario["salario"])
-                print(funcionario)
                 self.__funcionario_DAO.add(funcionario)
                 self.__Tela_Funcionario.mostra_mensagem("Cadastro de funcionário realizado!")
 
