@@ -47,3 +47,8 @@ class Atendente_nao_encontrado(Exception):
     def __init__(self):
         self.mensagem = "Atendente não encontrado."
         super().__init__(self.mensagem.format())
+
+class Cliente_nao_encontrado(Exception):
+    def __init__(self):
+        self.mensagem = "Cliente não encontrado."
+        super().__init__(self.mensagem.format())
