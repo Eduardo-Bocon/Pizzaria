@@ -68,23 +68,48 @@ class Tela_Produto:
     def mostra_mensagem(self, mensagem: str):
         sg.popup("", mensagem)
 
-    def pegar_dados_produto(self):
+    def pegar_dados_produto(self, dados_antigos = None):
         print("componentes visuais iniciados pega dados produto")
         sg.ChangeLookAndFeel('DarkBrown1')
         font = ("Palatino Linotype", 10)
         pad = (200,200), (0,0)
         size = (17,1)
 
-        layout = [
-            [sg.Column([[sg.Text('Dados Produto', font=("Palatino Linotype", 30))]], justification='center', pad=((0,0), (20,20)))],
-            [sg.Column([[sg.Text('Insira:', font=("Palatino Linotype", 20), pad=15)]], justification='left')],
-            [sg.Column([[sg.Text('Tipo (Bebida ou Pizza?):', font=font, size=size, pad=pad), sg.InputText('', key='tipo')]], justification='left')],
-            [sg.Column([[sg.Text('Nome:', font=font, size=size, pad=pad), sg.InputText('', key='nome')]], justification='left')],
-            [sg.Column([[sg.Text('Preço de Compra:', font=font, size=size, pad=pad), sg.InputText('', key='preco_compra')]], justification='left')],
-            [sg.Column([[sg.Text('Preço de Venda:', font=font, size=size, pad=pad), sg.InputText('', key='preco_venda')]], justification='left')],
-            [sg.Column([[sg.Text('Quantidade:', font=font, size=size, pad=pad), sg.InputText('', key='quantidade')]], justification='left')],
-            [sg.Column([[sg.Button('Confirmar', font=font, size=size, pad=pad)]], justification='center')],
-        ]
+        if dados_antigos is None:
+            layout = [
+                [sg.Column([[sg.Text('Dados Produto', font=("Palatino Linotype", 30))]], justification='center',
+                           pad=((0, 0), (20, 20)))],
+                [sg.Column([[sg.Text('Insira:', font=("Palatino Linotype", 20), pad=15)]], justification='left')],
+                [sg.Column([[sg.Text('Tipo (Bebida ou Pizza?):', font=font, size=size, pad=pad),
+                             sg.InputText('', key='tipo')]], justification='left')],
+                [sg.Column([[sg.Text('Nome:', font=font, size=size, pad=pad), sg.InputText('', key='nome')]],
+                           justification='left')],
+                [sg.Column([[sg.Text('Preço de Compra:', font=font, size=size, pad=pad),
+                             sg.InputText('', key='preco_compra')]], justification='left')],
+                [sg.Column(
+                    [[sg.Text('Preço de Venda:', font=font, size=size, pad=pad), sg.InputText('', key='preco_venda')]],
+                    justification='left')],
+                [sg.Column(
+                    [[sg.Text('Quantidade:', font=font, size=size, pad=pad), sg.InputText('', key='quantidade')]],
+                    justification='left')],
+                [sg.Column([[sg.Button('Confirmar', font=font, size=size, pad=pad)]], justification='center')],
+            ]
+        else:
+            layout = [
+                [sg.Column([[sg.Text('Dados Produto', font=("Palatino Linotype", 30))]], justification='center',
+                           pad=((0, 0), (20, 20)))],
+                [sg.Column([[sg.Text('Insira:', font=("Palatino Linotype", 20), pad=15)]], justification='left')],
+                [sg.Column([[sg.Text('Preço de Compra:', font=font, size=size, pad=pad),
+                             sg.InputText(default_text=dados_antigos["preco_compra"], key='preco_compra')]], justification='left')],
+                [sg.Column(
+                    [[sg.Text('Preço de Venda:', font=font, size=size, pad=pad), sg.InputText(default_text=dados_antigos["preco_venda"], key='preco_venda')]],
+                    justification='left')],
+                [sg.Column(
+                    [[sg.Text('Quantidade:', font=font, size=size, pad=pad), sg.InputText(default_text=dados_antigos["quantidade"], key='quantidade')]],
+                    justification='left')],
+                [sg.Column([[sg.Button('Confirmar', font=font, size=size, pad=pad)]], justification='center')],
+            ]
+
 
         self.__window = sg.Window('Pizzaria', default_element_size=(40,1), size=(1250,620), icon="Imagens\pizza icone.ico").Layout(layout)
 
@@ -94,8 +119,14 @@ class Tela_Produto:
             erro = False
 
             button, values = self.open()
-            tipo = values['tipo']
-            nome = values['nome']
+
+            if dados_antigos is None:
+                nome = values["nome"]
+                tipo = values["tipo"]
+            else:
+                nome = dados_antigos['nome']
+                tipo = dados_antigos['tipo']
+
             preco_compra = values['preco_compra']
             preco_venda = values['preco_venda']
             quantidade = values['quantidade']
@@ -157,6 +188,7 @@ class Tela_Produto:
             if not erro:
                 break
 
+        self.close()
         return {"tipo": tipo, "nome": nome, "preco_compra": float(preco_compra), "preco_venda": float(preco_venda), "quantidade": int(quantidade)}
 
     def ver_produto(self, dados_produto):
