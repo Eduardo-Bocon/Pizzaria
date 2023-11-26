@@ -15,7 +15,7 @@ class Tela_Produto:
         button, values = self.__window.Read()
         return button, values
 
-    def init_components(self):
+    def init_components(self, lista_pizzas):
 
         sg.ChangeLookAndFeel('DarkBrown1')
         font = ("Palatino Linotype", 10)
@@ -41,9 +41,9 @@ class Tela_Produto:
         self.__window = sg.Window('Pizzaria', default_element_size=(40, 1), size=(1250,620),
                                   icon="Imagens\pizza icone.ico").Layout(layout)
 
-    def abre_tela(self):
+    def abre_tela(self, lista_pizzas):
 
-        self.init_components()
+        self.init_components(lista_pizzas)
         button, values = self.__window.Read()
         button = int(button)
         opcao = 0
