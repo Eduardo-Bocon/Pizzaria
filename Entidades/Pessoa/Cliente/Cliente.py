@@ -4,10 +4,10 @@ from Entidades.Pessoa.Cliente.Endereco import Endereco
 
 class Cliente(Pessoa):
 
-    def __init__(self, nome:str, cpf:str, telefone:str, endereco:Endereco):
+    def __init__(self, nome:str, cpf:str, telefone:str, numero: int, rua: str, bairro: str, cidade: str, cep: str):
         super().__init__(nome=nome, cpf=cpf, telefone=telefone)
         self.__quantidade_pedidos = 0
-        self.__endereco = endereco
+        self.__endereco = Endereco(numero=numero, rua=rua, bairro=bairro, cidade=cidade, cep=cep)
 
     @property
     def quantidade_pedidos(self):

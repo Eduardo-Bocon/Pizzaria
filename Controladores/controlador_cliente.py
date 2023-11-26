@@ -13,16 +13,16 @@ class ControladorCliente():
         self.__controlador_pizzaria = controlador_pizzaria
 
     def cadastrar_cliente(self):
-        dados_endereco = self.__tela_Cliente.pega_endereco()
         dados_cliente = self.__tela_Cliente.pega_dados_cliente()
-        cpf = dados_cliente["cpf"]
+        dados_endereco = self.__tela_Cliente.pega_endereco()
+
+        cpf = str(dados_cliente["cpf"])
         cliente = self.busca_clientes(cpf)
 
         try:
             if cliente is None:
-                endereco_cliente = Endereco(dados_endereco["numero"], dados_endereco["rua"], dados_endereco["cidade"], dados_endereco["bairro"], dados_endereco["cep"])
-                cliente = Cliente(dados_cliente["nome"], dados_cliente["cpf"],
-                                  dados_cliente["telefone"], endereco_cliente)
+                cliente = Cliente(dados_cliente["nome"], cpf,
+                                  dados_cliente["telefone"], dados_endereco["numero"], dados_endereco["rua"], dados_endereco["bairro"], dados_endereco["cidade"], dados_endereco["cep"])
                 self.__cliente_DAO.add(cliente)
                 self.__tela_Cliente.mostra_mensagem("Cadastro de cliente realizado!")
 
@@ -43,8 +43,8 @@ class ControladorCliente():
 
             if cliente is not None:
                 self.__cliente_DAO.remove(cliente.cpf)
-                self.ver_clientes()
                 self.__tela_Cliente.mostra_mensagem("Remoção de cadastro de cliente realizado!")
+
 
             else:
                 self.__tela_Cliente.mostra_mensagem("Cliente não cadastrado!")
@@ -68,9 +68,8 @@ class ControladorCliente():
                 cliente.endereco = Endereco(numero=novo_endereco["numero"], rua=novo_endereco["rua"], bairro=novo_endereco["bairro"], cidade=novo_endereco["cidade"], cep=novo_endereco["cep"])
 
                 self.__cliente_DAO.update(cliente)
-
-                self.ver_clientes()
                 self.__tela_Cliente.mostra_mensagem("Modificação de cadastro de cliente realizado!")
+
 
             else:
                 self.__tela_Cliente.mostra_mensagem("Cliente não cadastrado!")

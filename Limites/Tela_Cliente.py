@@ -73,7 +73,7 @@ class Tela_Cliente():
             nome = values['nome']
             telefone = values['telefone']
             if dados_antigos is None:
-                cpf = 0
+                cpf = values['cpf']
             else:
                 cpf = dados_antigos['cpf']
 
@@ -82,10 +82,10 @@ class Tela_Cliente():
                     raise Entrada_muito_curta
             except ValueError:
                 erro = True
-                print("Nome: Entrada inválida!")
+                self.mostra_mensagem("Nome: Entrada inválida!")
             except Entrada_muito_curta as e:
                 erro = True
-                print("Nome: "+ str(e))
+                self.mostra_mensagem("Nome: "+ str(e))
 
 
             try:
@@ -99,16 +99,16 @@ class Tela_Cliente():
                 break
             except ValueError:
                 erro = True
-                print("Telefone: Entrada inválida!")
+                self.mostra_mensagem("Telefone: Entrada inválida!")
             except Valor_abaixo_de_zero as e:
                 erro = True
-                print(e)
+                self.mostra_mensagem(e)
             except Entrada_muito_curta as e:
                 erro = True
-                print(e)
+                self.mostra_mensagem(e)
             except Entrada_muito_longa as e:
                 erro = True
-                print("Telefone: "+ str(e))
+                self.mostra_mensagem("Telefone: "+ str(e))
 
             try:
                 if int(cpf) <= 0:
@@ -121,16 +121,16 @@ class Tela_Cliente():
                     raise Entrada_muito_longa
             except ValueError:
                 erro = True
-                print("CPF: Entrada inválida!")
+                self.mostra_mensagem("CPF: Entrada inválida!")
             except Valor_abaixo_de_zero as e:
                 erro = True
-                print("CPF: " + str(e))
+                self.mostra_mensagem("CPF: " + str(e))
             except Entrada_muito_curta as e:
                 erro = True
-                print("CPF: "+ str(e))
+                self.mostra_mensagem("CPF: "+ str(e))
             except Entrada_muito_longa as e:
                 erro = True
-                print("CPF: "+ str(e))
+                self.mostra_mensagem("CPF: "+ str(e))
 
             if not erro:
                 break
@@ -139,7 +139,6 @@ class Tela_Cliente():
         return {"nome": nome, "telefone": telefone, "cpf": cpf}
     
     def pega_endereco(self, dados_antigos = None):
-        print("componentes visuais iniciados pega endereço")
         sg.ChangeLookAndFeel('DarkBrown1')
         font = ("Palatino Linotype", 10)
         pad = (200,200), (0,0)
@@ -254,6 +253,7 @@ class Tela_Cliente():
                 break
 
         self.close()
+
         return {"numero": numero, "rua": rua, "bairro": bairro, "cidade": cidade, "cep": cep}
     
     def mostra_cliente(self, dados_cliente):
