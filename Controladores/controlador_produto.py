@@ -69,6 +69,8 @@ class ControladorProduto():
                 produto.preco_compra = novos_dados_produto["preco_compra"]
                 produto.quantidade = novos_dados_produto["quantidade"]
 
+                self.__produto_DAO.update(produto)
+
                 self.ver_produtos()
             else:
                 self.__tela.mostra_mensagem("Erro: produto não existente")
@@ -78,15 +80,16 @@ class ControladorProduto():
             self.__tela.mostra_mensagem("Nenhum produto cadastrado.")
             
         else:
+            lista_produtos = []
             for produto in self.__produto_DAO.get_all():
                 if isinstance(produto, Pizza):
-                    self.__tela.ver_produto(
-                        {"nome": produto.nome, "tipo": "Pizza", "preco_compra": produto.preco_compra,
+                    lista_produtos.append({"nome": produto.nome, "tipo": "Pizza", "preco_compra": produto.preco_compra,
                          "preco_venda": produto.preco_venda, "quantidade": produto.quantidade})
                 elif isinstance(produto, Bebida):
-                    self.__tela.ver_produto(
+                    lista_produtos.append(
                         {"nome": produto.nome, "tipo": "Bebida", "preco_compra": produto.preco_compra,
                          "preco_venda": produto.preco_venda, "quantidade": produto.quantidade})
+            self.__tela.ver_produtos(lista_produtos)
 
     def pegar_produto(self, nome: str) -> Produto:
         for produto in self.__produto_DAO.get_all():
@@ -106,7 +109,7 @@ class ControladorProduto():
             produto = self.pegar_produto(nome)
 
             if produto is not None:
-                self.__produto_DAO.remove(produto)
+                self.__produto_DAO.remove(produto.nome)
                 self.ver_produtos()
             else:
                 self.__tela.mostra_mensagem("Erro: produto não existente")
