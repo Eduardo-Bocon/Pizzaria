@@ -82,27 +82,57 @@ class Tela_Pedido():
     def pegar_dados_pedido(self, lista_atendentes: [], lista_pizzas: [], lista_bebidas: [], dados_antigos = None):
 
 
-        atendente_escolhido = self.escolher_atendente(lista_atendentes)
+        print("componentes visuais iniciados pega dados pedido")
+        sg.ChangeLookAndFeel('DarkBrown1')
+        font = ("Palatino Linotype", 10)
+        pad = (200, 200), (0, 0)
+        size = (18, 1)
+
+
+        layout = [
+            [sg.Column([[sg.Text('Dados Pedido', font=("Palatino Linotype", 30))]], justification='center',
+                        pad=((0, 0), (20, 20)))],
+            [sg.Column([[sg.Text('Insira:', font=("Palatino Linotype", 20), pad=15)]], justification='left')],
+            [sg.Column([[sg.Text('CPF do cliente:', font=font, size=size, pad=pad), sg.InputText('', key='cpf')]],
+                        justification='left')],
+            [sg.Column([[sg.Button('Adicionar pizza', key='1', font=font, size=size, pad=pad)]],
+                        justification='left')],
+            [sg.Column([[sg.Button('Adicionar bebida', key='2', font=font, size=size, pad=pad)]],
+                        justification='left')],
+            [sg.Column([[sg.Button('Continuar pedido', key='3', font=font, size=size, pad=pad)]],
+                        justification='left')],
+            [sg.Column([[sg.Button('Confirmar', font=font, size=size, pad=pad)]], justification='center')],
+            [sg.Column([[sg.Button('Retornar', key='0', font=font, size=size,  pad=pad)]], justification='right')],
+        ]
+
+        self.__window = sg.Window('Pizzaria', default_element_size=(40, 1), size=(1250, 620),
+                                  icon="Imagens\pizza icone.ico").Layout(layout)
+
+        button, values = self.open()
+        escolha = int(button)
+        cpf_cliente = values['cpf']
+        
+        
+        while True:
+            try:
+                # verifica se tem apenas numeros
+                int(cpf_cliente)
+
+                if len(cpf_cliente) < 9:
+                    raise Entrada_muito_curta
+                elif len(cpf_cliente) > 11:
+                    raise Entrada_muito_longa
+                break
+            except ValueError:
+                self.mostra_mensagem("Resposta invalida! Digite apenas numeros.")
+            except Entrada_muito_curta as e:
+                self.mostra_mensagem(e)
+            except Entrada_muito_longa as e:
+                self.mostra_mensagem(e)
 
         produtos = list()
 
-        print("Agora vamos escolher os produtos do pedido.")
-
         while True:
-            print("1 - adicionar pizza")
-            print("2 - adicionar bebida")
-            print("3 - continuar o pedido")
-
-            while True:
-                try:
-                    escolha = int(input("O que deseja fazer?"))
-                    if escolha < 1 or escolha > 3:
-                        raise Valor_invalido("1,2,3")
-                    break
-                except ValueError:
-                    print("Insira um numero.")
-                except Valor_invalido as e:
-                    print(e)
 
             if escolha == 1:
                 while True:
@@ -115,7 +145,7 @@ class Tela_Pedido():
                                 raise Entrada_muito_curta
                             break
                         except Entrada_muito_curta as e:
-                            print(e)
+                            self.mostra_mensagem(e)
                     if pizza_escolhida == "0":
                         break
                     existe = False
@@ -127,9 +157,9 @@ class Tela_Pedido():
                                 produtos.append(pizza)
                                 pizza.diminuir_estoque(1)
                             else:
-                                print("Não temos essa pizza no estoque.")
+                                sg.Popup("Não temos essa pizza no estoque.")
                     if not existe:
-                        print("Pizza não existe.")
+                        sg.Popup("Pizza não existe.")
                     else:
                         break
             elif escolha == 2:
@@ -143,7 +173,7 @@ class Tela_Pedido():
                                 raise Entrada_muito_curta
                             break
                         except Entrada_muito_curta as e:
-                            print(e)
+                            self.mostra_mensagem(e)
                     if bebida_escolhida == "0":
                         break
                     existe = False
@@ -155,9 +185,9 @@ class Tela_Pedido():
                                 produtos.append(bebida)
                                 bebida.diminuir_estoque(1)
                             else:
-                                print("Não temos essa bebida no estoque.")
+                                self.mostra_mensagem("Não temos essa bebida no estoque.")
                     if not existe:
-                        print("Bebida não existe.")
+                        self.mostra_mensagem("Bebida não existe.")
                     else:
                         break
 
@@ -238,19 +268,25 @@ class Tela_Pedido():
 
     def ver_pedido(self, dados_pedido):
 
-        print("Código do pedido: ", dados_pedido["codigo"])
-        print("Lista de produtos: ")
-        for produto in dados_pedido["produtos"]:
-            print(produto.nome)
-        print("Cliente: ", dados_pedido["nome_cliente"])
-        print("Cpf cliente: ", dados_pedido["cpf_cliente"])
-        print("Atendente: ", dados_pedido["atendente"].nome)
-        print("Valor: ", dados_pedido["valor"])
-        print("Forma de pagamento: ", dados_pedido["forma_de_pagamento"])
-        print("Data: ", dados_pedido["data"])
-        print("Entregue: ", dados_pedido["entregue"])
+        self.mostra_mensagem("Código do pedido: ", dados_pedido["codigo"])
+        self.mostra_mensagem("Lista de produtos: ")
 
-        print("\n")
+        string_pedido = ""
+        string_produtos = ""
+
+        for produto in dados_pedido["produtos"]:
+            string_produtos = string_produtos + produto.nome
+        sg.Popup('Produtos', string_produtos)
+
+        string_pedido = "Cliente: ", dados_pedido["nome_cliente"] + '\n'
+        string_pedido = string_pedido + "Cpf cliente: ", dados_pedido["cpf_cliente"] + '\n'
+        string_pedido = string_pedido + "Atendente: ", dados_pedido["atendente"].nome + '\n'
+        string_pedido = string_pedido + "Valor: ", dados_pedido["valor"] + '\n'
+        string_pedido = string_pedido + "Forma de pagamento: ", dados_pedido["forma_de_pagamento"] + '\n'
+        string_pedido = string_pedido + "Data: ", dados_pedido["data"] + '\n'
+        string_pedido = string_pedido + "Entregue: ", dados_pedido["entregue"] + '\n\n'
+
+        sg.Popup('Dados do Pedido', string_pedido)
 
     def mostra_mensagem(self, mensagem: str):
         sg.popup("", mensagem)

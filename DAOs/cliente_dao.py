@@ -20,5 +20,4 @@ class ClienteDAO(DAO):
 
     def remove(self, key:str):
         if isinstance(key, str):
-            print("REMOVIDO")
             return super().remove(key)

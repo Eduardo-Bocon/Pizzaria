@@ -68,7 +68,7 @@ class ControladorPizzaria():
         self.__pizzaria.produto_mais_vendido = produto
 
     def atendente_do_mes(self):
-        print("atendente do mes")
+
         atendente = self.__contr_funcionario.atendente_do_mes()
         self.__tela_pizzaria.atendente_do_mes(atendente)
         self.__pizzaria.atendente_do_mes = atendente

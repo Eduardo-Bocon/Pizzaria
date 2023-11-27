@@ -259,12 +259,13 @@ class Tela_Cliente():
     
     def mostra_cliente(self, dados_cliente):
 
-        string_todos_clientes = "Nome do cliente: " + dados_cliente["nome"] + '\n'
-        string_todos_clientes = string_todos_clientes + "CPF do cliente: "+ dados_cliente["cpf"] + '\n'
-        string_todos_clientes = string_todos_clientes + "Telefone do cliente: "+ dados_cliente["telefone"] + '\n'
-        string_todos_clientes = string_todos_clientes + "Cidade do endereço do cliente: "+ dados_cliente["cidade"] + '\n\n'
+        string_cliente = ""
+        string_cliente = "Nome do cliente: " + dados_cliente["nome"] + '\n'
+        string_cliente = string_cliente + "CPF do cliente: "+ dados_cliente["cpf"] + '\n'
+        string_cliente = string_cliente + "Telefone do cliente: "+ dados_cliente["telefone"] + '\n'
+        string_cliente = string_cliente + "Cidade do endereço do cliente: "+ dados_cliente["cidade"] + '\n\n'
 
-        sg.Popup('Clientes Cadastrados', string_todos_clientes)
+        sg.Popup('Clientes Cadastrados', string_cliente)
 
     def mostra_clientes(self, dados_clientes):
 
@@ -300,7 +301,7 @@ class Tela_Cliente():
                 ]
 
                 self.__window = sg.Window('Pizzaria', default_element_size=(40,1), size=(1250,620), icon="Imagens\pizza icone.ico").Layout(layout)
-                
+
                 button, values = self.open()
                 cpf = values['cpf']
                 self.close()
@@ -316,13 +317,13 @@ class Tela_Cliente():
                 break
 
             except ValueError:
-                print("CPF: Entrada inválida!")
+                self.mostra_mensagem("CPF: Entrada inválida!")
             except Valor_abaixo_de_zero as e:
-                print("CPF:"+ str(e))
+                self.mostra_mensagem("CPF:"+ str(e))
             except Entrada_muito_curta as e:
-                print("CPF:" + str(e))
+                self.mostra_mensagem("CPF:" + str(e))
             except Entrada_muito_longa as e:
-                print("CPF:"+ str(e))
+                self.mostra_mensagem("CPF:"+ str(e))
 
         self.close()
         return cpf

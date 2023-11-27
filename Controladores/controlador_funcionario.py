@@ -39,7 +39,6 @@ class ControladorFuncionario():
                     funcionario = Entregador(nome=dados_funcionario["nome"], cpf=dados_funcionario["cpf"],
                                              telefone=dados_funcionario["telefone"],
                                              salario=dados_funcionario["salario"])
-                print(funcionario)
                 self.__funcionario_DAO.add(funcionario)
                 self.__Tela_Funcionario.mostra_mensagem("Cadastro de funcionário realizado!")
 
@@ -52,11 +51,11 @@ class ControladorFuncionario():
         self.ver_funcionarios()
 
         if not self.__funcionario_DAO.get_all():
-            pass
+            self.__Tela_Funcionario.mostra_mensagem("Nenhum funcionário cadastrado!")
         
         else:
             busca_funcionario = self.__Tela_Funcionario.seleciona_funcionario()
-            funcionario = self.busca_funcionario(busca_funcionario, False)
+            funcionario = self.busca_funcionario(busca_funcionario, True)
 
             if funcionario is not None:
                 self.__funcionario_DAO.remove(funcionario.cpf)
@@ -70,7 +69,7 @@ class ControladorFuncionario():
         self.ver_funcionarios()
 
         if not self.__funcionario_DAO.get_all():
-            pass
+            self.__Tela_Funcionario.mostra_mensagem("Nenhum funcionário cadastrado!")
         
         else:
             busca_funcionario = self.__Tela_Funcionario.seleciona_funcionario()

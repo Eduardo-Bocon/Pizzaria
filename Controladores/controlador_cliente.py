@@ -35,7 +35,7 @@ class ControladorCliente():
         self.ver_clientes()
 
         if not self.__cliente_DAO.get_all():
-            pass
+            self.__tela_Cliente.mostra_mensagem("Nenhum cliente cadastrado!")
         
         else:
             busca_cliente = self.__tela_Cliente.seleciona_cliente()
@@ -53,7 +53,7 @@ class ControladorCliente():
         self.ver_clientes()
 
         if not self.__cliente_DAO.get_all():
-            pass
+            self.__tela_Cliente.mostra_mensagem("Nenhum cliente cadastrado!")
         
         else:
             busca_cliente = self.__tela_Cliente.seleciona_cliente()
