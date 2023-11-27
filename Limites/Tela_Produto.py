@@ -93,7 +93,6 @@ class Tela_Produto:
                     [[sg.Text('Quantidade:', font=font, size=size, pad=pad), sg.InputText('', key='quantidade')]],
                     justification='left')],
                 [sg.Column([[sg.Button('Confirmar', font=font, size=size, pad=pad)]], justification='center')],
-                [sg.Column([[sg.Button('Retornar', key='0', font=font, size=size,  pad=pad)]], justification='right')],
             ]
         else:
             layout = [
@@ -109,7 +108,6 @@ class Tela_Produto:
                     [[sg.Text('Quantidade:', font=font, size=size, pad=pad), sg.InputText(default_text=dados_antigos["quantidade"], key='quantidade')]],
                     justification='left')],
                 [sg.Column([[sg.Button('Confirmar', font=font, size=size, pad=pad)]], justification='center')],
-                [sg.Column([[sg.Button('Retornar', key='0', font=font, size=size,  pad=pad)]], justification='right')],
             ]
 
 
