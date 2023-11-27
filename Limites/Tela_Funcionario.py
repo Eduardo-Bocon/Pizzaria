@@ -8,7 +8,7 @@ class Tela_Funcionario():
         self.__window = None
 
     def init_components(self):
-        print("componentes visuais iniciados funcionario")
+
         sg.ChangeLookAndFeel('DarkBrown1')
         font = ("Palatino Linotype", 10)
         pad = (200, 200), (0, 0)
@@ -42,7 +42,7 @@ class Tela_Funcionario():
         self.__window.Close()
 
     def pega_dados_funcionario(self, dados_antigos=None):
-        print("componentes visuais iniciados pega dados funcionario")
+
         sg.ChangeLookAndFeel('DarkBrown1')
         font = ("Palatino Linotype", 10)
         pad = (200, 200), (0, 0)
@@ -178,7 +178,7 @@ class Tela_Funcionario():
         sg.popup("", mensagem)
 
     def seleciona_funcionario(self):
-        print("componentes visuais iniciados seleciona funcionario")
+
         sg.ChangeLookAndFeel('DarkBrown1')
         font = ("Palatino Linotype", 10)
         pad = (200, 200), (0, 0)
@@ -226,7 +226,7 @@ class Tela_Funcionario():
         return cpf
 
     def escolhe_funcao(self):
-        print("componentes visuais iniciados escolhe funcao")
+
         sg.ChangeLookAndFeel('DarkBrown1')
         font = ("Palatino Linotype", 10)
         pad = (200, 200), (0, 0)

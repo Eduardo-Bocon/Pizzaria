@@ -69,7 +69,7 @@ class Tela_Produto:
         sg.popup("", mensagem)
 
     def pegar_dados_produto(self, dados_antigos = None):
-        print("componentes visuais iniciados pega dados produto")
+
         sg.ChangeLookAndFeel('DarkBrown1')
         font = ("Palatino Linotype", 10)
         pad = (200,200), (0,0)
@@ -218,7 +218,7 @@ class Tela_Produto:
 
     def escolher_produto(self) -> str:
 
-        print("componentes visuais iniciados seleciona produto")
+
         sg.ChangeLookAndFeel('DarkBrown1')
         font = ("Palatino Linotype", 10)
         pad = (200,200), (0,0)

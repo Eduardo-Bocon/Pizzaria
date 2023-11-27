@@ -9,7 +9,7 @@ class Tela_Cliente():
 
 
     def init_components(self):
-        print("componentes visuais iniciados cliente")
+
         sg.ChangeLookAndFeel('DarkBrown1')
         font = ("Palatino Linotype", 10)
         pad = (200,200), (0,0)
@@ -285,7 +285,7 @@ class Tela_Cliente():
         sg.popup("", mensagem)
 
     def seleciona_cliente(self):
-        print("componentes visuais iniciados seleciona cliente")
+
         sg.ChangeLookAndFeel('DarkBrown1')
         font = ("Palatino Linotype", 10)
         pad = (200,200), (0,0)

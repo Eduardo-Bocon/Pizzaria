@@ -10,7 +10,7 @@ class Tela_Pedido():
         self.__controlador = controlador
 
     def init_components(self):
-        print("componentes visuais iniciados pedido")
+
         sg.ChangeLookAndFeel('DarkBrown1')
         font = ("Palatino Linotype", 10)
         pad = (200, 200), (0, 0)
@@ -63,7 +63,7 @@ class Tela_Pedido():
         return opcao
 
     def abre_tela_ver_pedidos(self):
-        print("componentes visuais iniciados ver pedidos")
+
         sg.ChangeLookAndFeel('DarkBrown1')
         font = ("Palatino Linotype", 10)
         pad = (200, 200), (0, 0)
@@ -179,7 +179,7 @@ class Tela_Pedido():
         while True:
             event, values = self.__window.read()
             if event == 'listbox':
-                print(values[event])
+
                 self.close()
                 return values[event]
 
@@ -251,14 +251,14 @@ class Tela_Pedido():
                                   icon="Imagens\pizza icone.ico").Layout(layout)
 
         button, values = self.open()
-        print(values['valor'])
+
         valor = int(values['valor'])
         self.close()
         return valor
 
     def pegar_produtos(self, lista_produtos):
-        for produto in lista_produtos:
-            print(produto)
+
+
         sg.ChangeLookAndFeel('DarkBrown1')
         font = ("Palatino Linotype", 10)
         pad = (200, 200), (0, 0)

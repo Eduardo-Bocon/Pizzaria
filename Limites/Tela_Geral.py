@@ -7,7 +7,7 @@ class Tela_Geral():
 
 
     def init_components(self):
-        print("componentes visuais iniciados geral")
+
         sg.ChangeLookAndFeel('DarkBrown1')
         font = ("Palatino Linotype", 10)
         pad = (200,200), (0,0)
