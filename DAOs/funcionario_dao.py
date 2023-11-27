@@ -7,10 +7,8 @@ class FuncionarioDAO(DAO):
         super().__init__('funcionarios.pkl')
 
     def add(self, funcionario):
-        print("Chegou na função de add")
-        print(funcionario.cpf)
         if isinstance(funcionario.cpf, str):
-            print("Adicionou")
+
             super().add(funcionario.cpf, funcionario)
 
     def update(self, funcionario):

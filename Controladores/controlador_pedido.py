@@ -101,7 +101,7 @@ class ControladorPedido():
         self.ver_pedidos()
 
         if not self.__pedido_DAO.get_all():
-            pass
+            self.__tela.mostra_mensagem("Nenhum pedido cadastrado!")
         
         else:
             codigo = self.__tela.escolher_pedido()
@@ -184,7 +184,7 @@ class ControladorPedido():
         self.ver_pedidos()
 
         if not self.__pedido_DAO.get_all():
-            pass
+            self.__tela.mostra_mensagem("Nenhum pedido cadastrado!")
         
         else:
             codigo = self.__tela.escolher_pedido()
@@ -228,13 +228,13 @@ class ControladorPedido():
         existe = False
 
         for pedido in self.__pedido_DAO.get_all():
-            print("Verificando pedido: {}".format(pedido.codigo))
+            self.mostra_mensagem("Verificando pedido: " + pedido.codigo)
 
             if pedido.codigo == int(codigo):
                 pedido.entregue = True
                 existe = True
             else:
-                print("{} não é igual a {}".format(pedido.codigo, codigo))
+                self.mostra_mensagem(pedido.codigo + " não é igual a " + codigo)
 
         if not existe:
             self.__tela.mostra_mensagem("Erro: pedido não existente")

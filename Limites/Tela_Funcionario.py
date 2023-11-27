@@ -62,7 +62,6 @@ class Tela_Funcionario():
                 [sg.Column([[sg.Text('Salário:', font=font, size=size, pad=pad), sg.InputText('', key='salario')]],
                            justification='left')],
                 [sg.Column([[sg.Button('Confirmar', font=font, size=size, pad=pad)]], justification='center')],
-
             ]
         else:
             layout = [
@@ -79,7 +78,6 @@ class Tela_Funcionario():
                              sg.InputText(default_text=dados_antigos["salario"], key='salario')]],
                            justification='left')],
                 [sg.Column([[sg.Button('Confirmar', font=font, size=size, pad=pad)]], justification='center')],
-
             ]
 
         self.__window = sg.Window('Pizzaria', default_element_size=(40, 1), size=(1250, 620),
@@ -152,7 +150,8 @@ class Tela_Funcionario():
                 self.mostra_mensagem("Salario: Entrada inválida!")
             except Valor_abaixo_de_zero as e:
                 self.mostra_mensagem("Salario: " + str(e))
-
+                
+        self.close()
         return {"nome": nome, "telefone": telefone, "cpf": cpf, "salario": salario}
 
     def mostra_funcionario(self, dados_funcionario):
@@ -215,13 +214,13 @@ class Tela_Funcionario():
                     raise Entrada_muito_longa
                 break
             except ValueError:
-                print("Entrada inválida!")
+                self.mostra_mensagem("Entrada inválida!")
             except Valor_abaixo_de_zero as e:
-                print(e)
+                self.mostra_mensagem(e)
             except Entrada_muito_curta as e:
-                print(e)
+                self.mostra_mensagem(e)
             except Entrada_muito_longa as e:
-                print(e)
+                self.mostra_mensagem(e)
 
         self.close()
         return cpf
@@ -235,6 +234,10 @@ class Tela_Funcionario():
 
         while True:
             layout = [
+                [sg.Column([[sg.Text('Selecionar Função do Funcionário', font=("Palatino Linotype", 30))]],
+                            justification='center', pad=((0, 0), (20, 20)))],
+                [sg.Column([[sg.Text('Qual a função do funcionário que está sendo cadastrado?', font=("Palatino Linotype", 20), pad=15)]],
+                            justification='left')],
                 [sg.Column([[sg.Button('Atendente', key='1', font=font, size=size, pad=pad)]], justification='center')],
                 [sg.Column([[sg.Button('Gerente', key='2', font=font, size=size, pad=pad)]], justification='center')],
                 [sg.Column([[sg.Button('Pizzaiolo', key='3', font=font, size=size, pad=pad)]], justification='center')],
