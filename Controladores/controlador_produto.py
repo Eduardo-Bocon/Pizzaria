@@ -131,3 +131,9 @@ class ControladorProduto():
             if isinstance(produto, Bebida):
                 bebidas.append(produto.nome)
         return bebidas
+
+    def pegar_produtos(self):
+        produtos = list()
+        for produto in self.__produto_DAO.get_all():
+            produtos.append(produto.nome)
+        return produtos

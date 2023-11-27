@@ -65,27 +65,20 @@ class ControladorPedido():
             except Forma_de_Pagamento_Invalida as e:
                 self.__tela.mostra_mensagem(e)
 
-        while True:
-
-            forma = self.__tela.pegar_produtos(self.pegar_formas_pagamento())
-
-            forma = self.checar_forma_pagamento(forma)
-
-            try:
-                if forma is None:
-                    raise Forma_de_Pagamento_Invalida
-                else:
-                    self.__tela.mostra_mensagem("Forma escolhida: " + forma)
-                    break
-            except Forma_de_Pagamento_Invalida as e:
-                self.__tela.mostra_mensagem(e)
 
 
+        nomes_produtos = self.__tela.pegar_produtos(self.__controlador_pizzaria.pegar_produtos())
+
+        #transformar os nomes nos objetos
+        produtos = []
+        for produto in nomes_produtos:
+            produtos.append(self.__controlador_pizzaria.pegar_produto(produto))
+            print(produtos)
 
         # pegando a data atual
         data = datetime.datetime.now()
                 
-        pedido = Pedido(produtos=None,
+        pedido = Pedido(produtos=produtos,
                                 cliente=self.__controlador_pizzaria.pegar_cliente_por_cpf(
                                     cpf_cliente),
                                 atendente=atendente,
