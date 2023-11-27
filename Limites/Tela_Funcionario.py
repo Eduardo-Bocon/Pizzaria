@@ -150,7 +150,8 @@ class Tela_Funcionario():
                 self.mostra_mensagem("Salario: Entrada inválida!")
             except Valor_abaixo_de_zero as e:
                 self.mostra_mensagem("Salario: " + str(e))
-
+                
+        self.close()
         return {"nome": nome, "telefone": telefone, "cpf": cpf, "salario": salario}
 
     def mostra_funcionario(self, dados_funcionario):
@@ -233,6 +234,10 @@ class Tela_Funcionario():
 
         while True:
             layout = [
+                [sg.Column([[sg.Text('Selecionar Função do Funcionário', font=("Palatino Linotype", 30))]],
+                            justification='center', pad=((0, 0), (20, 20)))],
+                [sg.Column([[sg.Text('Qual a função do funcionário que está sendo cadastrado?', font=("Palatino Linotype", 20), pad=15)]],
+                            justification='left')],
                 [sg.Column([[sg.Button('Atendente', key='1', font=font, size=size, pad=pad)]], justification='center')],
                 [sg.Column([[sg.Button('Gerente', key='2', font=font, size=size, pad=pad)]], justification='center')],
                 [sg.Column([[sg.Button('Pizzaiolo', key='3', font=font, size=size, pad=pad)]], justification='center')],

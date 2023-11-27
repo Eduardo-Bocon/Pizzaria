@@ -49,7 +49,7 @@ class ControladorProduto():
         self.ver_produtos()
 
         if not self.__produto_DAO.get_all():
-            pass
+            self.__tela.mostra_mensagem("Nenhum produto cadastrado!")
 
         else:
             nome = self.__tela.escolher_produto()
@@ -106,7 +106,7 @@ class ControladorProduto():
         self.ver_produtos()
 
         if not self.__produto_DAO.get_all():
-            pass
+            self.__tela.mostra_mensagem("Nenhum produto cadastrado!")
 
         else:
             nome = self.__tela.escolher_produto()

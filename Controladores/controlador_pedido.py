@@ -62,7 +62,7 @@ class ControladorPedido():
         self.ver_pedidos()
 
         if not self.__pedido_DAO.get_all():
-            pass
+            self.__tela.mostra_mensagem("Nenhum pedido cadastrado!")
         
         else:
             codigo = self.__tela.escolher_pedido()
@@ -145,7 +145,7 @@ class ControladorPedido():
         self.ver_pedidos()
 
         if not self.__pedido_DAO.get_all():
-            pass
+            self.__tela.mostra_mensagem("Nenhum pedido cadastrado!")
         
         else:
             codigo = self.__tela.escolher_pedido()
