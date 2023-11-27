@@ -213,7 +213,7 @@ class Tela_Pedido():
         font = ("Palatino Linotype", 10)
         pad = (200, 200), (0, 0)
         size = (18, 1)
-
+        print(lista_atendentes)
         atendentes = sg.Listbox(lista_atendentes, size=(20, 4), enable_events=True, key='atendentes', expand_y=True)
 
         layout = [
