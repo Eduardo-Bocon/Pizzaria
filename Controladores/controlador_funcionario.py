@@ -137,9 +137,11 @@ class ControladorFuncionario():
 
             for funcionario in self.__funcionario_DAO.get_all():
                 if isinstance(funcionario, Atendente):
+                    print(funcionario.vendas_mes)
                     if funcionario.vendas_mes > vendas_atendente_do_mes:
                         vendas_atendente_do_mes = funcionario.vendas_mes
                         atendente_do_mes = funcionario
+
 
             return atendente_do_mes
 
@@ -166,7 +168,7 @@ class ControladorFuncionario():
                 return atendente.cpf
         return None
 
-    def aumentar_pedidos_funcionario(self, nome_funcionario):
+    def aumentar_pedidos_funcionario(self, cpf_funcionario):
         for cada_funcionario in self.__funcionario_DAO.get_all():
-            if cada_funcionario.nome.upper() == nome_funcionario.upper():
+            if cada_funcionario.cpf == cpf_funcionario:
                 cada_funcionario.vendas_mes += 1
