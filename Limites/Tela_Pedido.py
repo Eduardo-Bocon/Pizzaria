@@ -255,30 +255,31 @@ class Tela_Pedido():
     def mostra_mensagem(self, mensagem: str):
         sg.popup("", mensagem)
 
-    def pegar_forma_pagamento(self):
+    def pegar_forma_pagamento(self, formas_de_pagamento):
+        sg.ChangeLookAndFeel('DarkBrown1')
+        font = ("Palatino Linotype", 10)
+        pad = (200, 200), (0, 0)
+        size = (18, 1)
 
-        formas_pagamento = self.__controlador.pegar_formas_pagamento()
+        listbox = sg.Listbox(formas_de_pagamento, size=(20,4), enable_events=True, key='listbox', expand_y=True)
 
-        for forma in formas_pagamento:
-            print(forma.value)
+        layout = [
+            [sg.Column([[sg.Text('Fazer Pedido', font=("Palatino Linotype", 30))]], justification='center',
+                       pad=((0, 0), (20, 20)))],
+            [sg.Column([[sg.Text('Escolha a forma de pagamento:', font=("Palatino Linotype", 20), pad=15)]], justification='center')],
+            [listbox],
+        ]
 
-        while 1:
-            try:
-                forma_escolhida = input("Insira a forma de pagamento: ")
+        self.__window = sg.Window('Pizzaria', default_element_size=(40, 1), size=(1250, 620),
+                                  icon="Imagens\pizza icone.ico").Layout(layout)
 
-                existe = False
-                for forma in formas_pagamento:
-                    if forma_escolhida.upper() == forma.value.upper():
-                        existe = True
-                        break
+        while True:
+            event, values = self.__window.read()
+            if event == 'listbox':
+                print(values[event])
+                return values[event]
 
-                if not existe:
-                    raise Forma_de_Pagamento_Invalida
-                break
-            except Forma_de_Pagamento_Invalida as e:
-                print(e)
 
-        return forma_escolhida
 
     def escolher_pedido(self):
         cod = input("Digite o código do pedido: ")
@@ -334,33 +335,6 @@ class Tela_Pedido():
         self.close()
         return cpf_atendente
 
-
-    def escolher_cliente(self, lista_clientes):
-
-        while True:
-            try:
-                nome_cliente = input("Insira o nome do cliente: ")
-
-                cliente_escolhido = None
-
-                existe = False
-
-                if lista_clientes is not None:
-                    for cliente in lista_clientes:
-                        if nome_cliente.upper() == cliente.upper():
-                            existe = True
-                            cliente_escolhido = cliente
-
-                if len(nome_cliente) < 2:
-                    raise Entrada_muito_curta
-                elif not existe:
-                    raise Atendente_nao_encontrado
-
-                return cliente_escolhido
-            except Entrada_muito_curta as e:
-                print(e)
-            except Atendente_nao_encontrado as e:
-                print(e)
 
     def escolher_valor(self):
         try:

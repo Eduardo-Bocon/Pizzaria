@@ -5,7 +5,7 @@ from DAOs.pedido_dao import PedidoDAO
 from Entidades.Pedido.Forma_de_Pagamento import Forma_de_Pagamento
 from Limites.Tela_Pedido import Tela_Pedido
 from Entidades.Pedido.Pedido import Pedido
-from excecoes import Pedido_ja_cadastrado, Cliente_nao_encontrado, Atendente_nao_encontrado
+from excecoes import Pedido_ja_cadastrado, Cliente_nao_encontrado, Atendente_nao_encontrado, Forma_de_Pagamento_Invalida
 
 
 class ControladorPedido():
@@ -48,35 +48,54 @@ class ControladorPedido():
             except Atendente_nao_encontrado as e:
                 self.__tela.mostra_mensagem(e)
 
-        #pegar produtos #todo
+        while True:
 
-        #pegar_forma de pagamento #todo
+            forma = self.__tela.pegar_forma_pagamento(self.pegar_formas_pagamento())
 
-        dados_pedido = self.__tela.pegar_dados_pedido(lista_atendentes=self.__controlador_pizzaria.pegar_atendentes(),
-                                                      lista_pizzas=self.__controlador_pizzaria.pegar_pizzas(),
-                                                      lista_bebidas=self.__controlador_pizzaria.pegar_bebidas(),
-                                                      )
+            forma = self.checar_forma_pagamento(forma)
 
-        try:
-            if dados_pedido is not None:
-                # pegando a data atual
-                data = datetime.datetime.now()
+
+
+            try:
+                if forma is None:
+                    raise Forma_de_Pagamento_Invalida
+                else:
+                    self.__tela.mostra_mensagem("Forma escolhida: " + forma)
+                    break
+            except Forma_de_Pagamento_Invalida as e:
+                self.__tela.mostra_mensagem(e)
+
+        while True:
+
+            forma = self.__tela.pegar_produtos(self.pegar_formas_pagamento())
+
+            forma = self.checar_forma_pagamento(forma)
+
+            try:
+                if forma is None:
+                    raise Forma_de_Pagamento_Invalida
+                else:
+                    self.__tela.mostra_mensagem("Forma escolhida: " + forma)
+                    break
+            except Forma_de_Pagamento_Invalida as e:
+                self.__tela.mostra_mensagem(e)
+
+
+
+        # pegando a data atual
+        data = datetime.datetime.now()
                 
-                pedido = Pedido(produtos=dados_pedido["produtos"],
+        pedido = Pedido(produtos=None,
                                 cliente=self.__controlador_pizzaria.pegar_cliente_por_cpf(
-                                    dados_pedido["cpf"]),
-                                atendente=dados_pedido["atendente"],
-                                forma_de_pagamento=dados_pedido["forma_de_pagamento"],
+                                    cpf_cliente),
+                                atendente=atendente,
+                                forma_de_pagamento=forma,
                                 data=data, codigo=self.__proximo_codigo)
 
-                self.__pedido_DAO.add(pedido)
-                self.__proximo_codigo += 1
-                self.__controlador_pizzaria.aumentar_pedidos_funcionario(dados_pedido["atendente"])
+        self.__pedido_DAO.add(pedido)
+        self.__proximo_codigo += 1
+        self.__controlador_pizzaria.aumentar_pedidos_funcionario(atendente)
 
-            else:
-                raise Pedido_ja_cadastrado(dados_pedido)
-        except Pedido_ja_cadastrado as e:
-            self.__tela.mostra_mensagem(e)
 
     def deletar_pedido(self):
         self.ver_pedidos()
@@ -264,4 +283,14 @@ class ControladorPedido():
         return {"produto": produto_mais_vendido, "quantidade": quantidade}
 
     def pegar_formas_pagamento(self):
-        return Forma_de_Pagamento
+        formas = []
+        for forma in Forma_de_Pagamento:
+            formas.append(forma.value)
+
+        return formas
+
+    def checar_forma_pagamento(self, forma_pagamento):
+        for forma in Forma_de_Pagamento:
+            if forma.value.upper() == forma_pagamento[0].upper():
+                return forma.value
+        return None
