@@ -225,15 +225,17 @@ class Tela_Pedido():
     def escolher_pedido(self, codigos_pedidos):
         sg.ChangeLookAndFeel('DarkBrown1')
         font = ("Palatino Linotype", 10)
-        pad = (200, 200), (0, 0)
+        pad = (150, 150), (20, 20)
         size = (18, 1)
 
-        codigos = sg.Listbox([codigos_pedidos], size=(20, 4), enable_events=True, key='codigos', expand_y=True)
+        codigos = sg.Listbox([codigos_pedidos], size=(30, 8), pad=pad, enable_events=True, key='codigos', expand_y=True)
 
         layout = [
             [sg.Column([[sg.Text('Escolha o pedido', font=("Palatino Linotype", 30))]], justification='center',
                        pad=((0, 0), (20, 20)))],
-            [codigos],
+            [sg.Column([[sg.Text('Selecione o pedido:', font=("Palatino Linotype", 20), pad=15)]],
+                       justification='left')],
+            [sg.Column([[codigos]], justification='center')],
             [sg.Column([[sg.Button('Retornar', font=font, size=size, pad=pad)]], justification='center')],
         ]
         self.__window = sg.Window('Pizzaria', default_element_size=(40, 1), size=(1250, 620),
