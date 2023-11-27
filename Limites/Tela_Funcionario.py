@@ -87,7 +87,7 @@ class Tela_Funcionario():
             button, values = self.open()
             nome = values['nome']
             telefone = values['telefone']
-            salario = values['salario']
+            salario = float(values['salario'])
 
             if dados_antigos is None:
                 cpf = values['cpf']
@@ -143,7 +143,7 @@ class Tela_Funcionario():
                 self.mostra_mensagem("CPF: " + str(e))
 
             try:
-                if int(salario) <= 0:
+                if salario <= 0:
                     raise Valor_abaixo_de_zero
                 break
             except ValueError:
@@ -169,8 +169,7 @@ class Tela_Funcionario():
             string_todos_funcionarios = string_todos_funcionarios + "Nome do funcionario: " + funcionario["nome"] + '\n'
             string_todos_funcionarios = string_todos_funcionarios + "CPF do funcionario: " + str(funcionario["cpf"]) + '\n'
             string_todos_funcionarios = string_todos_funcionarios + "Telefone do funcionario: " + funcionario["telefone"] + '\n'
-            string_todos_funcionarios = string_todos_funcionarios + "Salario: " + funcionario[
-                "salario"] + '\n\n'
+            string_todos_funcionarios = string_todos_funcionarios + "Salario: " + str(funcionario["salario"]) + '\n\n'
 
         sg.Popup('Funcionarios Cadastrados', string_todos_funcionarios)
 

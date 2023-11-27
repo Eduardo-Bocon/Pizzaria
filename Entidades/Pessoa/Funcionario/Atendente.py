@@ -13,4 +13,5 @@ class Atendente(Funcionario):
     
     @vendas_mes.setter
     def vendas_mes(self, vendas_mes):
-        self.__vendas_mes = vendas_mes
+        if isinstance(vendas_mes, int):
+            self.__vendas_mes = vendas_mes

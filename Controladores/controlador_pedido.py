@@ -140,7 +140,7 @@ class ControladorPedido():
             lista_opcoes[self.__tela.abre_tela_ver_pedidos()]()
 
     def ver_pedidos_atendente(self):
-        atendente = self.__tela.escolher_atendente()
+        atendente = self.__tela.escolher_atendente(self.__controlador_pizzaria.pegar_atendentes)
         existe = False
         for pedido in self.__pedido_DAO.get_all():
             if pedido.atendente == atendente:
@@ -154,7 +154,7 @@ class ControladorPedido():
             self.__tela.mostra_mensagem("Não tem pedidos com esse atendente.")
 
     def ver_pedidos_cliente(self):
-        cliente = self.__tela.pegar_cliente()
+        cliente = self.__tela.pegar_cliente(self.__controlador_pizzaria.pegar_clientes)
         existe = False
         for pedido in self.__pedido_DAO.get_all():
             if pedido.cliente.cpf == cliente:
@@ -250,7 +250,7 @@ class ControladorPedido():
         for pedido in self.__pedido_DAO.get_all():
             receitas += pedido.calcula_preco()
 
-        return receitas
+        return float(receitas)
 
     def pegar_despesas(self):
 

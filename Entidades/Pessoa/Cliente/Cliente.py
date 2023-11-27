@@ -15,7 +15,8 @@ class Cliente(Pessoa):
     
     @quantidade_pedidos.setter
     def quantidade_pedidos(self, quantidade_pedidos):
-        self.__quantidade_pedidos = quantidade_pedidos
+        if isinstance(quantidade_pedidos, int):
+            self.__quantidade_pedidos = quantidade_pedidos
 
     @property
     def endereco(self):
@@ -23,6 +24,7 @@ class Cliente(Pessoa):
 
     @endereco.setter
     def endereco(self, endereco):
-        self.__endereco = endereco
+        if isinstance(endereco, Endereco):
+            self.__endereco = endereco
 
 

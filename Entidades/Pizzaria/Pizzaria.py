@@ -1,3 +1,6 @@
+from Entidades.Pessoa.Funcionario import Atendente
+
+
 class Pizzaria:
     def __init__(self):
         self.__receita = 0
@@ -11,7 +14,8 @@ class Pizzaria:
         return self.__receita
     @receita.setter
     def receita(self, nova_receita):
-        self.__receita = nova_receita
+        if isinstance(nova_receita, float) and nova_receita >= 0:
+            self.__receita = nova_receita
 
     @property
     def despesas(self):
@@ -19,7 +23,8 @@ class Pizzaria:
 
     @despesas.setter
     def despesas(self, nova_despesas):
-        self.__despesas = nova_despesas
+        if isinstance(nova_despesas, float) and nova_despesas >= 0:
+            self.__despesas = nova_despesas
 
     @property
     def total_salarios(self):
@@ -27,7 +32,8 @@ class Pizzaria:
 
     @total_salarios.setter
     def total_salarios(self, novo_total):
-        self.__total_salarios = novo_total
+        if isinstance(novo_total, float):
+            self.__total_salarios = novo_total
 
     @property
     def produto_mais_vendido(self):
@@ -43,4 +49,5 @@ class Pizzaria:
 
     @atendente_do_mes.setter
     def atendente_do_mes(self, novo_atendente):
-        self.__atendente_do_mes = novo_atendente
+        if isinstance(novo_atendente, Atendente.Atendente):
+            self.__atendente_do_mes = novo_atendente

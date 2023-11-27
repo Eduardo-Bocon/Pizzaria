@@ -13,7 +13,8 @@ class Endereco():
 
     @numero.setter
     def numero(self, numero):
-        self.__numero = numero
+        if isinstance(numero, int):
+            self.__numero = numero
 
     @property
     def rua(self):
@@ -21,7 +22,8 @@ class Endereco():
 
     @rua.setter
     def rua(self, rua):
-        self.__rua = rua
+        if isinstance(rua, str):
+            self.__rua = rua
 
     @property
     def bairro(self):
@@ -29,7 +31,8 @@ class Endereco():
 
     @bairro.setter
     def bairro(self, bairro):
-        self.__bairro = bairro
+        if isinstance(bairro, str):
+            self.__bairro = bairro
 
     @property
     def cidade(self):
@@ -37,7 +40,8 @@ class Endereco():
 
     @cidade.setter
     def cidade(self, cidade):
-        self.__cidade = cidade
+        if isinstance(cidade, str):
+            self.__cidade = cidade
 
     @property
     def cep(self):
@@ -45,4 +49,5 @@ class Endereco():
 
     @cep.setter
     def cep(self, cep):
-        self.__cep = cep
+        if isinstance(cep, str):
+            self.__cep = cep

@@ -16,7 +16,8 @@ class Produto(ABC):
 
     @nome.setter
     def nome(self, novo_nome):
-        self.__nome = novo_nome
+        if isinstance(novo_nome, str) and novo_nome is not None:
+            self.__nome = novo_nome
 
     @property
     def preco_venda(self):
@@ -24,7 +25,8 @@ class Produto(ABC):
 
     @preco_venda.setter
     def preco_venda(self, novo_preco_venda):
-        self.__preco_venda = novo_preco_venda
+        if isinstance(novo_preco_venda, float) and novo_preco_venda >= 0:
+            self.__preco_venda = novo_preco_venda
 
     @property
     def preco_compra(self):
@@ -32,7 +34,8 @@ class Produto(ABC):
 
     @preco_compra.setter
     def preco_compra(self, novo_preco_compra):
-        self.__preco_compra = novo_preco_compra
+        if isinstance(novo_preco_compra, float) and novo_preco_compra >= 0:
+            self.__preco_compra = novo_preco_compra
 
     @property
     def quantidade(self):
@@ -40,10 +43,13 @@ class Produto(ABC):
 
     @quantidade.setter
     def quantidade(self, nova_quantidade):
-        self.__quantidade = nova_quantidade
+        if isinstance(nova_quantidade, int) and nova_quantidade >= 0:
+            self.__quantidade = nova_quantidade
 
     def aumentar_estoque(self, quantidade: int):
-        self.__quantidade += quantidade
+        if isinstance(quantidade, int):
+            self.__quantidade += quantidade
 
     def diminuir_estoque(self, quantidade: int):
-        self.__quantidade -= quantidade
+        if isinstance(quantidade, int):
+            self.__quantidade -= quantidade

@@ -21,7 +21,8 @@ class Pedido:
 
     @cliente.setter
     def cliente(self, cliente):
-        self.__cliente = cliente
+        if isinstance(cliente, Cliente):
+            self.__cliente = cliente
 
     @property
     def produtos(self):
@@ -37,7 +38,8 @@ class Pedido:
 
     @atendente.setter
     def atendente(self, atendente):
-        self.__atendente = atendente
+        if isinstance(atendente, Atendente):
+            self.__atendente = atendente
 
     @property
     def forma_pagamento(self):
@@ -61,7 +63,8 @@ class Pedido:
 
     @entregue.setter
     def entregue(self, entregue:bool):
-        self.__entregue = entregue
+        if isinstance(entregue, bool):
+            self.__entregue = entregue
 
     @property
     def codigo(self):
@@ -69,7 +72,8 @@ class Pedido:
 
     @codigo.setter
     def codigo(self, codigo):
-        self.__codigo = codigo
+        if isinstance(codigo, int):
+            self.__codigo = codigo
 
     def adicionar_produto(self, produto):
         self.__produtos.append(produto)

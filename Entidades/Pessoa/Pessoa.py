@@ -15,7 +15,8 @@ class Pessoa(ABC):
 
     @nome.setter
     def nome(self, novo_nome):
-        self.__nome = novo_nome
+        if isinstance(novo_nome, str):
+            self.__nome = novo_nome
 
     @property
     def cpf(self):
@@ -23,7 +24,8 @@ class Pessoa(ABC):
 
     @cpf.setter
     def cpf(self, novo_cpf):
-        self.__cpf = novo_cpf
+        if isinstance(novo_cpf, str):
+            self.__cpf = novo_cpf
 
     @property
     def telefone(self):
@@ -31,4 +33,5 @@ class Pessoa(ABC):
 
     @telefone.setter
     def telefone(self, novo_telefone):
-        self.__telefone = novo_telefone
+        if isinstance(novo_telefone, str):
+            self.__telefone = novo_telefone

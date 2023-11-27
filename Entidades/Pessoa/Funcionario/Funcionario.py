@@ -15,4 +15,5 @@ class Funcionario(Pessoa, ABC):
     
     @salario.setter
     def salario(self, salario):
-        self.__salario = salario
+        if isinstance(salario, float):
+            self.__salario = salario
