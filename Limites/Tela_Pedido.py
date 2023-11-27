@@ -81,11 +81,13 @@ class Tela_Pedido():
 
     def pegar_dados_pedido(self, lista_atendentes: [], lista_pizzas: [], lista_bebidas: [], dados_antigos = None):
 
+
         print("componentes visuais iniciados pega dados pedido")
         sg.ChangeLookAndFeel('DarkBrown1')
         font = ("Palatino Linotype", 10)
         pad = (200, 200), (0, 0)
         size = (18, 1)
+
 
         layout = [
             [sg.Column([[sg.Text('Dados Pedido', font=("Palatino Linotype", 30))]], justification='center',
@@ -196,7 +198,7 @@ class Tela_Pedido():
 
         forma_de_pagamento = self.pegar_forma_pagamento()
 
-        return {"cpf": cpf_cliente, "produtos": produtos, "atendente": atendente_escolhido,
+        return { "produtos": produtos, "atendente": atendente_escolhido,
                 "forma_de_pagamento": forma_de_pagamento}
 
     def pegar_cliente(self,dados_antigos = None):
@@ -318,32 +320,56 @@ class Tela_Pedido():
         cod = input("Digite o código do pedido: ")
         return cod
 
-    def escolher_atendente(self, lista_atendentes: []):
+    def escolher_atendente(self):
+        sg.ChangeLookAndFeel('DarkBrown1')
+        font = ("Palatino Linotype", 10)
+        pad = (200, 200), (0, 0)
+        size = (18, 1)
+
+        layout = [
+            [sg.Column([[sg.Text('Fazer Pedido', font=("Palatino Linotype", 30))]], justification='center',
+                       pad=((0, 0), (20, 20)))],
+            [sg.Column([[sg.Text('Insira:', font=("Palatino Linotype", 20), pad=15)]], justification='center')],
+            [sg.Column([[sg.Text('CPF do atentente:', font=font, size=size, pad=pad), sg.InputText('', key='cpf')]],
+                       justification='left')],
+            [sg.Column([[sg.Button('Confirmar', font=font, size=size, pad=pad)]], justification='center')],
+        ]
+
+        self.__window = sg.Window('Pizzaria', default_element_size=(40, 1), size=(1250, 620),
+                                  icon="Imagens\pizza icone.ico").Layout(layout)
 
         while True:
+            erro = False
+
+            button, values = self.open()
+
+            cpf_atendente = values['cpf']
+
 
             try:
-                nome_atendente = input("Insira o nome do atendente: ")
 
-                atendente_escolhido = None
+                # verifica se tem apenas numeros
+                int(cpf_atendente)
 
-                existe = False
-
-                for atendente in lista_atendentes:
-                    if nome_atendente.upper() == atendente.upper():
-                        existe = True
-                        atendente_escolhido = atendente
-
-                if len(nome_atendente) < 2:
+                if len(cpf_atendente) < 8:
                     raise Entrada_muito_curta
-                elif not existe:
-                    raise Atendente_nao_encontrado
-                return atendente_escolhido
-
+                elif len(cpf_atendente) > 11:
+                    raise Entrada_muito_longa
+            except ValueError:
+                erro = True
+                self.mostra_mensagem("Resposta invalida! Digite apenas numeros.")
             except Entrada_muito_curta as e:
-                print(e)
-            except Atendente_nao_encontrado as e:
-                print(e)
+                erro = True
+                self.mostra_mensagem(e)
+            except Entrada_muito_longa as e:
+                erro = True
+                self.mostra_mensagem(e)
+
+            if not erro:
+                break
+        self.close()
+        return cpf_atendente
+
 
     def escolher_cliente(self, lista_clientes):
 
