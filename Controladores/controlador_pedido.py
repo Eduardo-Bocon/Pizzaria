@@ -25,6 +25,8 @@ class ControladorPedido():
             cpf_cliente = self.__tela.pegar_cliente()
 
             cliente = self.__controlador_pizzaria.pegar_cliente_por_cpf(cpf_cliente)
+            print("AAAAAAAAAAAAAAAAA")
+            print(cliente)
 
             try:
                 if cliente is None:
@@ -79,8 +81,7 @@ class ControladorPedido():
         data = datetime.datetime.now()
                 
         pedido = Pedido(produtos=produtos,
-                                cliente=self.__controlador_pizzaria.pegar_cliente_por_cpf(
-                                    cpf_cliente),
+                                cliente=cliente,
                                 atendente=atendente,
                                 forma_de_pagamento=forma,
                                 data=data, codigo=self.__proximo_codigo)
@@ -118,6 +119,7 @@ class ControladorPedido():
 
         else:
             for pedido in self.__pedido_DAO.get_all():
+
                 self.__tela.ver_pedido({"codigo": pedido.codigo, "produtos": pedido.produtos,
                                         "nome_cliente": pedido.cliente.nome, "cpf_cliente": pedido.cliente.cpf,
                                         "atendente": pedido.atendente, "valor": pedido.calcula_preco(),

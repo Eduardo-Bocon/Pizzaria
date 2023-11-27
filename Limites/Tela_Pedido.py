@@ -79,6 +79,25 @@ class Tela_Pedido():
 
         self.__window = sg.Window('Pizzaria', default_element_size=(40,1), size=(1250,620), icon="Imagens\pizza icone.ico").Layout(layout)
 
+        button, values = self.__window.Read()
+        button = int(button)
+        opcao = 0
+
+        if button == 1:
+            opcao = 1
+        if button == 2:
+            opcao = 2
+        if button == 3:
+            opcao = 3
+        if button == 4:
+            opcao = 4
+
+        if button == 0 or button in (None, 'Cancelar'):
+            opcao = 0
+
+        self.close()
+        return opcao
+
     def pegar_dados_pedido(self, lista_atendentes: [], lista_pizzas: [], lista_bebidas: [], dados_antigos = None):
 
 
@@ -268,25 +287,24 @@ class Tela_Pedido():
 
     def ver_pedido(self, dados_pedido):
 
-        self.mostra_mensagem("Código do pedido: ", dados_pedido["codigo"])
-        self.mostra_mensagem("Lista de produtos: ")
 
         string_pedido = ""
         string_produtos = ""
 
         for produto in dados_pedido["produtos"]:
-            string_produtos = string_produtos + produto.nome
-        sg.Popup('Produtos', string_produtos)
+            string_produtos = string_produtos + produto.nome + '\n'
 
-        string_pedido = "Cliente: ", dados_pedido["nome_cliente"] + '\n'
-        string_pedido = string_pedido + "Cpf cliente: ", dados_pedido["cpf_cliente"] + '\n'
-        string_pedido = string_pedido + "Atendente: ", dados_pedido["atendente"].nome + '\n'
-        string_pedido = string_pedido + "Valor: ", dados_pedido["valor"] + '\n'
-        string_pedido = string_pedido + "Forma de pagamento: ", dados_pedido["forma_de_pagamento"] + '\n'
-        string_pedido = string_pedido + "Data: ", dados_pedido["data"] + '\n'
-        string_pedido = string_pedido + "Entregue: ", dados_pedido["entregue"] + '\n\n'
+        string_pedido = "Código do pedido: " + str(dados_pedido["codigo"]) +'\n'
+        string_pedido = string_pedido + "Cliente: " + dados_pedido["nome_cliente"] + '\n'
+        string_pedido = string_pedido + "Cpf cliente: " + str(dados_pedido["cpf_cliente"]) + '\n'
+        string_pedido = string_pedido + "Atendente: "+ dados_pedido["atendente"] + '\n'
+        string_pedido = string_pedido + "Valor: "+ str(dados_pedido["valor"]) + '\n'
+        string_pedido = string_pedido + "Forma de pagamento: "+ dados_pedido["forma_de_pagamento"] + '\n'
+        string_pedido = string_pedido + "Data: "+ str(dados_pedido["data"]) + '\n'
+        string_pedido = string_pedido + "Entregue: "+ str(dados_pedido["entregue"]) + '\n\n'
+        string_pedido = string_pedido + "Lista de produtos: " + '\n'
 
-        sg.Popup('Dados do Pedido', string_pedido)
+        self.mostra_mensagem('Dados do Pedido: \n' + string_pedido + string_produtos)
 
     def mostra_mensagem(self, mensagem: str):
         sg.popup("", mensagem)
@@ -418,6 +436,7 @@ class Tela_Pedido():
                 self.__window['carrinho_listbox'].update(carrinho)
                 print(carrinho)
             if event == 'Confirmar':
+                self.close()
                 return carrinho
             if event == 'Remover':
                 carrinho.remove(opcoes.get()[0])

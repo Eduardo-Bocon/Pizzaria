@@ -89,7 +89,7 @@ class ControladorCliente():
     def busca_clientes(self, cpf: str):
         for cliente in self.__cliente_DAO.get_all():
             if cpf == cliente.cpf:
-                return cliente.cpf
+                return cliente
         return None
 
     def ver_clientes_fieis(self):
