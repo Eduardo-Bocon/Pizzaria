@@ -221,21 +221,18 @@ class ControladorPedido():
 
         self.ver_pedidos()
 
-        codigo = self.__tela.escolher_pedido()
+        codigo = self.__tela.escolher_pedido(self.pegar_codigos_pedidos())
+        if not codigo == "Retornar":
 
-        existe = False
+            pedido = self.pegar_pedido(codigo)
+            print(pedido)
 
-        for pedido in self.__pedido_DAO.get_all():
-            self.mostra_mensagem("Verificando pedido: " + pedido.codigo)
-
-            if pedido.codigo == int(codigo):
+            if pedido is not None:
                 pedido.entregue = True
-                existe = True
-            else:
-                self.mostra_mensagem(pedido.codigo + " não é igual a " + codigo)
 
-        if not existe:
-            self.__tela.mostra_mensagem("Erro: pedido não existente")
+            else:
+                self.__tela.mostra_mensagem("Erro: pedido não existente")
+
 
     def pegar_receitas(self):
 
