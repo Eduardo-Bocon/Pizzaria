@@ -38,23 +38,22 @@ class Tela_Pedido():
         self.__window.Close()
 
     def abre_tela(self):
-        # fazer aqui tratamento dos dados, caso a entrada seja diferente do esperado
+
         self.init_components()
         button, values = self.__window.Read()
-        button = int(button)
 
-        if button == 1:
+        if button == '1':
             opcao = 1
-        if button == 2:
+        if button == '2':
             opcao = 2
-        if button == 3:
+        if button == '3':
             opcao = 3
-        if button == 4:
+        if button == '4':
             opcao = 4
-        if button == 5:
+        if button == '5':
             opcao = 5
 
-        if button == 0 or button in (None,'Cancelar'):
+        if button == '0' or button in (None,'Cancelar'):
             opcao = 0
 
         self.close()
@@ -80,8 +79,9 @@ class Tela_Pedido():
 
         self.__window = sg.Window('Pizzaria', default_element_size=(40,1), size=(1250,620), icon="Imagens\pizza icone.ico").Layout(layout)
 
-    def pegar_dados_pedido(self, lista_atendentes: [], lista_pizzas: [], lista_bebidas: []):
+    def pegar_dados_pedido(self, lista_atendentes: [], lista_pizzas: [], lista_bebidas: [], dados_antigos = None):
 
+<<<<<<< HEAD
         print("componentes visuais iniciados pega dados pedido")
         sg.ChangeLookAndFeel('DarkBrown1')
         font = ("Palatino Linotype", 10)
@@ -128,6 +128,11 @@ class Tela_Pedido():
                 self.mostra_mensagem(e)
             except Entrada_muito_longa as e:
                 self.mostra_mensagem(e)
+=======
+        cpf_cliente = self.pegar_cliente(dados_antigos=dados_antigos)
+
+        atendente_escolhido = self.escolher_atendente(lista_atendentes)
+>>>>>>> ac7a85304e9b4e1da3149941f9e898f0263e9ab8
 
         produtos = list()
 
@@ -193,12 +198,77 @@ class Tela_Pedido():
             elif escolha == 3:
                 break
 
-        atendente_escolhido = self.escolher_atendente(lista_atendentes)
+
 
         forma_de_pagamento = self.pegar_forma_pagamento()
 
         return {"cpf": cpf_cliente, "produtos": produtos, "atendente": atendente_escolhido,
                 "forma_de_pagamento": forma_de_pagamento}
+
+    def pegar_cliente(self,dados_antigos = None):
+        sg.ChangeLookAndFeel('DarkBrown1')
+        font = ("Palatino Linotype", 10)
+        pad = (200, 200), (0, 0)
+        size = (18, 1)
+
+        if dados_antigos is None:
+            layout = [
+                [sg.Column([[sg.Text('Fazer Pedido', font=("Palatino Linotype", 30))]], justification='center',
+                           pad=((0, 0), (20, 20)))],
+                [sg.Column([[sg.Text('Insira:', font=("Palatino Linotype", 20), pad=15)]], justification='center')],
+                [sg.Column([[sg.Text('CPF do cliente:', font=font, size=size, pad=pad), sg.InputText('', key='cpf')]],
+                           justification='left')],
+                [sg.Column([[sg.Button('Confirmar', font=font, size=size, pad=pad)]], justification='center')],
+            ]
+        else:
+            layout = [
+                [sg.Column([[sg.Text('Fazer Pedido', font=("Palatino Linotype", 30))]], justification='center',
+                           pad=((0, 0), (20, 20)))],
+                [sg.Column([[sg.Text('Insira:', font=("Palatino Linotype", 20), pad=15)]], justification='center')],
+                [sg.Column([[sg.Text('CPF do cliente:', font=font, size=size, pad=pad),
+                             sg.InputText(default_text=dados_antigos['cpf'], key='cpf')]],
+                           justification='left')],
+                [sg.Column([[sg.Button('Confirmar', font=font, size=size, pad=pad)]], justification='center')],
+            ]
+
+        self.__window = sg.Window('Pizzaria', default_element_size=(40, 1), size=(1250, 620),
+                                  icon="Imagens\pizza icone.ico").Layout(layout)
+
+        while True:
+            erro = False
+
+            button, values = self.open()
+
+            if dados_antigos is None:
+                cpf_cliente = values['cpf']
+            else:
+                cpf_cliente = dados_antigos['cpf']
+
+            try:
+
+                # verifica se tem apenas numeros
+                int(cpf_cliente)
+
+                if len(cpf_cliente) < 8:
+                    raise Entrada_muito_curta
+                elif len(cpf_cliente) > 11:
+                    raise Entrada_muito_longa
+            except ValueError:
+                erro = True
+                self.mostra_mensagem("Resposta invalida! Digite apenas numeros.")
+            except Entrada_muito_curta as e:
+                erro = True
+                self.mostra_mensagem(e)
+            except Entrada_muito_longa as e:
+                erro = True
+                self.mostra_mensagem(e)
+
+            if not erro:
+                break
+        self.close()
+        return cpf_cliente
+
+
 
     def ver_pedido(self, dados_pedido):
 

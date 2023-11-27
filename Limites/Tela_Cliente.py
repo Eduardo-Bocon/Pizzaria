@@ -37,7 +37,6 @@ class Tela_Cliente():
         self.__window.Close()
 
     def pega_dados_cliente(self, dados_antigos = None):
-        print("componentes visuais iniciados pega dados cliente")
         sg.ChangeLookAndFeel('DarkBrown1')
         font = ("Palatino Linotype", 10)
         pad = (200,200), (0,0)
@@ -71,6 +70,8 @@ class Tela_Cliente():
         erro = False
 
         while True:
+            erro = False
+
             button, values = self.open()
             nome = values['nome']
             telefone = values['telefone']
