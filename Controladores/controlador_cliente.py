@@ -122,5 +122,5 @@ class ControladorCliente():
         clientes = list()
         for cliente in self.__cliente_DAO.get_all():
             if isinstance(cliente, Cliente):
-                clientes.append({'nome':cliente.nome, 'cpf':cliente.cpf})
+                clientes.append(cliente.cpf)
         return clientes

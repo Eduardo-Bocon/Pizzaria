@@ -157,7 +157,7 @@ class ControladorFuncionario():
         atendentes = list()
         for funcionario in self.__funcionario_DAO.get_all():
             if isinstance(funcionario, Atendente):
-                atendentes.append(funcionario.nome)
+                atendentes.append(funcionario.cpf)
         return atendentes
 
     def pegar_atendente_por_cpf(self, cpf: str):

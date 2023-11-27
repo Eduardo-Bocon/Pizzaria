@@ -23,11 +23,11 @@ class ControladorPedido():
         #pega o cliente
         while True:
 
-            cpf_cliente = self.__tela.pegar_cliente()
+            cpf_cliente = self.__tela.pegar_cliente(self.__controlador_pizzaria.pegar_clientes())
+            if cpf_cliente == "Retornar":
+                return
 
             cliente = self.__controlador_pizzaria.pegar_cliente_por_cpf(cpf_cliente)
-            print("AAAAAAAAAAAAAAAAA")
-            print(cliente)
 
             try:
                 if cliente is None:
@@ -39,9 +39,11 @@ class ControladorPedido():
 
         #pega o atendente
         while True:
-            atendente = self.__tela.escolher_atendente()
+            cpf_atendente = self.__tela.escolher_atendente(self.__controlador_pizzaria.pegar_atendentes())
+            if cpf_atendente == "Retornar":
+                return
 
-            atendente = self.__controlador_pizzaria.pegar_atendente_por_cpf(atendente)
+            atendente = self.__controlador_pizzaria.pegar_atendente_por_cpf(cpf_atendente)
 
             try:
                 if atendente is None:
