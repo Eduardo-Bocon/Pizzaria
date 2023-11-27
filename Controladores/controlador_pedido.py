@@ -5,7 +5,8 @@ from DAOs.pedido_dao import PedidoDAO
 from Entidades.Pedido.Forma_de_Pagamento import Forma_de_Pagamento
 from Limites.Tela_Pedido import Tela_Pedido
 from Entidades.Pedido.Pedido import Pedido
-from excecoes import Pedido_ja_cadastrado, Cliente_nao_encontrado, Atendente_nao_encontrado, Forma_de_Pagamento_Invalida
+from excecoes import Pedido_ja_cadastrado, Cliente_nao_encontrado, Atendente_nao_encontrado, \
+    Forma_de_Pagamento_Invalida, Valor_invalido
 
 
 class ControladorPedido():
@@ -165,7 +166,13 @@ class ControladorPedido():
             self.__tela.mostra_mensagem("Não tem pedidos com esse cliente.")
 
     def ver_pedidos_por_valor(self):
-        valor = self.__tela.escolher_valor()
+        while True:
+            valor = self.__tela.escolher_valor()
+            try:
+                if valor > 0:
+                    break
+            except ValueError:
+                self.__tela.mostra_mensagem("Valor invalido")
         existe = False
         for pedido in self.__pedido_DAO.get_all():
             if pedido.calcula_preco() >= valor:

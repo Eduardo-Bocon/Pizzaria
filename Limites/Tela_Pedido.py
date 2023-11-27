@@ -4,7 +4,7 @@ from excecoes import Entrada_muito_curta, Forma_de_Pagamento_Invalida, Atendente
 
 
 class Tela_Pedido():
-    
+
     def __init__(self, controlador):
         self.__window = None
         self.__controlador = controlador
@@ -13,22 +13,25 @@ class Tela_Pedido():
         print("componentes visuais iniciados pedido")
         sg.ChangeLookAndFeel('DarkBrown1')
         font = ("Palatino Linotype", 10)
-        pad = (200,200), (0,0)
-        size = (18,1)
+        pad = (200, 200), (0, 0)
+        size = (18, 1)
 
         layout = [
-            [sg.Column([[sg.Text('Tela Pedido', font=("Palatino Linotype", 30))]], justification='center', pad=((0,0), (20,20)))],
+            [sg.Column([[sg.Text('Tela Pedido', font=("Palatino Linotype", 30))]], justification='center',
+                       pad=((0, 0), (20, 20)))],
             [sg.Column([[sg.Image("Imagens\pedido.png", subsample=3)]], justification='center')],
-            [sg.Column([[sg.Text('O que você deseja fazer?', font=("Palatino Linotype", 20), pad=15)]], justification='center')],
+            [sg.Column([[sg.Text('O que você deseja fazer?', font=("Palatino Linotype", 20), pad=15)]],
+                       justification='center')],
             [sg.Column([[sg.Button('Fazer pedido', key='1', font=font, size=size, pad=pad)]], justification='left')],
-            [sg.Column([[sg.Button('Modificar pedido', key='2', font=font, size=size, pad=pad)]], justification='center')],
-            [sg.Column([[sg.Button('Ver pedidos', key='3', font=font, size=size,  pad=pad)]], justification='right')],
-            [sg.Column([[sg.Button('Deletar pedido', key='4', font=font, size=size,  pad=pad)]], justification='left')],
-            [sg.Column([[sg.Button('Confirmar entrega pedido', key='5', font=font, size=size,  pad=pad)]], justification='center')],
-            [sg.Column([[sg.Button('Retornar', key='0', font=font, size=size,  pad=pad)]], justification='right')],
+            [sg.Column([[sg.Button('Ver pedidos', key='3', font=font, size=size, pad=pad)]], justification='right')],
+            [sg.Column([[sg.Button('Deletar pedido', key='4', font=font, size=size, pad=pad)]], justification='left')],
+            [sg.Column([[sg.Button('Confirmar entrega pedido', key='5', font=font, size=size, pad=pad)]],
+                       justification='center')],
+            [sg.Column([[sg.Button('Retornar', key='0', font=font, size=size, pad=pad)]], justification='right')],
         ]
 
-        self.__window = sg.Window('Pizzaria', default_element_size=(40,1), size=(1250,620), icon="Imagens\pizza icone.ico").Layout(layout)
+        self.__window = sg.Window('Pizzaria', default_element_size=(40, 1), size=(1250, 620),
+                                  icon="Imagens\pizza icone.ico").Layout(layout)
 
     def open(self):
         button, values = self.__window.Read()
@@ -53,7 +56,7 @@ class Tela_Pedido():
         if button == '5':
             opcao = 5
 
-        if button == '0' or button in (None,'Cancelar'):
+        if button == '0' or button in (None, 'Cancelar'):
             opcao = 0
 
         self.close()
@@ -63,21 +66,29 @@ class Tela_Pedido():
         print("componentes visuais iniciados ver pedidos")
         sg.ChangeLookAndFeel('DarkBrown1')
         font = ("Palatino Linotype", 10)
-        pad = (200,200), (0,0)
-        size = (18,1)
+        pad = (200, 200), (0, 0)
+        size = (18, 1)
 
         layout = [
-            [sg.Column([[sg.Text('Tela Ver Pedidos', font=("Palatino Linotype", 30))]], justification='center', pad=((0,0), (20,20)))],
+            [sg.Column([[sg.Text('Tela Ver Pedidos', font=("Palatino Linotype", 30))]], justification='center',
+                       pad=((0, 0), (20, 20)))],
             [sg.Column([[sg.Image("Imagens\pedido.png", subsample=3)]], justification='center')],
-            [sg.Column([[sg.Text('O que você deseja fazer?', font=("Palatino Linotype", 20), pad=15)]], justification='center')],
-            [sg.Column([[sg.Button('Ver todos os pedidos', key='1', font=font, size=size, pad=pad)]], justification='left')],
-            [sg.Column([[sg.Button('Ver os pedidos de um atendente', key='2', font=font, size=size, pad=pad)]], justification='right')],
-            [sg.Column([[sg.Button('Ver os pedidos de um cliente', key='3', font=font, size=size,  pad=pad)]], justification='left')],
-            [sg.Column([[sg.Button('Ver os pedidos acima de uma faixa de preço', key='4', font=font, size=size,  pad=pad)]], justification='right')],
-            [sg.Column([[sg.Button('Retornar', key='0', font=font, size=size,  pad=pad)]], justification='right')],
+            [sg.Column([[sg.Text('O que você deseja fazer?', font=("Palatino Linotype", 20), pad=15)]],
+                       justification='center')],
+            [sg.Column([[sg.Button('Ver todos os pedidos', key='1', font=font, size=size, pad=pad)]],
+                       justification='left')],
+            [sg.Column([[sg.Button('Ver os pedidos de um atendente', key='2', font=font, size=size, pad=pad)]],
+                       justification='right')],
+            [sg.Column([[sg.Button('Ver os pedidos de um cliente', key='3', font=font, size=size, pad=pad)]],
+                       justification='left')],
+            [sg.Column(
+                [[sg.Button('Ver os pedidos acima de uma faixa de preço', key='4', font=font, size=size, pad=pad)]],
+                justification='right')],
+            [sg.Column([[sg.Button('Retornar', key='0', font=font, size=size, pad=pad)]], justification='right')],
         ]
 
-        self.__window = sg.Window('Pizzaria', default_element_size=(40,1), size=(1250,620), icon="Imagens\pizza icone.ico").Layout(layout)
+        self.__window = sg.Window('Pizzaria', default_element_size=(40, 1), size=(1250, 620),
+                                  icon="Imagens\pizza icone.ico").Layout(layout)
 
         button, values = self.__window.Read()
         button = int(button)
@@ -98,9 +109,7 @@ class Tela_Pedido():
         self.close()
         return opcao
 
-
-
-    def pegar_cliente(self,dados_antigos = None):
+    def pegar_cliente(self, dados_antigos=None):
         sg.ChangeLookAndFeel('DarkBrown1')
         font = ("Palatino Linotype", 10)
         pad = (200, 200), (0, 0)
@@ -163,10 +172,7 @@ class Tela_Pedido():
         self.close()
         return cpf_cliente
 
-
-
     def ver_pedido(self, dados_pedido):
-
 
         string_pedido = ""
         string_produtos = ""
@@ -174,14 +180,14 @@ class Tela_Pedido():
         for produto in dados_pedido["produtos"]:
             string_produtos = string_produtos + produto.nome + '\n'
 
-        string_pedido = "Código do pedido: " + str(dados_pedido["codigo"]) +'\n'
+        string_pedido = "Código do pedido: " + str(dados_pedido["codigo"]) + '\n'
         string_pedido = string_pedido + "Cliente: " + dados_pedido["nome_cliente"] + '\n'
         string_pedido = string_pedido + "Cpf cliente: " + str(dados_pedido["cpf_cliente"]) + '\n'
-        string_pedido = string_pedido + "Atendente: "+ dados_pedido["atendente"] + '\n'
-        string_pedido = string_pedido + "Valor: "+ str(dados_pedido["valor"]) + '\n'
-        string_pedido = string_pedido + "Forma de pagamento: "+ dados_pedido["forma_de_pagamento"] + '\n'
-        string_pedido = string_pedido + "Data: "+ str(dados_pedido["data"]) + '\n'
-        string_pedido = string_pedido + "Entregue: "+ str(dados_pedido["entregue"]) + '\n\n'
+        string_pedido = string_pedido + "Atendente: " + dados_pedido["atendente"] + '\n'
+        string_pedido = string_pedido + "Valor: " + str(dados_pedido["valor"]) + '\n'
+        string_pedido = string_pedido + "Forma de pagamento: " + dados_pedido["forma_de_pagamento"] + '\n'
+        string_pedido = string_pedido + "Data: " + str(dados_pedido["data"]) + '\n'
+        string_pedido = string_pedido + "Entregue: " + str(dados_pedido["entregue"]) + '\n\n'
         string_pedido = string_pedido + "Lista de produtos: " + '\n'
 
         self.mostra_mensagem('Dados do Pedido: \n' + string_pedido + string_produtos)
@@ -195,12 +201,13 @@ class Tela_Pedido():
         pad = (200, 200), (0, 0)
         size = (18, 1)
 
-        listbox = sg.Listbox(formas_de_pagamento, size=(20,4), enable_events=True, key='listbox', expand_y=True)
+        listbox = sg.Listbox(formas_de_pagamento, size=(20, 4), enable_events=True, key='listbox', expand_y=True)
 
         layout = [
             [sg.Column([[sg.Text('Fazer Pedido', font=("Palatino Linotype", 30))]], justification='center',
                        pad=((0, 0), (20, 20)))],
-            [sg.Column([[sg.Text('Escolha a forma de pagamento:', font=("Palatino Linotype", 20), pad=15)]], justification='center')],
+            [sg.Column([[sg.Text('Escolha a forma de pagamento:', font=("Palatino Linotype", 20), pad=15)]],
+                       justification='center')],
             [listbox],
         ]
 
@@ -213,8 +220,6 @@ class Tela_Pedido():
                 print(values[event])
                 self.close()
                 return values[event]
-
-
 
     def escolher_pedido(self, codigos_pedidos):
         sg.ChangeLookAndFeel('DarkBrown1')
@@ -237,7 +242,7 @@ class Tela_Pedido():
             if event == 'codigos':
                 self.close()
                 return values[event][0][0]
-            if  event == 'Retornar':
+            if event == 'Retornar':
                 self.close()
                 return "Retornar"
 
@@ -266,7 +271,6 @@ class Tela_Pedido():
 
             cpf_atendente = values['cpf']
 
-
             try:
 
                 # verifica se tem apenas numeros
@@ -291,17 +295,28 @@ class Tela_Pedido():
         self.close()
         return cpf_atendente
 
-
     def escolher_valor(self):
-        try:
-            valor = float(input("Digite o valor: "))
-            if valor < 0:
-                raise Valor_invalido("acima de 0")
-            return valor
-        except ValueError:
-            print("Erro! Digite um valor.")
-        except Valor_invalido as e:
-            print(e)
+        sg.ChangeLookAndFeel('DarkBrown1')
+        font = ("Palatino Linotype", 10)
+        pad = (200, 200), (0, 0)
+        size = (18, 1)
+
+        layout = [
+            [sg.Column([[sg.Text('Ver pedidos por valor', font=("Palatino Linotype", 30))]], justification='center',
+                       pad=((0, 0), (20, 20)))],
+            [sg.Column([[sg.Text('Valor:', font=font, size=size, pad=pad), sg.InputText(default_text='30', key='valor')]],
+                       justification='left')],
+            [sg.Column([[sg.Button('Confirmar', font=font, size=size, pad=pad)]], justification='center')],
+        ]
+
+        self.__window = sg.Window('Pizzaria', default_element_size=(40, 1), size=(1250, 620),
+                                  icon="Imagens\pizza icone.ico").Layout(layout)
+
+        button, values = self.open()
+        print(values['valor'])
+        valor = int(values['valor'])
+        self.close()
+        return valor
 
     def pegar_produtos(self, lista_produtos):
         for produto in lista_produtos:
@@ -313,14 +328,15 @@ class Tela_Pedido():
 
         carrinho = []
 
-        opcoes = sg.Listbox(lista_produtos, size=(20,4), enable_events=True, key='opcoes', expand_y=True)
+        opcoes = sg.Listbox(lista_produtos, size=(20, 4), enable_events=True, key='opcoes', expand_y=True)
 
-        carrinho_listbox = sg.Listbox(carrinho, size=(20,4), enable_events=True, key='carrinho_listbox', expand_y=True)
+        carrinho_listbox = sg.Listbox(carrinho, size=(20, 4), enable_events=True, key='carrinho_listbox', expand_y=True)
 
         layout = [
             [sg.Column([[sg.Text('Fazer Pedido', font=("Palatino Linotype", 30))]], justification='center',
                        pad=((0, 0), (20, 20)))],
-            [sg.Column([[sg.Text('Escolha produtos:', font=("Palatino Linotype", 20), pad=15)]], justification='center')],
+            [sg.Column([[sg.Text('Escolha produtos:', font=("Palatino Linotype", 20), pad=15)]],
+                       justification='center')],
             [opcoes],
             [carrinho_listbox],
             [sg.Column([[sg.Button('Confirmar', font=font, size=size, pad=pad)]], justification='center')],
@@ -341,4 +357,3 @@ class Tela_Pedido():
             if event == 'Remover':
                 carrinho.remove(opcoes.get()[0])
                 self.__window['carrinho_listbox'].update(carrinho)
-
