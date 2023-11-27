@@ -98,14 +98,17 @@ class ControladorPedido():
             self.__tela.mostra_mensagem("Nenhum pedido cadastrado!")
         
         else:
-            codigo = self.__tela.escolher_pedido()
-            pedido = self.pegar_pedido(codigo)
+            codigo = self.__tela.escolher_pedido(self.pegar_codigos_pedidos())
+            if not codigo == "Retornar":
 
-            if pedido is not None:
-                self.__pedido_DAO.remove(pedido)
-                self.ver_pedidos()
-            else:
-                self.__tela.mostra_mensagem("Erro: pedido não existente")
+                pedido = self.pegar_pedido(codigo)
+                print(pedido)
+
+                if pedido is not None:
+                    self.__pedido_DAO.remove(pedido.codigo)
+                    self.ver_pedidos()
+                else:
+                    self.__tela.mostra_mensagem("Erro: pedido não existente")
 
     def pegar_pedido(self, codigo):
         for pedido in self.__pedido_DAO.get_all():
@@ -289,3 +292,9 @@ class ControladorPedido():
             if forma.value.upper() == forma_pagamento[0].upper():
                 return forma.value
         return None
+
+    def pegar_codigos_pedidos(self):
+        codigos = []
+        for pedido in self.__pedido_DAO.get_all():
+            codigos.append(pedido.codigo)
+        return codigos

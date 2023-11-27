@@ -98,127 +98,7 @@ class Tela_Pedido():
         self.close()
         return opcao
 
-    def pegar_dados_pedido(self, lista_atendentes: [], lista_pizzas: [], lista_bebidas: [], dados_antigos = None):
 
-
-        print("componentes visuais iniciados pega dados pedido")
-        sg.ChangeLookAndFeel('DarkBrown1')
-        font = ("Palatino Linotype", 10)
-        pad = (200, 200), (0, 0)
-        size = (18, 1)
-
-
-        layout = [
-            [sg.Column([[sg.Text('Dados Pedido', font=("Palatino Linotype", 30))]], justification='center',
-                        pad=((0, 0), (20, 20)))],
-            [sg.Column([[sg.Text('Insira:', font=("Palatino Linotype", 20), pad=15)]], justification='left')],
-            [sg.Column([[sg.Text('CPF do cliente:', font=font, size=size, pad=pad), sg.InputText('', key='cpf')]],
-                        justification='left')],
-            [sg.Column([[sg.Button('Adicionar pizza', key='1', font=font, size=size, pad=pad)]],
-                        justification='left')],
-            [sg.Column([[sg.Button('Adicionar bebida', key='2', font=font, size=size, pad=pad)]],
-                        justification='left')],
-            [sg.Column([[sg.Button('Continuar pedido', key='3', font=font, size=size, pad=pad)]],
-                        justification='left')],
-            [sg.Column([[sg.Button('Confirmar', font=font, size=size, pad=pad)]], justification='center')],
-            [sg.Column([[sg.Button('Retornar', key='0', font=font, size=size,  pad=pad)]], justification='right')],
-        ]
-
-        self.__window = sg.Window('Pizzaria', default_element_size=(40, 1), size=(1250, 620),
-                                  icon="Imagens\pizza icone.ico").Layout(layout)
-
-        button, values = self.open()
-        escolha = int(button)
-        cpf_cliente = values['cpf']
-        
-        
-        while True:
-            try:
-                # verifica se tem apenas numeros
-                int(cpf_cliente)
-
-                if len(cpf_cliente) < 9:
-                    raise Entrada_muito_curta
-                elif len(cpf_cliente) > 11:
-                    raise Entrada_muito_longa
-                break
-            except ValueError:
-                self.mostra_mensagem("Resposta invalida! Digite apenas numeros.")
-            except Entrada_muito_curta as e:
-                self.mostra_mensagem(e)
-            except Entrada_muito_longa as e:
-                self.mostra_mensagem(e)
-
-        produtos = list()
-
-        while True:
-
-            if escolha == 1:
-                while True:
-                    while True:
-                        try:
-                            pizza_escolhida = input("Insira o nome da pizza: ")
-                            if pizza_escolhida == "0":
-                                break
-                            if len(pizza_escolhida) < 2:
-                                raise Entrada_muito_curta
-                            break
-                        except Entrada_muito_curta as e:
-                            self.mostra_mensagem(e)
-                    if pizza_escolhida == "0":
-                        break
-                    existe = False
-
-                    for pizza in lista_pizzas:
-                        if pizza.upper() == pizza_escolhida.upper():
-                            existe = True
-                            if pizza.quantidade > 0:
-                                produtos.append(pizza)
-                                pizza.diminuir_estoque(1)
-                            else:
-                                sg.Popup("Não temos essa pizza no estoque.")
-                    if not existe:
-                        sg.Popup("Pizza não existe.")
-                    else:
-                        break
-            elif escolha == 2:
-                while True:
-                    while True:
-                        try:
-                            bebida_escolhida = input("Insira o nome da bebida: ")
-                            if bebida_escolhida == "0":
-                                break
-                            if len(bebida_escolhida) < 2:
-                                raise Entrada_muito_curta
-                            break
-                        except Entrada_muito_curta as e:
-                            self.mostra_mensagem(e)
-                    if bebida_escolhida == "0":
-                        break
-                    existe = False
-
-                    for bebida in lista_bebidas:
-                        if bebida.upper() == bebida_escolhida.upper():
-                            existe = True
-                            if bebida.quantidade > 0:
-                                produtos.append(bebida)
-                                bebida.diminuir_estoque(1)
-                            else:
-                                self.mostra_mensagem("Não temos essa bebida no estoque.")
-                    if not existe:
-                        self.mostra_mensagem("Bebida não existe.")
-                    else:
-                        break
-
-            elif escolha == 3:
-                break
-
-
-
-        forma_de_pagamento = self.pegar_forma_pagamento()
-
-        return { "produtos": produtos, "atendente": atendente_escolhido,
-                "forma_de_pagamento": forma_de_pagamento}
 
     def pegar_cliente(self,dados_antigos = None):
         sg.ChangeLookAndFeel('DarkBrown1')
@@ -336,9 +216,30 @@ class Tela_Pedido():
 
 
 
-    def escolher_pedido(self):
-        cod = input("Digite o código do pedido: ")
-        return cod
+    def escolher_pedido(self, codigos_pedidos):
+        sg.ChangeLookAndFeel('DarkBrown1')
+        font = ("Palatino Linotype", 10)
+        pad = (200, 200), (0, 0)
+        size = (18, 1)
+
+        codigos = sg.Listbox([codigos_pedidos], size=(20, 4), enable_events=True, key='codigos', expand_y=True)
+
+        layout = [
+            [sg.Column([[sg.Text('Escolha o pedido', font=("Palatino Linotype", 30))]], justification='center',
+                       pad=((0, 0), (20, 20)))],
+            [codigos],
+            [sg.Column([[sg.Button('Retornar', font=font, size=size, pad=pad)]], justification='center')],
+        ]
+        self.__window = sg.Window('Pizzaria', default_element_size=(40, 1), size=(1250, 620),
+                                  icon="Imagens\pizza icone.ico").Layout(layout)
+        while True:
+            event, values = self.__window.read()
+            if event == 'codigos':
+                self.close()
+                return values[event][0][0]
+            if  event == 'Retornar':
+                self.close()
+                return "Retornar"
 
     def escolher_atendente(self):
         sg.ChangeLookAndFeel('DarkBrown1')
@@ -434,7 +335,6 @@ class Tela_Pedido():
             if event == 'opcoes':
                 carrinho.append(values[event][0])
                 self.__window['carrinho_listbox'].update(carrinho)
-                print(carrinho)
             if event == 'Confirmar':
                 self.close()
                 return carrinho
