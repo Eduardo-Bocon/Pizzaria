@@ -5,7 +5,7 @@ from DAOs.pedido_dao import PedidoDAO
 from Entidades.Pedido.Forma_de_Pagamento import Forma_de_Pagamento
 from Limites.Tela_Pedido import Tela_Pedido
 from Entidades.Pedido.Pedido import Pedido
-from excecoes import Pedido_ja_cadastrado, Cliente_nao_encontrado
+from excecoes import Pedido_ja_cadastrado, Cliente_nao_encontrado, Atendente_nao_encontrado
 
 
 class ControladorPedido():
@@ -16,8 +16,10 @@ class ControladorPedido():
         self.__controlador_pizzaria = controlador_pizzaria
         self.__proximo_codigo = 1
 
-    def fazer_pedido(self): #todo
+    def fazer_pedido(self):
 
+
+        #pega o cliente
         while True:
 
             cpf_cliente = self.__tela.pegar_cliente()
@@ -31,6 +33,24 @@ class ControladorPedido():
                     break
             except Cliente_nao_encontrado as e:
                 self.__tela.mostra_mensagem(e)
+
+        #pega o atendente
+        while True:
+            atendente = self.__tela.escolher_atendente()
+
+            atendente = self.__controlador_pizzaria.pegar_atendente_por_cpf(atendente)
+
+            try:
+                if atendente is None:
+                    raise Atendente_nao_encontrado
+                else:
+                    break
+            except Atendente_nao_encontrado as e:
+                self.__tela.mostra_mensagem(e)
+
+        #pegar produtos #todo
+
+        #pegar_forma de pagamento #todo
 
         dados_pedido = self.__tela.pegar_dados_pedido(lista_atendentes=self.__controlador_pizzaria.pegar_atendentes(),
                                                       lista_pizzas=self.__controlador_pizzaria.pegar_pizzas(),

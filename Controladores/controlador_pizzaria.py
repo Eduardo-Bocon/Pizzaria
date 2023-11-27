@@ -100,6 +100,9 @@ class ControladorPizzaria():
     def pegar_atendentes(self):
         return self.__contr_funcionario.pegar_atendentes()
 
+    def pegar_atendente_por_cpf(self, cpf):
+        return self.__contr_funcionario.pegar_atendente_por_cpf(cpf)
+
     def pegar_pizzas(self):
         return self.__contr_produto.pegar_pizzas()
 
