@@ -81,7 +81,6 @@ class Tela_Pedido():
 
     def pegar_dados_pedido(self, lista_atendentes: [], lista_pizzas: [], lista_bebidas: [], dados_antigos = None):
 
-<<<<<<< HEAD
         print("componentes visuais iniciados pega dados pedido")
         sg.ChangeLookAndFeel('DarkBrown1')
         font = ("Palatino Linotype", 10)
@@ -128,11 +127,6 @@ class Tela_Pedido():
                 self.mostra_mensagem(e)
             except Entrada_muito_longa as e:
                 self.mostra_mensagem(e)
-=======
-        cpf_cliente = self.pegar_cliente(dados_antigos=dados_antigos)
-
-        atendente_escolhido = self.escolher_atendente(lista_atendentes)
->>>>>>> ac7a85304e9b4e1da3149941f9e898f0263e9ab8
 
         produtos = list()
 
