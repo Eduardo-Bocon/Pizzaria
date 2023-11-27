@@ -189,7 +189,7 @@ class Tela_Pedido():
         pad = (200, 200), (0, 0)
         size = (18, 1)
 
-        codigos = sg.Listbox([codigos_pedidos], size=(20, 4), enable_events=True, key='codigos', expand_y=True)
+        codigos = sg.Listbox(codigos_pedidos, size=(20, 4), enable_events=True, key='codigos', expand_y=True)
 
         layout = [
             [sg.Column([[sg.Text('Escolha o pedido', font=("Palatino Linotype", 30))]], justification='center',
@@ -203,7 +203,7 @@ class Tela_Pedido():
             event, values = self.__window.read()
             if event == 'codigos':
                 self.close()
-                return values[event][0][0]
+                return values[event][0]
             if event == 'Retornar':
                 self.close()
                 return "Retornar"
