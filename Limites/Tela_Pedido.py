@@ -23,10 +23,10 @@ class Tela_Pedido():
             [sg.Column([[sg.Text('O que você deseja fazer?', font=("Palatino Linotype", 20), pad=15)]],
                        justification='center')],
             [sg.Column([[sg.Button('Fazer pedido', key='1', font=font, size=size, pad=pad)]], justification='left')],
-            [sg.Column([[sg.Button('Ver pedidos', key='3', font=font, size=size, pad=pad)]], justification='right')],
-            [sg.Column([[sg.Button('Deletar pedido', key='4', font=font, size=size, pad=pad)]], justification='left')],
+            [sg.Column([[sg.Button('Ver pedidos', key='3', font=font, size=size, pad=pad)]], justification='center')],
+            [sg.Column([[sg.Button('Deletar pedido', key='4', font=font, size=size, pad=pad)]], justification='right')],
             [sg.Column([[sg.Button('Confirmar entrega pedido', key='5', font=font, size=size, pad=pad)]],
-                       justification='center')],
+                       justification='left')],
             [sg.Column([[sg.Button('Retornar', key='0', font=font, size=size, pad=pad)]], justification='right')],
         ]
 
@@ -78,12 +78,12 @@ class Tela_Pedido():
             [sg.Column([[sg.Button('Ver todos os pedidos', key='1', font=font, size=size, pad=pad)]],
                        justification='left')],
             [sg.Column([[sg.Button('Ver os pedidos de um atendente', key='2', font=font, size=size, pad=pad)]],
-                       justification='right')],
+                       justification='center')],
             [sg.Column([[sg.Button('Ver os pedidos de um cliente', key='3', font=font, size=size, pad=pad)]],
-                       justification='left')],
+                       justification='right')],
             [sg.Column(
-                [[sg.Button('Ver os pedidos acima de uma faixa de preço', key='4', font=font, size=size, pad=pad)]],
-                justification='right')],
+                [[sg.Button('Ver os pedidos por preço', key='4', font=font, size=size, pad=pad)]],
+                justification='left')],
             [sg.Column([[sg.Button('Retornar', key='0', font=font, size=size, pad=pad)]], justification='right')],
         ]
 
@@ -169,6 +169,7 @@ class Tela_Pedido():
 
             if not erro:
                 break
+
         self.close()
         return cpf_cliente
 
@@ -190,7 +191,7 @@ class Tela_Pedido():
         string_pedido = string_pedido + "Entregue: " + str(dados_pedido["entregue"]) + '\n\n'
         string_pedido = string_pedido + "Lista de produtos: " + '\n'
 
-        self.mostra_mensagem('Dados do Pedido: \n' + string_pedido + string_produtos)
+        self.mostra_mensagem("Dados do Pedido:" + '\n\n' + string_pedido + string_produtos)
 
     def mostra_mensagem(self, mensagem: str):
         sg.popup("", mensagem)
@@ -198,17 +199,17 @@ class Tela_Pedido():
     def pegar_forma_pagamento(self, formas_de_pagamento):
         sg.ChangeLookAndFeel('DarkBrown1')
         font = ("Palatino Linotype", 10)
-        pad = (200, 200), (0, 0)
+        pad = (150, 150), (20, 20)
         size = (18, 1)
 
-        listbox = sg.Listbox(formas_de_pagamento, size=(20, 4), enable_events=True, key='listbox', expand_y=True)
+        listbox = sg.Listbox(formas_de_pagamento, size=(30, 8), pad=pad, enable_events=True, key='listbox', expand_y=True)
 
         layout = [
             [sg.Column([[sg.Text('Fazer Pedido', font=("Palatino Linotype", 30))]], justification='center',
                        pad=((0, 0), (20, 20)))],
             [sg.Column([[sg.Text('Escolha a forma de pagamento:', font=("Palatino Linotype", 20), pad=15)]],
-                       justification='center')],
-            [listbox],
+                       justification='left')],
+            [sg.Column([[listbox]], justification='left')],
         ]
 
         self.__window = sg.Window('Pizzaria', default_element_size=(40, 1), size=(1250, 620),
@@ -304,7 +305,7 @@ class Tela_Pedido():
         layout = [
             [sg.Column([[sg.Text('Ver pedidos por valor', font=("Palatino Linotype", 30))]], justification='center',
                        pad=((0, 0), (20, 20)))],
-            [sg.Column([[sg.Text('Valor:', font=font, size=size, pad=pad), sg.InputText(default_text='30', key='valor')]],
+            [sg.Column([[sg.Text('Valor:', font=font, size=size, pad=pad), sg.InputText(default_text='0', key='valor')]],
                        justification='left')],
             [sg.Column([[sg.Button('Confirmar', font=font, size=size, pad=pad)]], justification='center')],
         ]
@@ -328,17 +329,21 @@ class Tela_Pedido():
 
         carrinho = []
 
-        opcoes = sg.Listbox(lista_produtos, size=(20, 4), enable_events=True, key='opcoes', expand_y=True)
+        opcoes = sg.Listbox(lista_produtos, size=(20, 4), pad = pad, enable_events=True, key='opcoes', expand_y=True)
 
-        carrinho_listbox = sg.Listbox(carrinho, size=(20, 4), enable_events=True, key='carrinho_listbox', expand_y=True)
+        carrinho_listbox = sg.Listbox(carrinho, size=(20, 4), pad = pad, enable_events=True, key='carrinho_listbox', expand_y=True)
 
         layout = [
             [sg.Column([[sg.Text('Fazer Pedido', font=("Palatino Linotype", 30))]], justification='center',
                        pad=((0, 0), (20, 20)))],
-            [sg.Column([[sg.Text('Escolha produtos:', font=("Palatino Linotype", 20), pad=15)]],
+            [sg.Column([[sg.Text('Escolha seus produtos:', font=("Palatino Linotype", 20), pad=15)]],
                        justification='center')],
-            [opcoes],
-            [carrinho_listbox],
+            [sg.Column([[sg.Text('Produtos disponíveis:', font=font, pad = ((150, 150), (20, 20)), size=size)]],
+                       justification='lef')],
+            [sg.Column([[opcoes]], justification='left')],
+            [sg.Column([[sg.Text('Seu carrinho:', font=font, pad = ((150, 150), (20, 20)), size=size)]],
+                       justification='left')],                   
+            [sg.Column([[carrinho_listbox]], justification='left')],
             [sg.Column([[sg.Button('Confirmar', font=font, size=size, pad=pad)]], justification='center')],
             [sg.Column([[sg.Button('Remover', font=font, size=size, pad=pad)]], justification='center')],
         ]

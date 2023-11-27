@@ -63,7 +63,9 @@ class Tela_Pizzaria():
         if produto_mais_vendido is None:
             sg.Popup("Não há pedidos com produtos.")
         else:
-            texto = "Produto mais vendido do mês: {}\nQuantidade: {}".format(produto_mais_vendido["produto"],produto_mais_vendido["quantidade"])
+            produto = produto_mais_vendido["produto"].nome
+            quantidade = produto_mais_vendido["quantidade"]
+            texto = f"Produto mais vendido do mês: {produto}\nQuantidade: {quantidade}"
             sg.Popup(texto)
 
     def mostrar_financeiro(self, salarios, despesas, receitas):
