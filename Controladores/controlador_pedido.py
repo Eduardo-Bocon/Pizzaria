@@ -15,7 +15,7 @@ class ControladorPedido():
         self.__pedido_DAO = PedidoDAO()
         self.__tela = Tela_Pedido(self)
         self.__controlador_pizzaria = controlador_pizzaria
-        self.__proximo_codigo = 1
+        self.__proximo_codigo = self.pegar_ultimo_codigo() + 1
 
     def fazer_pedido(self):
 
@@ -304,3 +304,10 @@ class ControladorPedido():
         for pedido in self.__pedido_DAO.get_all():
             codigos.append(pedido.codigo)
         return codigos
+
+    def pegar_ultimo_codigo(self):
+        codigo = 0
+        for pedido in self.__pedido_DAO.get_all():
+            if pedido.codigo > codigo:
+                codigo = pedido.codigo
+        return codigo
