@@ -160,6 +160,12 @@ class ControladorFuncionario():
                 atendentes.append(funcionario.nome)
         return atendentes
 
+    def pegar_atendente_por_cpf(self, cpf: str):
+        for atendente in self.__funcionario_DAO.get_all():
+            if cpf == atendente.cpf:
+                return atendente.cpf
+        return None
+
     def aumentar_pedidos_funcionario(self, nome_funcionario):
         for cada_funcionario in self.__funcionario_DAO.get_all():
             if cada_funcionario.nome.upper() == nome_funcionario.upper():

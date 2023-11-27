@@ -5,7 +5,8 @@ from DAOs.pedido_dao import PedidoDAO
 from Entidades.Pedido.Forma_de_Pagamento import Forma_de_Pagamento
 from Limites.Tela_Pedido import Tela_Pedido
 from Entidades.Pedido.Pedido import Pedido
-from excecoes import Pedido_ja_cadastrado, Cliente_nao_encontrado
+from excecoes import Pedido_ja_cadastrado, Cliente_nao_encontrado, Atendente_nao_encontrado, \
+    Forma_de_Pagamento_Invalida, Valor_invalido
 
 
 class ControladorPedido():
@@ -16,13 +17,17 @@ class ControladorPedido():
         self.__controlador_pizzaria = controlador_pizzaria
         self.__proximo_codigo = 1
 
-    def fazer_pedido(self): #todo
+    def fazer_pedido(self):
 
+
+        #pega o cliente
         while True:
 
             cpf_cliente = self.__tela.pegar_cliente()
 
             cliente = self.__controlador_pizzaria.pegar_cliente_por_cpf(cpf_cliente)
+            print("AAAAAAAAAAAAAAAAA")
+            print(cliente)
 
             try:
                 if cliente is None:
@@ -32,31 +37,60 @@ class ControladorPedido():
             except Cliente_nao_encontrado as e:
                 self.__tela.mostra_mensagem(e)
 
-        dados_pedido = self.__tela.pegar_dados_pedido(lista_atendentes=self.__controlador_pizzaria.pegar_atendentes(),
-                                                      lista_pizzas=self.__controlador_pizzaria.pegar_pizzas(),
-                                                      lista_bebidas=self.__controlador_pizzaria.pegar_bebidas(),
-                                                      )
+        #pega o atendente
+        while True:
+            atendente = self.__tela.escolher_atendente()
 
-        try:
-            if dados_pedido is not None:
-                # pegando a data atual
-                data = datetime.datetime.now()
+            atendente = self.__controlador_pizzaria.pegar_atendente_por_cpf(atendente)
+
+            try:
+                if atendente is None:
+                    raise Atendente_nao_encontrado
+                else:
+                    break
+            except Atendente_nao_encontrado as e:
+                self.__tela.mostra_mensagem(e)
+
+        while True:
+
+            forma = self.__tela.pegar_forma_pagamento(self.pegar_formas_pagamento())
+
+            forma = self.checar_forma_pagamento(forma)
+
+
+
+            try:
+                if forma is None:
+                    raise Forma_de_Pagamento_Invalida
+                else:
+                    self.__tela.mostra_mensagem("Forma escolhida: " + forma)
+                    break
+            except Forma_de_Pagamento_Invalida as e:
+                self.__tela.mostra_mensagem(e)
+
+
+
+        nomes_produtos = self.__tela.pegar_produtos(self.__controlador_pizzaria.pegar_produtos())
+
+        #transformar os nomes nos objetos
+        produtos = []
+        for produto in nomes_produtos:
+            produtos.append(self.__controlador_pizzaria.pegar_produto(produto))
+            print(produtos)
+
+        # pegando a data atual
+        data = datetime.datetime.now()
                 
-                pedido = Pedido(produtos=dados_pedido["produtos"],
-                                cliente=self.__controlador_pizzaria.pegar_cliente_por_cpf(
-                                    dados_pedido["cpf"]),
-                                atendente=dados_pedido["atendente"],
-                                forma_de_pagamento=dados_pedido["forma_de_pagamento"],
+        pedido = Pedido(produtos=produtos,
+                                cliente=cliente,
+                                atendente=atendente,
+                                forma_de_pagamento=forma,
                                 data=data, codigo=self.__proximo_codigo)
 
-                self.__pedido_DAO.add(pedido)
-                self.__proximo_codigo += 1
-                self.__controlador_pizzaria.aumentar_pedidos_funcionario(dados_pedido["atendente"])
+        self.__pedido_DAO.add(pedido)
+        self.__proximo_codigo += 1
+        self.__controlador_pizzaria.aumentar_pedidos_funcionario(atendente)
 
-            else:
-                raise Pedido_ja_cadastrado(dados_pedido)
-        except Pedido_ja_cadastrado as e:
-            self.__tela.mostra_mensagem(e)
 
     def deletar_pedido(self):
         self.ver_pedidos()
@@ -65,14 +99,17 @@ class ControladorPedido():
             self.__tela.mostra_mensagem("Nenhum pedido cadastrado!")
         
         else:
-            codigo = self.__tela.escolher_pedido()
-            pedido = self.pegar_pedido(codigo)
+            codigo = self.__tela.escolher_pedido(self.pegar_codigos_pedidos())
+            if not codigo == "Retornar":
 
-            if pedido is not None:
-                self.__pedido_DAO.remove(pedido)
-                self.ver_pedidos()
-            else:
-                self.__tela.mostra_mensagem("Erro: pedido não existente")
+                pedido = self.pegar_pedido(codigo)
+                print(pedido)
+
+                if pedido is not None:
+                    self.__pedido_DAO.remove(pedido.codigo)
+                    self.ver_pedidos()
+                else:
+                    self.__tela.mostra_mensagem("Erro: pedido não existente")
 
     def pegar_pedido(self, codigo):
         for pedido in self.__pedido_DAO.get_all():
@@ -86,6 +123,7 @@ class ControladorPedido():
 
         else:
             for pedido in self.__pedido_DAO.get_all():
+
                 self.__tela.ver_pedido({"codigo": pedido.codigo, "produtos": pedido.produtos,
                                         "nome_cliente": pedido.cliente.nome, "cpf_cliente": pedido.cliente.cpf,
                                         "atendente": pedido.atendente, "valor": pedido.calcula_preco(),
@@ -100,7 +138,7 @@ class ControladorPedido():
             lista_opcoes[self.__tela.abre_tela_ver_pedidos()]()
 
     def ver_pedidos_atendente(self):
-        atendente = self.__tela.escolher_atendente(self.__controlador_pizzaria.pegar_atendentes())
+        atendente = self.__tela.escolher_atendente()
         existe = False
         for pedido in self.__pedido_DAO.get_all():
             if pedido.atendente == atendente:
@@ -114,10 +152,10 @@ class ControladorPedido():
             self.__tela.mostra_mensagem("Não tem pedidos com esse atendente.")
 
     def ver_pedidos_cliente(self):
-        cliente = self.__tela.escolher_cliente(self.__controlador_pizzaria.pegar_clientes())
+        cliente = self.__tela.pegar_cliente()
         existe = False
         for pedido in self.__pedido_DAO.get_all():
-            if pedido.cliente == cliente:
+            if pedido.cliente.cpf == cliente:
                 existe = True
                 self.__tela.ver_pedido({"codigo": pedido.codigo, "produtos": pedido.produtos,
                                         "nome_cliente": pedido.cliente.nome, "cpf_cliente": pedido.cliente.cpf,
@@ -128,7 +166,13 @@ class ControladorPedido():
             self.__tela.mostra_mensagem("Não tem pedidos com esse cliente.")
 
     def ver_pedidos_por_valor(self):
-        valor = self.__tela.escolher_valor()
+        while True:
+            valor = self.__tela.escolher_valor()
+            try:
+                if valor > 0:
+                    break
+            except ValueError:
+                self.__tela.mostra_mensagem("Valor invalido")
         existe = False
         for pedido in self.__pedido_DAO.get_all():
             if pedido.calcula_preco() >= valor:
@@ -184,21 +228,18 @@ class ControladorPedido():
 
         self.ver_pedidos()
 
-        codigo = self.__tela.escolher_pedido()
+        codigo = self.__tela.escolher_pedido(self.pegar_codigos_pedidos())
+        if not codigo == "Retornar":
 
-        existe = False
+            pedido = self.pegar_pedido(codigo)
+            print(pedido)
 
-        for pedido in self.__pedido_DAO.get_all():
-            self.mostra_mensagem("Verificando pedido: " + pedido.codigo)
-
-            if pedido.codigo == int(codigo):
+            if pedido is not None:
                 pedido.entregue = True
-                existe = True
-            else:
-                self.mostra_mensagem(pedido.codigo + " não é igual a " + codigo)
 
-        if not existe:
-            self.__tela.mostra_mensagem("Erro: pedido não existente")
+            else:
+                self.__tela.mostra_mensagem("Erro: pedido não existente")
+
 
     def pegar_receitas(self):
 
@@ -244,4 +285,20 @@ class ControladorPedido():
         return {"produto": produto_mais_vendido, "quantidade": quantidade}
 
     def pegar_formas_pagamento(self):
-        return Forma_de_Pagamento
+        formas = []
+        for forma in Forma_de_Pagamento:
+            formas.append(forma.value)
+
+        return formas
+
+    def checar_forma_pagamento(self, forma_pagamento):
+        for forma in Forma_de_Pagamento:
+            if forma.value.upper() == forma_pagamento[0].upper():
+                return forma.value
+        return None
+
+    def pegar_codigos_pedidos(self):
+        codigos = []
+        for pedido in self.__pedido_DAO.get_all():
+            codigos.append(pedido.codigo)
+        return codigos
